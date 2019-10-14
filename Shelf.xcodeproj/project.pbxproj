@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		33057EDF2354004600AD06DB /* TabRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33057EDE2354004600AD06DB /* TabRowView.swift */; };
-		33057EE82354188900AD06DB /* MyShelfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33057EE72354188900AD06DB /* MyShelfView.swift */; };
 		33057EEA235418A400AD06DB /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33057EE9235418A400AD06DB /* NotificationsView.swift */; };
 		33057EEC235418B400AD06DB /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33057EEB235418B400AD06DB /* SearchView.swift */; };
 		33057EEE235418C900AD06DB /* FindFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33057EED235418C900AD06DB /* FindFriendView.swift */; };
 		33057EF0235418D900AD06DB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33057EEF235418D900AD06DB /* SettingsView.swift */; };
 		33057EF2235418E600AD06DB /* SignOutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33057EF1235418E600AD06DB /* SignOutView.swift */; };
+		33057EFC23541A3800AD06DB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33057EFB23541A3800AD06DB /* ProfileView.swift */; };
 		333D18362336DECC0005AD45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333D18352336DECC0005AD45 /* AppDelegate.swift */; };
 		333D18382336DECC0005AD45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333D18372336DECC0005AD45 /* SceneDelegate.swift */; };
 		333D183B2336DECC0005AD45 /* Shelf.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 333D18392336DECC0005AD45 /* Shelf.xcdatamodeld */; };
@@ -51,12 +51,12 @@
 
 /* Begin PBXFileReference section */
 		33057EDE2354004600AD06DB /* TabRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabRowView.swift; sourceTree = "<group>"; };
-		33057EE72354188900AD06DB /* MyShelfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyShelfView.swift; sourceTree = "<group>"; };
 		33057EE9235418A400AD06DB /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		33057EEB235418B400AD06DB /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		33057EED235418C900AD06DB /* FindFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindFriendView.swift; sourceTree = "<group>"; };
 		33057EEF235418D900AD06DB /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		33057EF1235418E600AD06DB /* SignOutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutView.swift; sourceTree = "<group>"; };
+		33057EFB23541A3800AD06DB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
 		333D18322336DECC0005AD45 /* Shelf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shelf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		333D18352336DECC0005AD45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		333D18372336DECC0005AD45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -175,7 +175,7 @@
 		33057EFA2354197E00AD06DB /* MyShelf */ = {
 			isa = PBXGroup;
 			children = (
-				33057EE72354188900AD06DB /* MyShelfView.swift */,
+				33057EFB23541A3800AD06DB /* ProfileView.swift */,
 			);
 			path = MyShelf;
 			sourceTree = "<group>";
@@ -398,12 +398,12 @@
 				33C3C1B72353EC7200E1652A /* LoginView.swift in Sources */,
 				333D183D2336DECC0005AD45 /* ContentView.swift in Sources */,
 				33057EEE235418C900AD06DB /* FindFriendView.swift in Sources */,
+				33057EFC23541A3800AD06DB /* ProfileView.swift in Sources */,
 				3365D2DD234FE76A003E6B79 /* HomeView.swift in Sources */,
 				333D18382336DECC0005AD45 /* SceneDelegate.swift in Sources */,
 				33C3C1B32353BF0200E1652A /* User.swift in Sources */,
 				33057EEC235418B400AD06DB /* SearchView.swift in Sources */,
 				33C3C1B52353C62B00E1652A /* Game.swift in Sources */,
-				33057EE82354188900AD06DB /* MyShelfView.swift in Sources */,
 				33057EDF2354004600AD06DB /* TabRowView.swift in Sources */,
 				33057EEA235418A400AD06DB /* NotificationsView.swift in Sources */,
 			);
