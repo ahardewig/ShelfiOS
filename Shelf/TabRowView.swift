@@ -26,14 +26,26 @@ struct TabRowView: View {
             NavigationView { Text("Hi again!") }
                 .tabItem {
                     Image(systemName: "heart.fill")
-                    Text("Find Friends")
+                    Text("Notifications")
                 }.tag(2)
 
             NavigationView { Text("Coming soon?") }
                 .tabItem {
                     Image(systemName: "bubble.left.and.bubble.right.fill")
-                    Text("Log Out!")
+                    Text("Search")
                 }.tag(3)
+            
+            NavigationView { Text("Coming soon?") }
+                .tabItem {
+                    Image(systemName: "bubble.left.and.bubble.right.fill")
+                    Text("Find a Friend")
+                }.tag(4)
+            
+            NavigationView { Text("Coming soon?") }
+                .tabItem {
+                    Image(systemName: "bubble.left.and.bubble.right.fill")
+                    Text("Sign Out")
+                }.tag(5)
         }
     }
 }
