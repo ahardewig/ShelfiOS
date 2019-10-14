@@ -32,14 +32,20 @@ func registerUser(username: String, password: String, confirmPassword: String, e
             "email": email,
             "birthday": dateString
         ]
-        AF.request("http://localhost:8080/user/register", method: .post, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
-            switch response.result {
-            case .success(let value):
-                print(value);
-            
-            case .failure(let error):
-                print(error)
-            }
+    AF.request("http://localhost:8080/user/register", method: .post, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
+           
+                
+        if response.response?.statusCode == 200 {
+            print("Success with JSON: \(String(describing: response.data))")
+        }
+        else {
+            let error = JSON(response.data as Any)
+            let errorMessage = error["message"].string
+           
+            ErrorHandler.errorHandler.errorMessageText = errorMessage!
+            ErrorHandler.errorHandler.errorDetected = true
+                    
+        }
             
         }
     }
