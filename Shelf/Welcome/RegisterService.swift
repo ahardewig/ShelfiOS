@@ -17,7 +17,7 @@ func registerUser(username: String, password: String, email: String, birthday: D
     print("EMAIL: " + email);
     
     let dateFormatter = DateFormatter()
-    //dateFormatter.dateFormat = "yyyy-MM-dd"
+    dateFormatter.dateFormat = "yyyy-MM-dd"
     let dateString = dateFormatter.string(from: birthday)
     print("BIRTHDAY: " + dateString);
     let body: [String: String] = [

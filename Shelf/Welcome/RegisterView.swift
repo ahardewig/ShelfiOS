@@ -48,6 +48,7 @@ struct RegisterView: View {
 func signup(username: String, password: String, email: String, birthday: Date) {
     print(username)
     print(password)
+    //print("my birthday: " + birthday)
     registerUser(username: username,password: password, email: email, birthday: birthday)
 
 }
@@ -87,7 +88,7 @@ struct ConfirmPasswordTextField: View {
 struct EmailTextField: View {
     @Binding var email: String
     var body: some View {
-        SecureField("Email Address", text: $email)
+        TextField("Email Address", text: $email)
             .padding()
             .background(lightGreyColor)
             .cornerRadius(5.0)
