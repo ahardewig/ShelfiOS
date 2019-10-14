@@ -15,6 +15,11 @@ class User: ObservableObject {
     private var birthday: String = "";
     private var email: String = "";
     private var games_rated:  Array<Game> = [];
+    private var games_played: Array<Game> = [];
+    private var followers: [String] = [];
+    private var following: [String] = [];
+    private var inboxId: String = "";
+    
     @Published var isLoggedIn: Bool = false;
     
     static let currentUser = User();
@@ -51,12 +56,35 @@ class User: ObservableObject {
     func initFromJson(json: Any) {
         self.isLoggedIn = true;
         let parsed = JSON(json);
+        print(parsed);
+        
         self.username = parsed["username"].string ?? "";
+        self.birthday = parsed["birthday"].string ?? "";
+        self.email = parsed["email"].string ?? "";
+        self.inboxId = parsed["inboxID"].string ?? "";
+        
         for games in parsed["games_rated"].array! {
             print(games["rating"]);
-            //self.games_rated.append(Game(games.rating, games.game_id))
+            let rating = games["rating"].string ?? ""
+            let gameId = games["game_id"].string ?? ""
+            self.games_rated.append(Game(rating: rating, gameId: gameId))
         }
-        //self.games_rated.append(Game())
+        
+        for games in parsed["games_played"].array! {
+            print(games["rating"]);
+            let rating = games["rating"].string ?? ""
+            let gameId = games["game_id"].string ?? ""
+            self.games_played.append(Game(rating: rating, gameId: gameId))
+        }
+        
+        for follower in parsed["followers"].array! {
+            self.followers.append(follower.string!)
+        }
+        
+        for following in parsed["following"].array! {
+            self.following.append(following.string!)
+        }
+        
         
     }
 
