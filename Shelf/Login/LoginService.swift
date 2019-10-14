@@ -9,10 +9,6 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
-
-//class LoginService: ObservableObject {
-    
-   // @Published private var isLoggedIn: Bool = false;
     
     func loginUser(username: String, password: String) {
         print("USER: " + username);
@@ -26,16 +22,13 @@ import SwiftyJSON
             switch response.result {
             case .success(let value):
                 User.currentUser.initFromJson(json: value as AnyObject)
-           //     self.isLoggedIn = true;
             
             case .failure(let error):
                 print(error)
-         //       self.isLoggedIn = false;
             }
             
         }
     
 
     }
-//}
 

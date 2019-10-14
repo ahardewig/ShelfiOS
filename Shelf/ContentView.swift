@@ -20,7 +20,8 @@ struct ContentView: View {
         Group() {
             
             if (!user.isLoggedIn) {
-               LoginView()
+               //LoginView()
+                WelcomeView()
             } else {
                TabRowView()
             }
