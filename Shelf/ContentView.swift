@@ -12,6 +12,7 @@ import SwiftUI
 struct ContentView: View {
     @State private var selection = 0
     @ObservedObject var user: User = User.currentUser;
+    @EnvironmentObject var errorHandler: ErrorHandler
     
     var body: some View {
         //needed bc the Swift compiler is wack. REALLY solid stack
@@ -32,7 +33,7 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-            ContentView()
+        ContentView().environmentObject(ErrorHandler.errorHandler)
     }
 }
 

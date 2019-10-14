@@ -17,39 +17,37 @@ struct RegisterView: View {
     @State var confirmPassword: String = ""
     @State var email: String = ""
     @State var birthday = Date()
-    
+    @EnvironmentObject var errorHandler: ErrorHandler
     
     var body: some View {
     
-        VStack {
-            RegisterText()
-            UsernameTextField(username: $username)
-            PasswordTextField(password: $password)
-            ConfirmPasswordTextField(confirmPassword: $confirmPassword)
-            EmailTextField(email: $email)
-            DatePicker(
-                selection: $birthday,
-                in: ...Date(),
-                displayedComponents: .date,
-                label: { Text("DOB") }
-            )
-            Button(action: {signup(username: self.username, password: self.password, email: self.email, birthday: self.birthday)}) {
-               SignupButton()
-            }
-            
-            Button(action: {self.isRegistering = false}) {
-                  SwitchToLoginButton()
-            }
-        }.padding()
+        ZStack {
+            VStack {
+                RegisterText()
+                UsernameTextField(username: $username)
+                PasswordTextField(password: $password)
+                ConfirmPasswordTextField(confirmPassword: $confirmPassword)
+                EmailTextField(email: $email)
+                DatePicker(
+                    selection: $birthday,
+                    in: ...Date(),
+                    displayedComponents: .date,
+                    label: { Text("DOB") }
+                )
+                Button(action: {registerUser(username: self.username, password: self.password, confirmPassword: self.confirmPassword, email: self.email, birthday: self.birthday)}) {
+                   SignupButton()
+                }
+                
+                Button(action: {self.isRegistering = false}) {
+                      SwitchToLoginButton()
+                }
+            }.padding()
+                .alert(isPresented: $errorHandler.errorDetected) {
+                    Alert(title: Text("Error!"), message: Text(errorHandler.errorMessageText), dismissButton: .default(Text("Got it!")))
+                }
+        }
         
     }
-}
-
-func signup(username: String, password: String, email: String, birthday: Date) {
-    print(username)
-    print(password)
-    registerUser(username: username,password: password, email: email, birthday: birthday)
-
 }
 
 struct SwitchToLoginButton: View {
@@ -87,7 +85,7 @@ struct ConfirmPasswordTextField: View {
 struct EmailTextField: View {
     @Binding var email: String
     var body: some View {
-        SecureField("Email Address", text: $email)
+        TextField("Email Address", text: $email)
             .padding()
             .background(lightGreyColor)
             .cornerRadius(5.0)
@@ -98,7 +96,7 @@ struct EmailTextField: View {
 
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterView(isRegistering: .constant(false))
+        RegisterView(isRegistering: .constant(true)).environmentObject(ErrorHandler.errorHandler)
     }
 }
 

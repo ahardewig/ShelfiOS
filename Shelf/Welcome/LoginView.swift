@@ -16,6 +16,7 @@ struct LoginView: View {
     
     @State var username: String = ""
     @State var password: String = ""
+    @EnvironmentObject var errorHandler: ErrorHandler
     
    var body: some View {
     ZStack {
@@ -24,7 +25,7 @@ struct LoginView: View {
             ShelfImage()
             UsernameTextField(username: $username)
             PasswordTextField(password: $password)
-            Button(action: {login(username: self.username, password: self.password)}) {
+            Button(action: {loginUser(username: self.username, password: self.password)}) {
                LoginButton()
             }
             
@@ -33,16 +34,13 @@ struct LoginView: View {
             }
             
         }.padding()
+        
+        .alert(isPresented: $errorHandler.errorDetected) {
+            Alert(title: Text("Error!"), message: Text(errorHandler.errorMessageText), dismissButton: .default(Text("Got it!")))
+        }
 
         }
     }
-}
-
-func login(username: String, password: String) {
-    print(username)
-    print(password)
-    loginUser(username: username,password: password)
-
 }
 
 struct LoginText: View {
@@ -117,6 +115,6 @@ struct PasswordTextField: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         
-        LoginView(isRegistering: .constant(false))
+        LoginView(isRegistering: .constant(false)).environmentObject(ErrorHandler.errorHandler)
     }
 }
