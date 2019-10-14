@@ -19,8 +19,8 @@ import SwiftyJSON
         print("PASS: " + password);
 
         let body: [String: String] = [
-            "username": "alex123",
-            "password": "password",
+            "username": username,
+            "password": password,
         ]
         AF.request("http://localhost:8080/user/login", method: .post, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
             switch response.result {

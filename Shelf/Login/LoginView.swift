@@ -31,7 +31,7 @@ struct LoginView: View {
                 .offset(y: -10)
                 .foregroundColor(.red)
             }
-            Button(action: {doThis(username: self.username, password: self.password)}) {
+            Button(action: {login(username: self.username, password: self.password)}) {
                LoginButton()
             }
         }.padding()
@@ -49,17 +49,10 @@ struct LoginView: View {
     }
 }
 
-func doThis(username: String, password: String) {
+func login(username: String, password: String) {
     print(username);
     print(password);
     loginUser(username: username,password: password);
-    
-//    if (isAuthenticated) {
-//        NavigationLink(destination: TabRowView()) {
-//            Text("Do Something")
-//        }
-//    }
-        
     
 }
 
@@ -87,6 +80,18 @@ struct ShelfImage: View {
 struct LoginButton: View {
     var body: some View {
         Text("LOGIN")
+            .font(.headline)
+            .foregroundColor(.white)
+            .padding()
+            .frame(width: 220, height: 60)
+            .background(Color.green)
+            .cornerRadius(15.0)
+    }
+}
+
+struct SwitchToSignupButton: View {
+    var body: some View {
+        Text("Register for an Account")
             .font(.headline)
             .foregroundColor(.white)
             .padding()
