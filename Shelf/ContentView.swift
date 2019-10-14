@@ -11,33 +11,21 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selection = 0
- 
+    @ObservedObject var user: User = User.currentUser;
+    
     var body: some View {
-        TabView {
-            NavigationView { HomeView() }
-                .tabItem {
-                    Image(systemName: "list.dash")
-                    Text("Home")
-                }.tag(0)
-
-            NavigationView { Text("Hello!") }
-                .tabItem {
-                    Image(systemName: "flame.fill")
-                    Text("My Shelf")
-                }.tag(1)
-
-            NavigationView { Text("Hi again!") }
-                .tabItem {
-                    Image(systemName: "heart.fill")
-                    Text("Find Friends")
-                }.tag(2)
-
-            NavigationView { Text("Coming soon?") }
-                .tabItem {
-                    Image(systemName: "bubble.left.and.bubble.right.fill")
-                    Text("Log Out!")
-                }.tag(3)
+        //needed bc the Swift compiler is wack. REALLY solid stack
+        //overflow post:
+        //https://stackoverflow.com/questions/56517610/conditionally-use-view-in-swiftui
+        Group() {
+            
+            if (!user.isLoggedIn) {
+               LoginView()
+            } else {
+               TabRowView()
+            }
         }
+        
     }
 }
 

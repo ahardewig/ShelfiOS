@@ -52,7 +52,14 @@ struct LoginView: View {
 func doThis(username: String, password: String) {
     print(username);
     print(password);
-    loginUser(username: username,password: password)
+    loginUser(username: username,password: password);
+    
+//    if (isAuthenticated) {
+//        NavigationLink(destination: TabRowView()) {
+//            Text("Do Something")
+//        }
+//    }
+        
     
 }
 

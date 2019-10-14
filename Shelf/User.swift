@@ -9,12 +9,13 @@
 import Foundation
 import SwiftyJSON
 
-class User {
+class User: ObservableObject {
     
     private var username: String = "";
     private var birthday: String = "";
     private var email: String = "";
     private var games_rated:  Array<Game> = [];
+    @Published var isLoggedIn: Bool = false;
     
     static let currentUser = User();
     
@@ -48,6 +49,7 @@ class User {
     }
     
     func initFromJson(json: Any) {
+        self.isLoggedIn = true;
         let parsed = JSON(json);
         self.username = parsed["username"].string ?? "";
         for games in parsed["games_rated"].array! {
