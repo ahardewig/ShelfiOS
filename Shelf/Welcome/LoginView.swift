@@ -7,6 +7,8 @@
 //
 
 import SwiftUI
+import KeychainSwift
+import LocalAuthentication
 
 let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255.0, opacity: 1.0)
 
@@ -32,6 +34,9 @@ struct LoginView: View {
             Button(action: {self.isRegistering = true}) {
                   SwitchToSignupButton()
             }
+            Button(action: {faceId()}) {
+                  Text("FaceIDMe")
+            }
             
         }.padding()
         
@@ -40,6 +45,64 @@ struct LoginView: View {
         }
 
         }
+    }
+}
+
+func faceId() {
+    print("entering")
+    let laContext = LAContext()
+    var error: NSError?
+    let biometricsPolicy = LAPolicy.deviceOwnerAuthenticationWithBiometrics
+
+    if (laContext.canEvaluatePolicy(biometricsPolicy, error: &error)) {
+
+        if let laError = error {
+            ErrorHandler.errorHandler.errorDetected = true;
+            ErrorHandler.errorHandler.errorMessageText = "\(laError)"
+            return
+        }
+
+        var localizedReason = "Unlock device"
+        if #available(iOS 11.0, *) {
+            switch laContext.biometryType {
+            case .faceID: localizedReason = "Face ID Unlock";
+            case .touchID: localizedReason = "Touch ID Unlock";
+            case .none: localizedReason = "No support"
+            @unknown default:
+                fatalError();
+            }
+        } else {
+            // do other stuff but we only support ios13 so no need to do
+        }
+
+
+        laContext.evaluatePolicy(biometricsPolicy, localizedReason: localizedReason, reply: { (isSuccess, error) in
+
+            DispatchQueue.main.async(execute: {
+
+                if let laError = error {
+                    ErrorHandler.errorHandler.errorDetected = true;
+                    ErrorHandler.errorHandler.errorMessageText = "\(laError)"
+                } else {
+                    if isSuccess {
+                        let keychain = KeychainSwift()
+                        let username = keychain.get("username");
+                        let password = keychain.get("password");
+                        if ((username?.count ?? 0 > 0) && (password?.count ?? 0 > 0)) {
+                            loginUser(username: username ?? "" , password: password ?? "" )
+                        }
+                        else {
+                            ErrorHandler.errorHandler.errorDetected = true
+                             ErrorHandler.errorHandler.errorMessageText = "No saved credentials. Log in normally first!"
+                        }
+                    } else {
+                        ErrorHandler.errorHandler.errorDetected = true
+                        ErrorHandler.errorHandler.errorMessageText = "No saved credentials. Log in normally first!"
+                    }
+                }
+
+            })
+        })
     }
 }
 

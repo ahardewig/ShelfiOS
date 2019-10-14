@@ -14,6 +14,7 @@
 		33057EF0235418D900AD06DB /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33057EEF235418D900AD06DB /* SettingsView.swift */; };
 		33057EF2235418E600AD06DB /* SignOutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33057EF1235418E600AD06DB /* SignOutView.swift */; };
 		33057EFC23541A3800AD06DB /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33057EFB23541A3800AD06DB /* ProfileView.swift */; };
+		333C5E972354BDA20037E6DC /* KeychainSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 333C5E962354BDA20037E6DC /* KeychainSwift */; };
 		333D18362336DECC0005AD45 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333D18352336DECC0005AD45 /* AppDelegate.swift */; };
 		333D18382336DECC0005AD45 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 333D18372336DECC0005AD45 /* SceneDelegate.swift */; };
 		333D183B2336DECC0005AD45 /* Shelf.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 333D18392336DECC0005AD45 /* Shelf.xcdatamodeld */; };
@@ -61,6 +62,7 @@
 		33057EEF235418D900AD06DB /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		33057EF1235418E600AD06DB /* SignOutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutView.swift; sourceTree = "<group>"; };
 		33057EFB23541A3800AD06DB /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		333C5E942354BCC50037E6DC /* Shelf.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Shelf.entitlements; sourceTree = "<group>"; };
 		333D18322336DECC0005AD45 /* Shelf.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Shelf.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		333D18352336DECC0005AD45 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		333D18372336DECC0005AD45 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -92,6 +94,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				333C5E972354BDA20037E6DC /* KeychainSwift in Frameworks */,
 				33C3C1A92353A46700E1652A /* SwiftyJSON in Frameworks */,
 				33C3C1B12353B7AD00E1652A /* Alamofire in Frameworks */,
 			);
@@ -203,6 +206,7 @@
 		333D18342336DECC0005AD45 /* Shelf */ = {
 			isa = PBXGroup;
 			children = (
+				333C5E942354BCC50037E6DC /* Shelf.entitlements */,
 				334541CC235439850055331A /* Welcome */,
 				33057EFA2354197E00AD06DB /* MyShelf */,
 				33057EE4235417D200AD06DB /* Models */,
@@ -282,6 +286,7 @@
 			packageProductDependencies = (
 				33C3C1A82353A46700E1652A /* SwiftyJSON */,
 				33C3C1B02353B7AD00E1652A /* Alamofire */,
+				333C5E962354BDA20037E6DC /* KeychainSwift */,
 			);
 			productName = Shelf;
 			productReference = 333D18322336DECC0005AD45 /* Shelf.app */;
@@ -358,6 +363,7 @@
 			packageReferences = (
 				33C3C1A72353A46700E1652A /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				33C3C1AF2353B7AD00E1652A /* XCRemoteSwiftPackageReference "Alamofire" */,
+				333C5E952354BDA20037E6DC /* XCRemoteSwiftPackageReference "keychain-swift" */,
 			);
 			productRefGroup = 333D18332336DECC0005AD45 /* Products */;
 			projectDirPath = "";
@@ -586,6 +592,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Shelf/Shelf.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Shelf/Preview Content\"";
 				DEVELOPMENT_TEAM = 4MLS2VE8Z4;
@@ -598,7 +605,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = CS407.Shelf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -606,6 +613,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Shelf/Shelf.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"Shelf/Preview Content\"";
 				DEVELOPMENT_TEAM = 4MLS2VE8Z4;
@@ -618,7 +626,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = CS407.Shelf;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -748,6 +756,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		333C5E952354BDA20037E6DC /* XCRemoteSwiftPackageReference "keychain-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/evgenyneu/keychain-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 17.0.0;
+			};
+		};
 		33C3C1A72353A46700E1652A /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
@@ -767,6 +783,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		333C5E962354BDA20037E6DC /* KeychainSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 333C5E952354BDA20037E6DC /* XCRemoteSwiftPackageReference "keychain-swift" */;
+			productName = KeychainSwift;
+		};
 		33C3C1A82353A46700E1652A /* SwiftyJSON */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 33C3C1A72353A46700E1652A /* XCRemoteSwiftPackageReference "SwiftyJSON" */;

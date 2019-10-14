@@ -9,7 +9,7 @@
 import Foundation
 import Alamofire
 import SwiftyJSON
-    
+import KeychainSwift
 
     func loginUser(username: String, password: String) {
         print("USER: " + username);
@@ -25,6 +25,10 @@ import SwiftyJSON
         AF.request("http://localhost:8080/user/login", method: .post, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
             if response.response?.statusCode == 200 {
                 User.currentUser.initFromJson(json: response.value as AnyObject)
+                let keychain = KeychainSwift()
+                keychain.set(username, forKey: "username")
+                keychain.set(password, forKey: "password")
+                
             }
             else {
                 let error = JSON(response.data as Any)
