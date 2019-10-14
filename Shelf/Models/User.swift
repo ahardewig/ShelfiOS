@@ -84,8 +84,6 @@ class User: ObservableObject {
         for following in parsed["following"].array! {
             self.following.append(following.string!)
         }
-        
-        
     }
 
 }
