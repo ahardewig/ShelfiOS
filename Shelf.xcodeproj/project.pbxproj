@@ -120,15 +120,6 @@
 			path = Home;
 			sourceTree = "<group>";
 		};
-		33057EE3235417A000AD06DB /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				33C3C1B62353EC7200E1652A /* LoginView.swift */,
-				33C3C1AA2353A78C00E1652A /* LoginService.swift */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
 		33057EE4235417D200AD06DB /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -209,10 +200,9 @@
 		333D18342336DECC0005AD45 /* Shelf */ = {
 			isa = PBXGroup;
 			children = (
-				334541C5235421360055331A /* Register */,
+				334541CC235439850055331A /* Welcome */,
 				33057EFA2354197E00AD06DB /* MyShelf */,
 				33057EE4235417D200AD06DB /* Models */,
-				33057EE3235417A000AD06DB /* Login */,
 				33057EE22354178A00AD06DB /* Home */,
 				33057EF52354190800AD06DB /* Search */,
 				33057EF4235418FD00AD06DB /* Notifications */,
@@ -223,7 +213,6 @@
 				333D18372336DECC0005AD45 /* SceneDelegate.swift */,
 				33057EDE2354004600AD06DB /* TabRowView.swift */,
 				333D183C2336DECC0005AD45 /* ContentView.swift */,
-				334541CA235435450055331A /* WelcomeView.swift */,
 				333D183E2336DECE0005AD45 /* Assets.xcassets */,
 				333D18432336DECE0005AD45 /* LaunchScreen.storyboard */,
 				333D18462336DECE0005AD45 /* Info.plist */,
@@ -259,13 +248,16 @@
 			path = ShelfUITests;
 			sourceTree = "<group>";
 		};
-		334541C5235421360055331A /* Register */ = {
+		334541CC235439850055331A /* Welcome */ = {
 			isa = PBXGroup;
 			children = (
+				334541CA235435450055331A /* WelcomeView.swift */,
 				334541C6235421790055331A /* RegisterView.swift */,
 				334541C8235428E00055331A /* RegisterService.swift */,
+				33C3C1B62353EC7200E1652A /* LoginView.swift */,
+				33C3C1AA2353A78C00E1652A /* LoginService.swift */,
 			);
-			path = Register;
+			path = Welcome;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
