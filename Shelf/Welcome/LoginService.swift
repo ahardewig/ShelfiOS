@@ -10,6 +10,7 @@ import Foundation
 import Alamofire
 import SwiftyJSON
     
+
     func loginUser(username: String, password: String) {
         print("USER: " + username);
         print("PASS: " + password);
