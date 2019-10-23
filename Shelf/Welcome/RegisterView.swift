@@ -39,6 +39,7 @@ struct RegisterView: View {
                     displayedComponents: .date,
                     label: { Text("DOB").font(KarlaInput) }
                 ).font(KarlaInput)
+                
                 Button(action: {registerUser(username: self.username, password: self.password, confirmPassword: self.confirmPassword, email: self.email, birthday: self.birthday)}) {
                    SignupButton()
                 }
@@ -58,15 +59,7 @@ struct RegisterView: View {
 
 struct SwitchToLoginButton: View {
     var body: some View {
-        
-        Text("Log into my Account!")
-            .font(.headline)
-            .foregroundColor(.white)
-            .padding()
-            .frame(width: 320, height: 60)
-            .background(Color.green)
-            .cornerRadius(15.0)
-        
+        secondaryCTAButton(text: "Switch to Login")
     }
 }
 
@@ -121,13 +114,14 @@ struct RegisterView_Previews: PreviewProvider {
 
 struct SignupButton: View {
     var body: some View {
-        Text("Register")
-            .font(KarlaSubtitle)
-            .foregroundColor(.white)
-            .padding()
-            .frame(width: 320, height: 60)
-            .background(Color(red: 0.98, green: 0.65, blue: 0.10, opacity: 1.0))
-            .cornerRadius(15.0)
+        primaryCTAButton(text: "REGISTER")
+//        Text("Register")
+//            .font(KarlaSubtitle)
+//            .foregroundColor(.white)
+//            .padding()
+//            .frame(width: 320, height: 60)
+//            .background(Color(red: 0.98, green: 0.65, blue: 0.10, opacity: 1.0))
+//            .cornerRadius(15.0)
 
     }
 }

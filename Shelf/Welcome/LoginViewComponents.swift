@@ -12,6 +12,7 @@ import SwiftUI
 let KarlaHeader = Font.custom("Karla", size: 32);
 let KarlaSubtitle = Font.custom("Karla", size: 16)
 let KarlaInput = Font.custom("Karla", size: 18)
+let KarlaButton = Font.custom("Karla", size: 23)
 
 struct LoginViewComponents: View {
     var body: some View {
@@ -49,13 +50,32 @@ struct kSubtitle: View {
 struct primaryCTAButton: View {
     var text1: String;
     var body: some View {
-        Text("Register")
-            .font(KarlaSubtitle)
+        Text(text1)
+            .font(KarlaButton)
+            .fontWeight(.semibold)
             .foregroundColor(.white)
             .padding()
             .frame(width: 320, height: 60)
             .background(Color(red: 0.98, green: 0.65, blue: 0.10, opacity: 1.0))
             .cornerRadius(15.0)
+    }
+    
+    init(text: String){
+        text1 = text
+    }
+}
+
+struct secondaryCTAButton: View {
+    var text1: String;
+    var body: some View {
+        
+        Text(text1)
+            .font(KarlaSubtitle)
+            .fontWeight(.semibold)
+            .foregroundColor(.black)
+            .padding(.top)
+
+        
     }
     
     init(text: String){

@@ -23,8 +23,8 @@ struct LoginView: View {
    var body: some View {
     ZStack {
         VStack {
-            LoginText()
             ShelfImage()
+            LoginText()
             UsernameTextField(username: $username)
             PasswordTextField(password: $password)
             Button(action: {loginUser(username: self.username, password: self.password)}) {
@@ -35,7 +35,7 @@ struct LoginView: View {
                   SwitchToSignupButton()
             }
             Button(action: {faceId()}) {
-                  Text("FaceIDMe")
+                secondaryCTAButton(text: "Log In with FaceID")
             }
             
         }.padding()
@@ -118,37 +118,25 @@ struct LoginText: View {
 
 struct ShelfImage: View {
     var body: some View {
-        Image("second")
+        Image("Group 5")
             .resizable()
             .aspectRatio(contentMode: .fill)
-            .frame(width: 150, height: 150)
-            .clipped()
-            .cornerRadius(150)
+            .frame(width: 150, height: 50)
             .padding(.bottom, 35)
     }
 }
 
 struct LoginButton: View {
     var body: some View {
-        Text("LOGIN")
-            .font(.headline)
-            .foregroundColor(.white)
-            .padding()
-            .frame(width: 320, height: 60)
-            .background(Color.green)
-            .cornerRadius(15.0)
+        primaryCTAButton(text: "LOGIN")
+        
     }
 }
 
 struct SwitchToSignupButton: View {
     var body: some View {
-        Text("Register for an Account")
-            .font(.headline)
-            .foregroundColor(.white)
-            .padding()
-            .frame(width: 320, height: 60)
-            .background(Color.green)
-            .cornerRadius(15.0)
+        secondaryCTAButton(text: "Register for an Account")
+        
     }
 }
 
