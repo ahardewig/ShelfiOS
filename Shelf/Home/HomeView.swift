@@ -22,6 +22,7 @@ struct HomeView: View {
             List(games, id: \.id) { game in
                 NavigationLink(destination: DetailedGameView(name: game.name)) {
                     URLImage(URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.coverImageId + ".jpg")!,
+                             processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
                         content: {
                             $0.image
                     .resizable()
