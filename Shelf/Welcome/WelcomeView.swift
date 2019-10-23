@@ -10,6 +10,7 @@ import SwiftUI
 
 struct WelcomeView: View {
     @State var isRegistering: Bool = false;
+    
     var body: some View {
         
         Group() {

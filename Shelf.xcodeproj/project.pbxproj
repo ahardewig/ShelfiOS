@@ -35,6 +35,11 @@
 		33C3C1B32353BF0200E1652A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3C1B22353BF0200E1652A /* User.swift */; };
 		33C3C1B52353C62B00E1652A /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3C1B42353C62B00E1652A /* Game.swift */; };
 		33C3C1B72353EC7200E1652A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3C1B62353EC7200E1652A /* LoginView.swift */; };
+		925400E7235F677200572DA2 /* Karla-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 925400E3235F677100572DA2 /* Karla-RegularItalic.ttf */; };
+		925400E8235F677200572DA2 /* Karla-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 925400E4235F677200572DA2 /* Karla-Bold.ttf */; };
+		925400E9235F677200572DA2 /* Karla-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 925400E5235F677200572DA2 /* Karla-BoldItalic.ttf */; };
+		925400EA235F677200572DA2 /* Karla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 925400E6235F677200572DA2 /* Karla-Regular.ttf */; };
+		925400EE235F6A2C00572DA2 /* LoginViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925400ED235F6A2C00572DA2 /* LoginViewComponents.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +92,11 @@
 		33C3C1B22353BF0200E1652A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		33C3C1B42353C62B00E1652A /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		33C3C1B62353EC7200E1652A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		925400E3235F677100572DA2 /* Karla-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-RegularItalic.ttf"; sourceTree = "<group>"; };
+		925400E4235F677200572DA2 /* Karla-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-Bold.ttf"; sourceTree = "<group>"; };
+		925400E5235F677200572DA2 /* Karla-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-BoldItalic.ttf"; sourceTree = "<group>"; };
+		925400E6235F677200572DA2 /* Karla-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-Regular.ttf"; sourceTree = "<group>"; };
+		925400ED235F6A2C00572DA2 /* LoginViewComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewComponents.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -223,6 +233,7 @@
 				333D183E2336DECE0005AD45 /* Assets.xcassets */,
 				333D18432336DECE0005AD45 /* LaunchScreen.storyboard */,
 				333D18462336DECE0005AD45 /* Info.plist */,
+				925400E2235F674000572DA2 /* Fonts */,
 				333D18392336DECC0005AD45 /* Shelf.xcdatamodeld */,
 				333D18402336DECE0005AD45 /* Preview Content */,
 			);
@@ -263,8 +274,20 @@
 				334541C8235428E00055331A /* RegisterService.swift */,
 				33C3C1B62353EC7200E1652A /* LoginView.swift */,
 				33C3C1AA2353A78C00E1652A /* LoginService.swift */,
+				925400ED235F6A2C00572DA2 /* LoginViewComponents.swift */,
 			);
 			path = Welcome;
+			sourceTree = "<group>";
+		};
+		925400E2235F674000572DA2 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				925400E4235F677200572DA2 /* Karla-Bold.ttf */,
+				925400E5235F677200572DA2 /* Karla-BoldItalic.ttf */,
+				925400E6235F677200572DA2 /* Karla-Regular.ttf */,
+				925400E3235F677100572DA2 /* Karla-RegularItalic.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -382,8 +405,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				333D18452336DECE0005AD45 /* LaunchScreen.storyboard in Resources */,
+				925400E8235F677200572DA2 /* Karla-Bold.ttf in Resources */,
 				333D18422336DECE0005AD45 /* Preview Assets.xcassets in Resources */,
 				333D183F2336DECE0005AD45 /* Assets.xcassets in Resources */,
+				925400EA235F677200572DA2 /* Karla-Regular.ttf in Resources */,
+				925400E7235F677200572DA2 /* Karla-RegularItalic.ttf in Resources */,
+				925400E9235F677200572DA2 /* Karla-BoldItalic.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,6 +442,7 @@
 				33C3C1AB2353A78C00E1652A /* LoginService.swift in Sources */,
 				333D18362336DECC0005AD45 /* AppDelegate.swift in Sources */,
 				33C3C1B72353EC7200E1652A /* LoginView.swift in Sources */,
+				925400EE235F6A2C00572DA2 /* LoginViewComponents.swift in Sources */,
 				333D183D2336DECC0005AD45 /* ContentView.swift in Sources */,
 				33057EEE235418C900AD06DB /* FindFriendView.swift in Sources */,
 				334541C7235421790055331A /* RegisterView.swift in Sources */,
