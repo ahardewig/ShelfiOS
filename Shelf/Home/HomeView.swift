@@ -33,35 +33,6 @@ struct HomeView: View {
         }.onAppear {self.getGames()}
         .navigationBarTitle("Critically Acclaimed")
         
-        
-        //List {
-//            VStack {
-//                List(games, id: \.id) { game in
-//                    NavigationLink(destination: DetailedGameView()) {
-//                        URLImage(URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.coverImageId + ".jpg")!)
-//                    }
-//                }
-//            }.onAppear { self.getGames() }
-        //}.onAppear { self.getGames() }
-        
-        
-//        List {
-//            VStack {
-//                List(games, id: \.id) { game in
-//                    NavigationLink(destination: DetailedGameView()) {
-//                        URLImage(URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.coverImageId + ".jpg")!)
-//                    }
-//                }
-//            }
-//        }.onAppear { self.getGames() }
-        
-//        NavigationView {
-//            List(games, id: \.id) { message in
-//                NavigationLink(destination: DetailedGameView()) {
-//                    URLImage(URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.coverImageId + ".jpg")!)
-//                }
-//            }.navigationBarTitle("Messages")
-//        }.onAppear {self.getGames()}
     }
     
     func getGames() {
