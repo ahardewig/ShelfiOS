@@ -108,10 +108,11 @@ func faceId() {
 
 struct LoginText: View {
     var body: some View {
-        Text("Login to Shelf!")
-            .font(.largeTitle)
-            .fontWeight(.semibold)
-            .padding(.bottom, 20)
+        VStack{
+            kHeader(text: "Welcome Back!");
+            kSubtitle(text: "Login to pick up where you left off.")
+        }
+        
     }
 }
 
@@ -153,13 +154,14 @@ struct SwitchToSignupButton: View {
 
 struct UsernameTextField: View {
     @Binding var username: String
-
+    
     var body: some View {
         TextField("Username" , text: $username )
             .padding()
             .background(lightGreyColor)
             .cornerRadius(5.0)
             .padding(.bottom, 20)
+            .font(KarlaInput)
     }
 }
 
@@ -171,6 +173,7 @@ struct PasswordTextField: View {
             .background(lightGreyColor)
             .cornerRadius(5.0)
             .padding(.bottom, 20)
+            .font(KarlaInput)
     }
 }
 
