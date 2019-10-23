@@ -20,17 +20,16 @@ struct HomeView: View {
         List {
             VStack {
                 ForEach(games, id: \.id) { game in
-//                    Button(action: {}) {
-//                        RandomButton()
-//                    }
-                    URLImage(URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.coverImageId + ".jpg")!)
+                    NavigationLink(destination: DetailedGameView()) {
+                        URLImage(URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.coverImageId + ".jpg")!)
+                    }
                 }
             }
         }.onAppear { self.getGames() }
     }
     
     func getGames() {
-        AF.request("http://localhost:8080/games/criticallyacclaimedgames").responseJSON { response in
+    AF.request("http://localhost:8080/games/criticallyacclaimedgames").responseJSON { response in
             if response.response?.statusCode == 200 {
                 self.getGameOverviewsArray(response: response.value as Any);
             } else {
