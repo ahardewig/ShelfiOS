@@ -37,7 +37,12 @@ struct HomeView: View {
     }
     
     func getGames() {
-    AF.request("http://localhost:8080/games/criticallyacclaimedgames").responseJSON { response in
+   
+        let headers: HTTPHeaders = [
+            "token": User.currentUser.getToken()
+        ]
+        AF.request("http://localhost:8080/games/criticallyacclaimedgames",
+                   headers: headers).responseJSON { response in
             if response.response?.statusCode == 200 {
                 self.getGameOverviewsArray(response: response.value as Any);
             } else {

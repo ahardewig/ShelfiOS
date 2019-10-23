@@ -19,6 +19,7 @@ class User: ObservableObject {
     private var followers: [String] = [];
     private var following: [String] = [];
     private var inboxId: String = "";
+    private var token: String = "";
     
     @Published var isLoggedIn: Bool = false;
     
@@ -52,6 +53,15 @@ class User: ObservableObject {
     func getEmail() -> String {
         return self.email;
     }
+    
+    func setToken(token: String) {
+        self.token = token;
+    }
+    
+    func getToken() -> String {
+        return self.token;
+    }
+    
     
     func initFromJson(json: Any) {
         self.isLoggedIn = true;

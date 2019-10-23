@@ -24,6 +24,11 @@ import KeychainSwift
         ]
         AF.request("http://localhost:8080/user/login", method: .post, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
             if response.response?.statusCode == 200 {
+                
+                if let token = response.response?.allHeaderFields["token"] as? String {
+                    User.currentUser.setToken(token: token)
+                }
+                
                 User.currentUser.initFromJson(json: response.value as AnyObject)
                 let keychain = KeychainSwift()
                 keychain.set(username, forKey: "username")
