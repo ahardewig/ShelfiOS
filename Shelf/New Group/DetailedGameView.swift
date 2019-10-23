@@ -9,13 +9,15 @@
 import SwiftUI
 
 struct DetailedGameView: View {
+    @State var name: String;
     var body: some View {
-        Text("Hello GAME!")
+        Text("Name is \(name)")
     }
 }
 
 struct DetailedGameView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        DetailedGameView()
+        DetailedGameView(name: "FakeForPreview")
     }
 }

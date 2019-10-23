@@ -17,15 +17,51 @@ struct HomeView: View {
     let urls = (300..<305).map { "https://picsum.photos/\($0)" }.map { URL(string: $0)! }
     
     var body: some View {
-        List {
-            VStack {
-                ForEach(games, id: \.id) { game in
-                    NavigationLink(destination: DetailedGameView()) {
-                        URLImage(URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.coverImageId + ".jpg")!)
-                    }
+        
+        NavigationView {
+            List(games, id: \.id) { game in
+                NavigationLink(destination: DetailedGameView(name: game.name)) {
+                    URLImage(URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.coverImageId + ".jpg")!,
+                        content: {
+                            $0.image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .clipped()
+                    }).frame(width: 100, height: 150)
                 }
             }
-        }.onAppear { self.getGames() }
+        }.onAppear {self.getGames()}
+        .navigationBarTitle("Critically Acclaimed")
+        
+        
+        //List {
+//            VStack {
+//                List(games, id: \.id) { game in
+//                    NavigationLink(destination: DetailedGameView()) {
+//                        URLImage(URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.coverImageId + ".jpg")!)
+//                    }
+//                }
+//            }.onAppear { self.getGames() }
+        //}.onAppear { self.getGames() }
+        
+        
+//        List {
+//            VStack {
+//                List(games, id: \.id) { game in
+//                    NavigationLink(destination: DetailedGameView()) {
+//                        URLImage(URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.coverImageId + ".jpg")!)
+//                    }
+//                }
+//            }
+//        }.onAppear { self.getGames() }
+        
+//        NavigationView {
+//            List(games, id: \.id) { message in
+//                NavigationLink(destination: DetailedGameView()) {
+//                    URLImage(URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/" + game.coverImageId + ".jpg")!)
+//                }
+//            }.navigationBarTitle("Messages")
+//        }.onAppear {self.getGames()}
     }
     
     func getGames() {
