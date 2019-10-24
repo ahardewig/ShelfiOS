@@ -19,7 +19,7 @@ struct HomeView: View {
     var body: some View {
         NavigationView {
             List(games, id: \.id) { game in
-                NavigationLink(destination: DetailedGameView(gameOverview: game, detailedGame: DetailedGame(game: "" as Any))) {
+                NavigationLink(destination: DetailedGameView(gameOverview: game, detailedGame: DetailedGame())) {
                     URLImage(URL(string: self.url + game.coverImageId + ".jpg")!,
                              processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
                         content: {
