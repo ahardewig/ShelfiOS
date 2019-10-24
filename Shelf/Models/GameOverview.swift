@@ -15,6 +15,10 @@ class GameOverview {
     public var coverId: Int = 0
     public var coverImageId: String = ""
     
+    public init() {
+        
+    }
+    
     public init(game: Any) {
         initFromJson(json: game)
     }

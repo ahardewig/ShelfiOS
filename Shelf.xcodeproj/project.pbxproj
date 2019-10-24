@@ -36,6 +36,7 @@
 		33C3C1B52353C62B00E1652A /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3C1B42353C62B00E1652A /* Game.swift */; };
 		33C3C1B72353EC7200E1652A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3C1B62353EC7200E1652A /* LoginView.swift */; };
 		A71A985C235FBDFF0068B23F /* GameOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A71A985B235FBDFF0068B23F /* GameOverview.swift */; };
+		A72CC66423614ABA001AF516 /* DetailedGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = A72CC66323614ABA001AF516 /* DetailedGame.swift */; };
 		A74E86452360AFDD00CE7AE0 /* DetailedGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74E86442360AFDD00CE7AE0 /* DetailedGameView.swift */; };
 		A779F023235E6D1E00F69970 /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = A779F022235E6D1E00F69970 /* URLImage */; };
 /* End PBXBuildFile section */
@@ -91,6 +92,7 @@
 		33C3C1B42353C62B00E1652A /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		33C3C1B62353EC7200E1652A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		A71A985B235FBDFF0068B23F /* GameOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverview.swift; sourceTree = "<group>"; };
+		A72CC66323614ABA001AF516 /* DetailedGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedGame.swift; sourceTree = "<group>"; };
 		A74E86442360AFDD00CE7AE0 /* DetailedGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedGameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -138,6 +140,7 @@
 				33C3C1B42353C62B00E1652A /* Game.swift */,
 				33C3C1B22353BF0200E1652A /* User.swift */,
 				A71A985B235FBDFF0068B23F /* GameOverview.swift */,
+				A72CC66323614ABA001AF516 /* DetailedGame.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -429,6 +432,7 @@
 				A71A985C235FBDFF0068B23F /* GameOverview.swift in Sources */,
 				33057EF2235418E600AD06DB /* SignOutView.swift in Sources */,
 				334541C9235428E00055331A /* RegisterService.swift in Sources */,
+				A72CC66423614ABA001AF516 /* DetailedGame.swift in Sources */,
 				33057EF0235418D900AD06DB /* SettingsView.swift in Sources */,
 				333D183B2336DECC0005AD45 /* Shelf.xcdatamodeld in Sources */,
 				33C3C1AB2353A78C00E1652A /* LoginService.swift in Sources */,
