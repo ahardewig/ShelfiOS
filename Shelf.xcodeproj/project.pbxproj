@@ -40,6 +40,10 @@
 		925400E9235F677200572DA2 /* Karla-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 925400E5235F677200572DA2 /* Karla-BoldItalic.ttf */; };
 		925400EA235F677200572DA2 /* Karla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 925400E6235F677200572DA2 /* Karla-Regular.ttf */; };
 		925400EE235F6A2C00572DA2 /* LoginViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925400ED235F6A2C00572DA2 /* LoginViewComponents.swift */; };
+		A748191D23620C5A0077AE2F /* GameOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748191C23620C5A0077AE2F /* GameOverview.swift */; };
+		A748191F23620C8D0077AE2F /* DetailedGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748191E23620C8D0077AE2F /* DetailedGame.swift */; };
+		A748192223620D490077AE2F /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = A748192123620D490077AE2F /* URLImage */; };
+		A748192523620D870077AE2F /* DetailedGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748192423620D870077AE2F /* DetailedGameView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +101,9 @@
 		925400E5235F677200572DA2 /* Karla-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-BoldItalic.ttf"; sourceTree = "<group>"; };
 		925400E6235F677200572DA2 /* Karla-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-Regular.ttf"; sourceTree = "<group>"; };
 		925400ED235F6A2C00572DA2 /* LoginViewComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewComponents.swift; sourceTree = "<group>"; };
+		A748191C23620C5A0077AE2F /* GameOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverview.swift; sourceTree = "<group>"; };
+		A748191E23620C8D0077AE2F /* DetailedGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedGame.swift; sourceTree = "<group>"; };
+		A748192423620D870077AE2F /* DetailedGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedGameView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +113,7 @@
 			files = (
 				333C5E972354BDA20037E6DC /* KeychainSwift in Frameworks */,
 				33C3C1A92353A46700E1652A /* SwiftyJSON in Frameworks */,
+				A748192223620D490077AE2F /* URLImage in Frameworks */,
 				33C3C1B12353B7AD00E1652A /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,6 +149,8 @@
 				33BD18B32354A33100236E2C /* ErrorHandler.swift */,
 				33C3C1B42353C62B00E1652A /* Game.swift */,
 				33C3C1B22353BF0200E1652A /* User.swift */,
+				A748191C23620C5A0077AE2F /* GameOverview.swift */,
+				A748191E23620C8D0077AE2F /* DetailedGame.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -216,6 +226,7 @@
 		333D18342336DECC0005AD45 /* Shelf */ = {
 			isa = PBXGroup;
 			children = (
+				A748192323620D720077AE2F /* DetailedGame */,
 				333C5E942354BCC50037E6DC /* Shelf.entitlements */,
 				334541CC235439850055331A /* Welcome */,
 				33057EFA2354197E00AD06DB /* MyShelf */,
@@ -290,6 +301,14 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		A748192323620D720077AE2F /* DetailedGame */ = {
+			isa = PBXGroup;
+			children = (
+				A748192423620D870077AE2F /* DetailedGameView.swift */,
+			);
+			path = DetailedGame;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -310,6 +329,7 @@
 				33C3C1A82353A46700E1652A /* SwiftyJSON */,
 				33C3C1B02353B7AD00E1652A /* Alamofire */,
 				333C5E962354BDA20037E6DC /* KeychainSwift */,
+				A748192123620D490077AE2F /* URLImage */,
 			);
 			productName = Shelf;
 			productReference = 333D18322336DECC0005AD45 /* Shelf.app */;
@@ -387,6 +407,7 @@
 				33C3C1A72353A46700E1652A /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				33C3C1AF2353B7AD00E1652A /* XCRemoteSwiftPackageReference "Alamofire" */,
 				333C5E952354BDA20037E6DC /* XCRemoteSwiftPackageReference "keychain-swift" */,
+				A748192023620D490077AE2F /* XCRemoteSwiftPackageReference "url-image" */,
 			);
 			productRefGroup = 333D18332336DECC0005AD45 /* Products */;
 			projectDirPath = "";
@@ -437,13 +458,16 @@
 			files = (
 				33057EF2235418E600AD06DB /* SignOutView.swift in Sources */,
 				334541C9235428E00055331A /* RegisterService.swift in Sources */,
+				A748192523620D870077AE2F /* DetailedGameView.swift in Sources */,
 				33057EF0235418D900AD06DB /* SettingsView.swift in Sources */,
+				A748191F23620C8D0077AE2F /* DetailedGame.swift in Sources */,
 				333D183B2336DECC0005AD45 /* Shelf.xcdatamodeld in Sources */,
 				33C3C1AB2353A78C00E1652A /* LoginService.swift in Sources */,
 				333D18362336DECC0005AD45 /* AppDelegate.swift in Sources */,
 				33C3C1B72353EC7200E1652A /* LoginView.swift in Sources */,
 				925400EE235F6A2C00572DA2 /* LoginViewComponents.swift in Sources */,
 				333D183D2336DECC0005AD45 /* ContentView.swift in Sources */,
+				A748191D23620C5A0077AE2F /* GameOverview.swift in Sources */,
 				33057EEE235418C900AD06DB /* FindFriendView.swift in Sources */,
 				334541C7235421790055331A /* RegisterView.swift in Sources */,
 				33057EFC23541A3800AD06DB /* ProfileView.swift in Sources */,
@@ -808,6 +832,14 @@
 				version = "5.0.0-rc.2";
 			};
 		};
+		A748192023620D490077AE2F /* XCRemoteSwiftPackageReference "url-image" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dmytro-anokhin/url-image";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.7;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -825,6 +857,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 33C3C1AF2353B7AD00E1652A /* XCRemoteSwiftPackageReference "Alamofire" */;
 			productName = Alamofire;
+		};
+		A748192123620D490077AE2F /* URLImage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A748192023620D490077AE2F /* XCRemoteSwiftPackageReference "url-image" */;
+			productName = URLImage;
 		};
 /* End XCSwiftPackageProductDependency section */
 
