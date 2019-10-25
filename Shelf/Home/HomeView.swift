@@ -13,7 +13,7 @@ import SwiftyJSON
 
 struct HomeView: View {
     
-    @State var games: Array<GameOverview> = []
+    @State var games: [GameOverview] = []
     let url = "https://images.igdb.com/igdb/image/upload/t_cover_big/"
     
     var body: some View {
@@ -28,9 +28,17 @@ struct HomeView: View {
                     .aspectRatio(contentMode: .fill)
                     .clipped()
                     }).frame(width: 100, height: 150)
+                    
+                    VStack {
+                        StarRatingView(games: self.$games, gameId: game.id, canEdit: false)
+                        StarRatingView(games: self.$games, gameId: game.id, canEdit: true)
+                    }
                 }
+                
             }
-        }.onAppear {self.getGames()}
+        }.onAppear {
+            self.getGames()
+        }
     }
     
     func getGames() {
@@ -42,6 +50,8 @@ struct HomeView: View {
                    headers: headers).responseJSON { response in
             if response.response?.statusCode == 200 {
                 self.getGameOverviewsArray(response: response.value as Any);
+                self.getGlobalRatings();
+                self.getUserRatings();
             } else {
                 let error = JSON(response.data as Any)
                 let errorMessage = error["message"].string
@@ -51,13 +61,108 @@ struct HomeView: View {
         }
     }
     
+    func getGlobalRatings() {
+        
+        let headers: HTTPHeaders = [
+            "token": User.currentUser.getToken()
+        ]
+        AF.request("http://localhost:8080/ratingInfo/all",
+                   headers: headers).responseJSON { response in
+            if response.response?.statusCode == 200 {
+                
+                let sampleJson = JSON(response.value as Any)
+                let responseArray = sampleJson.array
+                var ratings: [RatingInfo] = [];
+                for ratingInfo in responseArray! {
+                    let r: RatingInfo = RatingInfo();
+                    r.initFromJson(json: ratingInfo)
+                    ratings.append(r)
+                }
+                self.attachGlobalRatingsToGames(ratingInfos: ratings)
+            } else {
+                let error = JSON(response.data as Any)
+                let errorMessage = error["message"].string
+                print(errorMessage as Any)
+            }
+            
+        }
+    }
+    
+    func getUserRatings() {
+        self.attachUserRatingsToGames(gamesRated: User.currentUser.getGamesRated())
+    }
+    
+    func attachUserRatingsToGames(gamesRated : [Game]) {
+        var map: [Int: Int] = [:]
+       
+        for game in gamesRated {
+            map.updateValue(game.rating, forKey: game.gameId)
+        }
+        
+        var updatedGames: Array<GameOverview> = []
+        for game in games {
+            let key = game.id;
+            let keyExists = map[key] != nil
+            if (keyExists) {
+                let score: Int = map[key] ?? 0;
+                print("SCORE \(score)");
+                game.userRating = score
+                updatedGames.append(game);
+            }
+            else {
+                print("DOING ZERO")
+                game.userRating = 0;
+                updatedGames.append(game)
+                
+            }
+        }
+        games = updatedGames;
+
+    }
+    
+
+    
+    func attachGlobalRatingsToGames(ratingInfos : [RatingInfo]) {
+        var map: [Int: Int] = [:]
+       
+        for ratingInfo in ratingInfos {
+            var score: Int = 0;
+            if (ratingInfo.numberOfRatings != 0) {
+                score = ratingInfo.totalRatingValue / ratingInfo.numberOfRatings;
+            }
+            map.updateValue(score, forKey: Int(ratingInfo.gameId) ?? 0)
+        }
+        
+        var updatedGames: Array<GameOverview> = []
+        for game in games {
+            let key = game.id;
+            let keyExists = map[key] != nil
+            if (keyExists) {
+                let score: Int = map[key] ?? 0;
+                game.globalRating = score
+                updatedGames.append(game);
+            }
+            else {
+                game.globalRating = 0;
+                updatedGames.append(game)
+                
+            }
+        }
+        games = updatedGames;
+
+    }
+    
     func getGameOverviewsArray(response: Any) {
         let sampleJson = JSON(response)
         let responseArray = sampleJson.array
+        var count = 0;
         for game in responseArray! {
+            print(game);
             let newGame = GameOverview(game: game)
             games.append(newGame)
+            count+=1;
         }
+        print("THE COUNT IS \(count)")
     }
     
 }

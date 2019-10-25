@@ -13,12 +13,12 @@ import SwiftyJSON
 
 class Game {
     
-    private var rating: String;
-    private var gameId: String;
+    public var rating: Int;
+    public var gameId: Int;
     
     
-    init(rating: String, gameId: String) {
+    init(rating: Int, gameId: String) {
         self.rating = rating;
-        self.gameId = gameId;
+        self.gameId = Int(gameId) ?? -999;
     }
 }
