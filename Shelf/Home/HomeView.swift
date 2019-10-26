@@ -31,13 +31,12 @@ struct HomeView: View {
                     
                     VStack {
                         StarRatingView(games: self.$games, gameId: game.id, canEdit: false)
-                        StarRatingView(games: self.$games, gameId: game.id, canEdit: true)
                     }
                 }
-                
             }
         }.onAppear {
             self.getGames()
+            
         }
     }
     
@@ -51,7 +50,7 @@ struct HomeView: View {
             if response.response?.statusCode == 200 {
                 self.getGameOverviewsArray(response: response.value as Any);
                 self.getGlobalRatings();
-                self.getUserRatings();
+                //self.getUserRatings();
             } else {
                 let error = JSON(response.data as Any)
                 let errorMessage = error["message"].string
