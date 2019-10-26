@@ -46,6 +46,9 @@
 		A748191F23620C8D0077AE2F /* DetailedGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748191E23620C8D0077AE2F /* DetailedGame.swift */; };
 		A748192223620D490077AE2F /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = A748192123620D490077AE2F /* URLImage */; };
 		A748192523620D870077AE2F /* DetailedGameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748192423620D870077AE2F /* DetailedGameView.swift */; };
+		A7583F4A236410DF0027049D /* MessagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7583F49236410DF0027049D /* MessagingView.swift */; };
+		A7583F4C236414030027049D /* UserOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7583F4B236414030027049D /* UserOverview.swift */; };
+		A7583F4E23641ED60027049D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7583F4D23641ED60027049D /* Message.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +111,9 @@
 		A748191C23620C5A0077AE2F /* GameOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverview.swift; sourceTree = "<group>"; };
 		A748191E23620C8D0077AE2F /* DetailedGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedGame.swift; sourceTree = "<group>"; };
 		A748192423620D870077AE2F /* DetailedGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedGameView.swift; sourceTree = "<group>"; };
+		A7583F49236410DF0027049D /* MessagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingView.swift; sourceTree = "<group>"; };
+		A7583F4B236414030027049D /* UserOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOverview.swift; sourceTree = "<group>"; };
+		A7583F4D23641ED60027049D /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,6 +163,8 @@
 				A748191C23620C5A0077AE2F /* GameOverview.swift */,
 				A748191E23620C8D0077AE2F /* DetailedGame.swift */,
 				33AF7CAB23637365006EF3C2 /* RatingInfo.swift */,
+				A7583F4B236414030027049D /* UserOverview.swift */,
+				A7583F4D23641ED60027049D /* Message.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -232,6 +240,7 @@
 		333D18342336DECC0005AD45 /* Shelf */ = {
 			isa = PBXGroup;
 			children = (
+				A7583F48236410CC0027049D /* Messaging */,
 				A748192323620D720077AE2F /* DetailedGame */,
 				333C5E942354BCC50037E6DC /* Shelf.entitlements */,
 				334541CC235439850055331A /* Welcome */,
@@ -313,6 +322,14 @@
 				A748192423620D870077AE2F /* DetailedGameView.swift */,
 			);
 			path = DetailedGame;
+			sourceTree = "<group>";
+		};
+		A7583F48236410CC0027049D /* Messaging */ = {
+			isa = PBXGroup;
+			children = (
+				A7583F49236410DF0027049D /* MessagingView.swift */,
+			);
+			path = Messaging;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -467,6 +484,7 @@
 				A748192523620D870077AE2F /* DetailedGameView.swift in Sources */,
 				33057EF0235418D900AD06DB /* SettingsView.swift in Sources */,
 				A748191F23620C8D0077AE2F /* DetailedGame.swift in Sources */,
+				A7583F4E23641ED60027049D /* Message.swift in Sources */,
 				333D183B2336DECC0005AD45 /* Shelf.xcdatamodeld in Sources */,
 				33C3C1AB2353A78C00E1652A /* LoginService.swift in Sources */,
 				333D18362336DECC0005AD45 /* AppDelegate.swift in Sources */,
@@ -474,12 +492,14 @@
 				925400EE235F6A2C00572DA2 /* LoginViewComponents.swift in Sources */,
 				333D183D2336DECC0005AD45 /* ContentView.swift in Sources */,
 				A748191D23620C5A0077AE2F /* GameOverview.swift in Sources */,
+				A7583F4A236410DF0027049D /* MessagingView.swift in Sources */,
 				33057EEE235418C900AD06DB /* FindFriendView.swift in Sources */,
 				334541C7235421790055331A /* RegisterView.swift in Sources */,
 				33057EFC23541A3800AD06DB /* ProfileView.swift in Sources */,
 				3365D2DD234FE76A003E6B79 /* HomeView.swift in Sources */,
 				333D18382336DECC0005AD45 /* SceneDelegate.swift in Sources */,
 				33C3C1B32353BF0200E1652A /* User.swift in Sources */,
+				A7583F4C236414030027049D /* UserOverview.swift in Sources */,
 				33057EEC235418B400AD06DB /* SearchView.swift in Sources */,
 				33C3C1B52353C62B00E1652A /* Game.swift in Sources */,
 				33057EDF2354004600AD06DB /* TabRowView.swift in Sources */,

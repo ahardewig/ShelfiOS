@@ -45,9 +45,9 @@ struct DetailedGameView: View {
     
     func getGameById(gameId: Int) {
     
-         let headers: HTTPHeaders = [
-             "token": User.currentUser.getToken()
-         ]
+        let headers: HTTPHeaders = [
+            "token": User.currentUser.getToken()
+        ]
         let body: [String: String] = [
             "id": String(gameOverview.id)
         ]

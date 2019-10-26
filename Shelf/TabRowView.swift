@@ -38,14 +38,8 @@ struct TabRowView: View {
             NavigationView { FindFriendView() }
                 .tabItem {
                     Image(systemName: "bubble.left.and.bubble.right.fill")
-                    Text("Find a Friend")
+                    Text("Users")
                 }.tag(4)
-            
-            NavigationView { SignOutView() }
-                .tabItem {
-                    Image(systemName: "bubble.left.and.bubble.right.fill")
-                    Text("Sign Out")
-                }.tag(5)
         }
     }
 }

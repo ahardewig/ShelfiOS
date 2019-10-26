@@ -155,14 +155,11 @@ struct HomeView: View {
     func getGameOverviewsArray(response: Any) {
         let sampleJson = JSON(response)
         let responseArray = sampleJson.array
-        var count = 0;
+        
         for game in responseArray! {
-            print(game);
             let newGame = GameOverview(game: game)
             games.append(newGame)
-            count+=1;
         }
-        print("THE COUNT IS \(count)")
     }
     
 }
