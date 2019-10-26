@@ -14,6 +14,7 @@ import SwiftyJSON
 struct DetailedGameView: View {
     @State var gameOverview: GameOverview;
     @State var detailedGame: DetailedGame;
+    @State var userRating: Int = 0;
     
     let coverUrl = "https://images.igdb.com/igdb/image/upload/t_cover_big/"
     let artworkUrl = "https://images.igdb.com/igdb/image/upload/t_screenshot_big/"
@@ -23,8 +24,11 @@ struct DetailedGameView: View {
             VStack {
                 
                 // FOR ZACH: I THINK THE PACKAGE OWNER FOR URLIMAGE said that you can do anything to it that you can for a normal image
+                 Text("NAME: \(gameOverview.name)")
                 URLImage(URL(string: self.coverUrl + gameOverview.coverImageId + ".jpg")!)
-                Text("NAME: \(gameOverview.name)")
+                
+                UserRatingView(userRating: self.$userRating, canEdit: true, gameId: self.$gameOverview.id)
+               
                 Text("STORYLINE: \(detailedGame.storyline)")
                 Text("GENRES")
                 ForEach(detailedGame.genres, id: \.self) { genre in
@@ -39,9 +43,33 @@ struct DetailedGameView: View {
                     URLImage(URL(string: self.artworkUrl + imageId + ".jpg")!)
                 }
             }
-        }.onAppear { self.getGameById(gameId: self.gameOverview.id) }
+        }.onAppear {
+            self.getGameById(gameId: self.gameOverview.id)
+            self.getUserRating(gameId: self.gameOverview.id)
+            
+        }
             
     }
+    
+    func getUserRating(gameId: Int) {
+    
+        let headers: HTTPHeaders = [
+            "token": User.currentUser.getToken()
+        ]
+        AF.request("http://localhost:8080/user/\(User.currentUser.getUsername())/games-rated/\(gameId)", headers: headers).responseJSON { response in
+             if response.response?.statusCode == 200 {
+                let json = JSON(response.value as Any);
+                let rate: Int = json["rating"].int ?? 0
+                self.userRating = rate
+                print(response.value as Any)
+             } else {
+                 let error = JSON(response.data as Any)
+                 let errorMessage = error["message"].string
+                 print(errorMessage as Any)
+             }
+             
+         }
+     }
     
     func getGameById(gameId: Int) {
     
@@ -73,6 +101,6 @@ struct DetailedGameView: View {
 struct DetailedGameView_Previews: PreviewProvider {
     
     static var previews: some View {
-        DetailedGameView(gameOverview: GameOverview(game: "" as Any), detailedGame: DetailedGame(game: "" as Any))
+        DetailedGameView(gameOverview: GameOverview(game: "" as Any), detailedGame: DetailedGame(game: "" as Any), userRating: 3)
     }
 }
