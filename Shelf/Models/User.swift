@@ -67,6 +67,14 @@ class User: ObservableObject {
         return self.games_rated;
     }
     
+    func getFollowers() -> [String] {
+        return self.followers
+    }
+    
+    func getFollowing() -> [String] {
+        return self.following
+    }
+    
     func initFromJson(json: Any) {
         self.games_rated = [];
         self.games_played = [];
