@@ -22,8 +22,10 @@ import KeychainSwift
             "username": username,
             "password": password,
         ]
+        print("trying")
         AF.request("http://localhost:8080/user/login", method: .post, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
             if response.response?.statusCode == 200 {
+                print("success")
                 
                 if let token = response.response?.allHeaderFields["token"] as? String {
                     User.currentUser.setToken(token: token)
@@ -36,6 +38,7 @@ import KeychainSwift
                 
             }
             else {
+                print("fail")
                 let error = JSON(response.data as Any)
                 let errorMessage = error["message"].string
                

@@ -62,6 +62,10 @@ class User: ObservableObject {
         return self.token;
     }
     
+    func getGamesRated() -> Array<Game> {
+        return self.games_rated;
+    }
+    
     func initFromJson(json: Any) {
         self.isLoggedIn = true;
         let parsed = JSON(json);
@@ -74,15 +78,15 @@ class User: ObservableObject {
         
         for games in parsed["games_rated"].array! {
             print(games["rating"]);
-            let rating = games["rating"].string ?? ""
-            let gameId = games["game_id"].string ?? ""
-            self.games_rated.append(Game(rating: rating, gameId: gameId))
+            let rating = games["rating"].int ?? 0
+            let gameId = games["game_id"].string ?? "-999"
+            self.games_rated.append(Game(rating: rating, gameId: gameId ))
         }
         
         for games in parsed["games_played"].array! {
             print(games["rating"]);
-            let rating = games["rating"].string ?? ""
-            let gameId = games["game_id"].string ?? ""
+            let rating = games["rating"].int ?? 0
+            let gameId = games["game_id"].string ?? "-999"
             self.games_played.append(Game(rating: rating, gameId: gameId))
         }
         

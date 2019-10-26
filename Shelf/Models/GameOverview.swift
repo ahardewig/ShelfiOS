@@ -14,6 +14,8 @@ class GameOverview {
     public var name: String = ""
     public var coverId: Int = 0
     public var coverImageId: String = ""
+    public var globalRating: Int = 0
+    public var userRating: Int = 0
     
     public init() {
         
