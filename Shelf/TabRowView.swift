@@ -17,7 +17,7 @@ struct TabRowView: View {
                     Text("Home")
                 }.tag(0)
 
-            NavigationView { ProfileView() }
+            NavigationView { ProfileView(username: User.currentUser.getUsername()) }
                 .tabItem {
                     Image(systemName: "flame.fill")
                     Text("My Shelf")

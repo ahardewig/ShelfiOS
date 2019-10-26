@@ -11,19 +11,20 @@ import SwiftyJSON
 
 class User: ObservableObject {
     
-    private var username: String = "";
-    private var birthday: String = "";
-    private var email: String = "";
-    private var games_rated:  Array<Game> = [];
-    private var games_played: Array<Game> = [];
-    private var followers: [String] = [];
-    private var following: [String] = [];
-    private var inboxId: String = "";
-    private var token: String = "";
+    @Published private var username: String = "";
+    @Published private var birthday: String = "";
+    @Published private var email: String = "";
+    @Published private var games_rated:  Array<Game> = [];
+    @Published private var games_played: Array<Game> = [];
+    @Published private var followers: [String] = [];
+    @Published private var following: [String] = [];
+    @Published private var inboxId: String = "";
+    @Published private var token: String = "";
     
     @Published var isLoggedIn: Bool = false;
     
     static let currentUser = User();
+    static let otherUser = User();
     
     private init() {
         //SINGLETON
@@ -67,6 +68,11 @@ class User: ObservableObject {
     }
     
     func initFromJson(json: Any) {
+        self.games_rated = [];
+        self.games_played = [];
+        self.followers = [];
+        self.following = []
+        
         self.isLoggedIn = true;
         let parsed = JSON(json);
         print(parsed);
