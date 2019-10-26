@@ -15,12 +15,16 @@ struct SearchView: View {
     
     @State var games: Array<GameOverview> = []
     @State var query: String = ""
+    @State var test: Bool = false;
     
     let url = "https://images.igdb.com/igdb/image/upload/t_cover_big/"
     
     var body: some View {
-        VStack {
+        VStack{
             QueryTextField(query: $query)
+            Button(action: {self.searchGames(query: self.query)}) {
+                primaryCTAButton(text: "Search")
+            }
             NavigationView {
                 List(games, id: \.id) { game in
                     NavigationLink(destination: DetailedGameView(gameOverview: game, detailedGame: DetailedGame())) {
@@ -52,7 +56,27 @@ struct SearchView: View {
                 let errorMessage = error["message"].string
                 print(errorMessage as Any)
             }
-            
+        }
+    }
+    
+    func searchGames(query: String) {
+        
+        let body: [String: String] = [
+            "search": query,
+        ]
+        let headers: HTTPHeaders = [
+            "token": User.currentUser.getToken()
+        ]
+        
+        AF.request("http://localhost:8080/games/searchedgames", method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
+            if response.response?.statusCode == 200 {
+                self.games = [];
+                self.getGameOverviewsArray(response: response.value as Any);
+            } else {
+                let error = JSON(response.data as Any)
+                let errorMessage = error["message"].string
+                print(errorMessage as Any)
+            }
         }
     }
     
