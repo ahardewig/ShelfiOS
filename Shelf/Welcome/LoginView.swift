@@ -140,7 +140,6 @@ struct LoginButton: View {
 struct SwitchToSignupButton: View {
     var body: some View {
         secondaryCTAButton(text: "Register for an Account")
-        
     }
 }
 
