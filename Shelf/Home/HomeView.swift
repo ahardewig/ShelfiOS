@@ -35,8 +35,8 @@ struct HomeView: View {
                             .clipped()
                             }).frame(width: 100, height: 150)
 
-                            VStack {
-
+                            VStack(alignment: .leading) {
+                                kSubtitle(text: "Game Title")
                                 StarRatingView(games: self.$games, gameId: game.id, canEdit: false)
                             }
                         }
@@ -46,7 +46,7 @@ struct HomeView: View {
                     //self.refreshUser()
 
 
-            }.font(KarlaSubtitle).frame(height: 675).navigationBarItems(trailing: SortingSheetView(showSortingSheet: $showSortingSheet, currentSortingMethod: $currentSortingMethod))
+            }.font(KarlaBody).frame(height: 675).navigationBarItems(trailing: SortingSheetView(showSortingSheet: $showSortingSheet, currentSortingMethod: $currentSortingMethod))
 
                 
         

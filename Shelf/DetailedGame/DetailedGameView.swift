@@ -31,7 +31,8 @@ struct DetailedGameView: View {
                 }
                 
                 kSubtitle(text: "Storyline").padding(.leading, 16)
-                Text("\(detailedGame.storyline)").padding(.leading, 16).padding(.trailing, 16)
+               
+                kBody(text: "\(detailedGame.storyline)") .padding(.leading, 16).padding(.trailing, 16)
                 
                 kSubtitle(text: "Genres").padding(.leading, 16)
                 ScrollView(.horizontal, content: {
