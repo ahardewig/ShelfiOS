@@ -75,6 +75,22 @@ class User: ObservableObject {
         return self.following
     }
     
+    func addFollower(follower: String) {
+        self.followers.append(follower)
+    }
+    
+    func addFollowing(following: String) {
+        self.following.append(following)
+    }
+    
+    func removeFollower(follower: String) {
+        self.followers.remove(at: self.followers.firstIndex(of: follower)!)
+    }
+    
+    func removeFollowing(following: String) {
+        self.following.remove(at: self.following.firstIndex(of: following)!)
+    }
+    
     func initFromJson(json: Any) {
         self.games_rated = [];
         self.games_played = [];

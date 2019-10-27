@@ -15,11 +15,14 @@ struct ProfileView: View {
     @State var username: String
     @ObservedObject var viewedProfile: User = User.otherUser
     @State var gamesRated: [Game] = [];
+    @State var followButtonText: String = "Follow"
+    
     var body: some View {
         VStack() {
             
             UsernameText(username: $username)
 
+            FollowButton(viewedProfile: viewedProfile, followButtonText: $followButtonText)
             LogoutButton()
             
             Text("Followers:")
@@ -35,7 +38,23 @@ struct ProfileView: View {
         }.onAppear {
             self.gamesRated = [];
             self.getUserData(username: self.username);
+            
         }.frame(height: 800).padding(0)
+    }
+    
+    func setFollowStatus() {
+        if(self.isFollowing(curProf: self.viewedProfile)) {
+            self.followButtonText = "Unfollow"
+        }
+        else {
+            self.followButtonText = "Follow"
+        }
+    }
+    
+    func isFollowing(curProf: User) -> Bool {
+        print(User.currentUser.getFollowing())
+        print(self.viewedProfile.getFollowers())
+        return User.currentUser.getFollowing().contains(self.viewedProfile.getUsername())
     }
     
     func getCovers() {
@@ -85,6 +104,7 @@ struct ProfileView: View {
                     if response.response?.statusCode == 200 {
                         User.otherUser.initFromJson(json: response.value as AnyObject)
                         self.getCovers();
+                        self.setFollowStatus()
                     } else {
                         let error = JSON(response.data as Any)
                         let errorMessage = error["message"].string
@@ -180,7 +200,75 @@ struct LogoutButton: View {
              }
         }
     }
+}
+
+struct FollowButton: View {
+    @ObservedObject var viewedProfile: User = User.otherUser
+    @Binding var followButtonText: String
+    var body: some View {
+        Group() {
+             if (User.currentUser.getUsername() != viewedProfile.getUsername()) {
+                    Button(action: {
+                        if (self.followButtonText == "Follow") {
+                            self.followUser()
+                            self.followButtonText = "Unfollow"
+                        }
+                        else {
+                            self.unfollowUser()
+                            self.followButtonText = "Follow"
+                        }
+                    }) {
+                        Text(followButtonText)
+                    }
+             }
+        }
+    }
     
+    func followUser() {
+        let headers: HTTPHeaders = [
+            "token": User.currentUser.getToken()
+        ]
+        let body: [String: String] = [
+            "user": viewedProfile.getUsername()
+        ]
+         AF.request("http://localhost:8080/user/follow",
+                    method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
+             if response.response?.statusCode == 200 {
+                
+                self.viewedProfile.addFollower(follower: User.currentUser.getUsername())
+                User.currentUser.addFollowing(following: self.viewedProfile.getUsername())
+                
+             } else {
+                 let error = JSON(response.data as Any)
+                 let errorMessage = error["message"].string
+                 print(errorMessage as Any)
+             }
+             
+         }
+    }
+    
+    func unfollowUser() {
+        let headers: HTTPHeaders = [
+            "token": User.currentUser.getToken()
+        ]
+        let body: [String: String] = [
+            "user": viewedProfile.getUsername()
+        ]
+         AF.request("http://localhost:8080/user/unfollow",
+                    method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
+             if response.response?.statusCode == 200 {
+                
+                self.viewedProfile.removeFollower(follower: User.currentUser.getUsername())
+                User.currentUser.removeFollowing(following: self.viewedProfile.getUsername())
+                
+             } else {
+                 let error = JSON(response.data as Any)
+                 let errorMessage = error["message"].string
+                 print(errorMessage as Any)
+             }
+             
+         }
+    }
 }
 
 
