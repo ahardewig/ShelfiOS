@@ -16,7 +16,7 @@ struct MessagingView: View {
     @State var to: UserOverview
     @State var messages: [Message] = []
     
-    let url = "http://localhost:8080/message/all"
+    let url = DOMAIN + "message/all"
     
     var body: some View {
         VStack {

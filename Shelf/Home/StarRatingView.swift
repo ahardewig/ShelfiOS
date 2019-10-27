@@ -123,7 +123,7 @@ struct UserRatingView: View {
                    "newRating": newRating,
                    "oldRating": oldRating
                ]
-        AF.request("http://localhost:8080/user/\(User.currentUser.getUsername())/games-rated",
+        AF.request(DOMAIN + "user/\(User.currentUser.getUsername())/games-rated",
                            method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
                     if response.response?.statusCode == 200 {
                         print(response.value as Any)
@@ -146,7 +146,7 @@ struct UserRatingView: View {
                    "newRating": newRating,
                    "oldRating": oldRating
                ]
-        AF.request("http://localhost:8080/ratingInfo/\(gameId)",
+        AF.request(DOMAIN + "ratingInfo/\(gameId)",
                            method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
                     if response.response?.statusCode == 200 {
                         print(response.value as Any)

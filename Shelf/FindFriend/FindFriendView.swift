@@ -14,7 +14,7 @@ struct FindFriendView: View {
     
     @State var users: [UserOverview] = []
     
-    let url = "http://localhost:8080/user/all-users"
+    let url = DOMAIN + "user/all-users"
     
     var body: some View {
         VStack {

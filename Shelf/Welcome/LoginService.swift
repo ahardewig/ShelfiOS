@@ -23,11 +23,18 @@ import KeychainSwift
             "password": password,
         ]
         print("trying")
-        AF.request("http://localhost:8080/user/login", method: .post, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
+        AF.request(DOMAIN + "user/login" , method: .post, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
             if response.response?.statusCode == 200 {
                 print("success")
+                print(response.response?.allHeaderFields as Any)
                 
                 if let token = response.response?.allHeaderFields["token"] as? String {
+                    print("token is: \(token)")
+                    User.currentUser.setToken(token: token)
+                }
+                //for some reason ngrok messes with the headers or something idk man
+                if let token = response.response?.allHeaderFields["Token"] as? String {
+                    print("token is: \(token)")
                     User.currentUser.setToken(token: token)
                 }
                 

@@ -54,7 +54,7 @@ struct HomeView: View {
         let headers: HTTPHeaders = [
             "token": User.currentUser.getToken()
         ]
-        AF.request("http://localhost:8080/games/criticallyacclaimedgames",
+        AF.request(DOMAIN + "games/criticallyacclaimedgames",
                    headers: headers).responseJSON { response in
             if response.response?.statusCode == 200 {
                 self.getGameOverviewsArray(response: response.value as Any)
@@ -74,7 +74,7 @@ struct HomeView: View {
         let headers: HTTPHeaders = [
             "token": User.currentUser.getToken()
         ]
-        AF.request("http://localhost:8080/ratingInfo/all",
+        AF.request(DOMAIN + "ratingInfo/all",
                    headers: headers).responseJSON { response in
             if response.response?.statusCode == 200 {
                 

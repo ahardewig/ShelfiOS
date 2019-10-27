@@ -56,7 +56,7 @@ struct DetailedGameView: View {
         let headers: HTTPHeaders = [
             "token": User.currentUser.getToken()
         ]
-        AF.request("http://localhost:8080/user/\(User.currentUser.getUsername())/games-rated/\(gameId)", headers: headers).responseJSON { response in
+        AF.request(DOMAIN + "user/\(User.currentUser.getUsername())/games-rated/\(gameId)", headers: headers).responseJSON { response in
              if response.response?.statusCode == 200 {
                 let json = JSON(response.value as Any);
                 let rate: Int = json["rating"].int ?? 0
@@ -79,7 +79,7 @@ struct DetailedGameView: View {
         let body: [String: String] = [
             "id": String(gameOverview.id)
         ]
-         AF.request("http://localhost:8080/games/detailedgamedata",
+         AF.request(DOMAIN + "games/detailedgamedata",
                     method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
              if response.response?.statusCode == 200 {
                  self.getDetailedGameInfo(response: response.value as Any);

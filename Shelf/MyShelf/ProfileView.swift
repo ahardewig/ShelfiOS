@@ -70,7 +70,7 @@ struct ProfileView: View {
         let body: [String: Int] = [
             "id": id
         ]
-         AF.request("http://localhost:8080/games/detailedgamedata",
+         AF.request(DOMAIN + "games/detailedgamedata",
                     method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
              if response.response?.statusCode == 200 {
                 let sampleJson = JSON(response.value as Any)
@@ -99,7 +99,7 @@ struct ProfileView: View {
                 "username": self.username,
                ]
         
-        AF.request("http://localhost:8080/user/data",
+        AF.request(DOMAIN + "user/data",
                            method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
                     if response.response?.statusCode == 200 {
                         User.otherUser.initFromJson(json: response.value as AnyObject)
@@ -231,7 +231,7 @@ struct FollowButton: View {
         let body: [String: String] = [
             "user": viewedProfile.getUsername()
         ]
-         AF.request("http://localhost:8080/user/follow",
+         AF.request(DOMAIN + "user/follow",
                     method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
              if response.response?.statusCode == 200 {
                 
@@ -254,7 +254,7 @@ struct FollowButton: View {
         let body: [String: String] = [
             "user": viewedProfile.getUsername()
         ]
-         AF.request("http://localhost:8080/user/unfollow",
+         AF.request(DOMAIN + "user/unfollow",
                     method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
              if response.response?.statusCode == 200 {
                 
