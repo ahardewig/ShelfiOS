@@ -20,11 +20,10 @@ struct DetailedGameView: View {
     let artworkUrl = "https://images.igdb.com/igdb/image/upload/t_screenshot_big/"
     
     var body: some View {
-        ScrollView {
+        ScrollView(.vertical) {
             VStack {
                 
                 // FOR ZACH: I THINK THE PACKAGE OWNER FOR URLIMAGE said that you can do anything to it that you can for a normal image
-                 Text("NAME: \(gameOverview.name)")
                 URLImage(URL(string: self.coverUrl + gameOverview.coverImageId + ".jpg")!)
                 
                 UserRatingView(userRating: self.$userRating, canEdit: true, gameId: self.$gameOverview.id)
@@ -40,14 +39,26 @@ struct DetailedGameView: View {
                 }
                 Text("ARTWORKS")
                 ForEach(detailedGame.artworkImageIds, id: \.self) { imageId in
-                    URLImage(URL(string: self.artworkUrl + imageId + ".jpg")!)
+                    URLImage(URL(string: self.artworkUrl + imageId + ".jpg")!, content: {
+                         $0.image
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .clipped()
+                    })
+                        .frame(width: UIScreen.main.bounds.width)
+                    
                 }
-            }
+                
+//                Image("page-under-construction")
+//                .resizable()
+//                .aspectRatio(UIImage(named: "page-under-construction")!.size, contentMode: .fill)
+            }.navigationBarTitle(Text("\(gameOverview.name)"))
         }.onAppear {
             self.getGameById(gameId: self.gameOverview.id)
             self.getUserRating(gameId: self.gameOverview.id)
             
-        }
+        }.frame(width: UIScreen.main.bounds.width)
+        .scaledToFit()
             
     }
     
