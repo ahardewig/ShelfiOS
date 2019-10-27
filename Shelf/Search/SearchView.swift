@@ -21,11 +21,11 @@ struct SearchView: View {
     
     var body: some View {
         VStack{
-            QueryTextField(query: $query)
+            QueryTextField(query: $query).padding(.leading, 16).padding(.trailing, 16)
             Button(action: {self.searchGames(query: self.query)}) {
                 primaryCTAButton(text: "Search")
             }
-            NavigationView {
+            Group {
                 List(games, id: \.id) { game in
                     NavigationLink(destination: DetailedGameView(gameOverview: game, detailedGame: DetailedGame())) {
                         URLImage(URL(string: self.url + game.coverImageId + ".jpg")!,
@@ -39,6 +39,7 @@ struct SearchView: View {
                     }
                 }
             }.onAppear {self.getGames()}
+                .navigationBarTitle("Search")
         }
     }
     
@@ -96,11 +97,12 @@ struct QueryTextField: View {
     
     var body: some View {
         TextField("Search" , text: $query )
-            .padding()
+        .padding()
             .background(lightGreyColor)
             .cornerRadius(5.0)
             .padding(.bottom, 20)
             .font(KarlaInput)
+            .keyboardType(.webSearch)
     }
 }
 
