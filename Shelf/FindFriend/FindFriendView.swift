@@ -19,7 +19,7 @@ struct FindFriendView: View {
     var body: some View {
         VStack {
             //Text("Message your friends!")
-            NavigationView {
+            //NavigationView {
                 List(users, id: \.username) { user in
 //                    NavigationLink(destination: MessagingView(to: user)) {
 //                        Text("MESSAGE THIS USER: " + user.username)
@@ -28,7 +28,7 @@ struct FindFriendView: View {
                         Text("MESSAGE THIS USER: " + user.username)
                     }
                 }
-            }
+           // }
         }.onAppear { self.getAllUsers() }
     }
     
@@ -50,7 +50,7 @@ struct FindFriendView: View {
     func parseAllUserData(response: Any) {
         let sampleJson = JSON(response)
         let responseArray = sampleJson.array
-        
+        users = [];
         for user in responseArray! {
             let newUser = UserOverview(user: user)
             users.append(newUser)
