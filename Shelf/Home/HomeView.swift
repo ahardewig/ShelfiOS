@@ -21,9 +21,6 @@ struct HomeView: View {
     
     var body: some View {
         
-        
-        VStack {
-            SortingSheetView(showSortingSheet: $showSortingSheet, currentSortingMethod: $currentSortingMethod).offset(y: CGFloat(10))
             
             HStack {
                     
@@ -48,8 +45,7 @@ struct HomeView: View {
                     self.getGames()
                     //self.refreshUser()
 
-            }.font(KarlaSubtitle).frame(height: 675)
-        }
+            }.font(KarlaSubtitle).frame(height: 675).navigationBarItems(trailing: SortingSheetView(showSortingSheet: $showSortingSheet, currentSortingMethod: $currentSortingMethod))
                 
         
 
@@ -284,12 +280,13 @@ struct SortingSheetView: View {
     
     
     var body: some View {
+        
         Button(action: {
             self.showSortingSheet.toggle()
         }) {
-            Image(systemName:"arrow.up.arrow.down.square")
+            Image(systemName:"arrow.up.arrow.down.circle.fill")
                 .imageScale(.large)
-                .frame(width:24, height: 24)
+                .frame(width:24, height: 24).foregroundColor(.black)
         }
         .actionSheet(isPresented: $showSortingSheet, content: {
             self.actionSheet })

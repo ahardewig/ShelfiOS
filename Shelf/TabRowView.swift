@@ -17,31 +17,31 @@ struct TabRowView: View {
         TabView {
             NavigationView { HomeView() }
                 .tabItem {
-                    Image(systemName: "list.dash")
+                    Image(systemName: "house.fill")
                     Text("Home")
                 }.tag(0)
 
             NavigationView { ProfileView(username: User.currentUser.getUsername()) }
                 .tabItem {
-                    Image(systemName: "flame.fill")
+                    Image(systemName: "person.fill")
                     Text("My Shelf")
                 }.tag(1)
 
             NavigationView { NotificationsView() }
                 .tabItem {
-                    Image(systemName: "heart.fill")
+                    Image(systemName: "bubble.left.and.bubble.right.fill")
                     Text("Notifications")
                 }.tag(2)
 
             NavigationView { SearchView() }
                 .tabItem {
-                    Image(systemName: "bubble.left.and.bubble.right.fill")
+                    Image(systemName: "magnifyingglass.circle.fill")
                     Text("Search")
                 }.tag(3)
             
             NavigationView { FindFriendView() }
                 .tabItem {
-                    Image(systemName: "bubble.left.and.bubble.right.fill")
+                    Image(systemName: "person.3.fill")
                     Text("Users")
                 }.tag(4)
         }
