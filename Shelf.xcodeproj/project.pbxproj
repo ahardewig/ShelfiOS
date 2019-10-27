@@ -37,6 +37,7 @@
 		33C3C1B32353BF0200E1652A /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3C1B22353BF0200E1652A /* User.swift */; };
 		33C3C1B52353C62B00E1652A /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3C1B42353C62B00E1652A /* Game.swift */; };
 		33C3C1B72353EC7200E1652A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3C1B62353EC7200E1652A /* LoginView.swift */; };
+		33E5EC9523654884009A3957 /* BackendConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E5EC9423654884009A3957 /* BackendConstants.swift */; };
 		925400E7235F677200572DA2 /* Karla-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 925400E3235F677100572DA2 /* Karla-RegularItalic.ttf */; };
 		925400E8235F677200572DA2 /* Karla-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 925400E4235F677200572DA2 /* Karla-Bold.ttf */; };
 		925400E9235F677200572DA2 /* Karla-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 925400E5235F677200572DA2 /* Karla-BoldItalic.ttf */; };
@@ -103,6 +104,7 @@
 		33C3C1B22353BF0200E1652A /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		33C3C1B42353C62B00E1652A /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		33C3C1B62353EC7200E1652A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		33E5EC9423654884009A3957 /* BackendConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendConstants.swift; sourceTree = "<group>"; };
 		925400E3235F677100572DA2 /* Karla-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-RegularItalic.ttf"; sourceTree = "<group>"; };
 		925400E4235F677200572DA2 /* Karla-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-Bold.ttf"; sourceTree = "<group>"; };
 		925400E5235F677200572DA2 /* Karla-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				33AF7CAB23637365006EF3C2 /* RatingInfo.swift */,
 				A7583F4B236414030027049D /* UserOverview.swift */,
 				A7583F4D23641ED60027049D /* Message.swift */,
+				33E5EC9423654884009A3957 /* BackendConstants.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				3365D2DD234FE76A003E6B79 /* HomeView.swift in Sources */,
 				333D18382336DECC0005AD45 /* SceneDelegate.swift in Sources */,
 				33C3C1B32353BF0200E1652A /* User.swift in Sources */,
+				33E5EC9523654884009A3957 /* BackendConstants.swift in Sources */,
 				A7583F4C236414030027049D /* UserOverview.swift in Sources */,
 				33057EEC235418B400AD06DB /* SearchView.swift in Sources */,
 				33C3C1B52353C62B00E1652A /* Game.swift in Sources */,
@@ -661,6 +665,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";

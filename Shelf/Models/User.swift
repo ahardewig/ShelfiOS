@@ -11,19 +11,20 @@ import SwiftyJSON
 
 class User: ObservableObject {
     
-    private var username: String = "";
-    private var birthday: String = "";
-    private var email: String = "";
-    private var games_rated:  Array<Game> = [];
-    private var games_played: Array<Game> = [];
-    private var followers: [String] = [];
-    private var following: [String] = [];
-    private var inboxId: String = "";
-    private var token: String = "";
+    @Published private var username: String = "";
+    @Published private var birthday: String = "";
+    @Published private var email: String = "";
+    @Published private var games_rated:  Array<Game> = [];
+    @Published private var games_played: Array<Game> = [];
+    @Published private var followers: [String] = [];
+    @Published private var following: [String] = [];
+    @Published private var inboxId: String = "";
+    @Published private var token: String = "";
     
     @Published var isLoggedIn: Bool = false;
     
     static let currentUser = User();
+    static let otherUser = User();
     
     private init() {
         //SINGLETON
@@ -66,7 +67,36 @@ class User: ObservableObject {
         return self.games_rated;
     }
     
+    func getFollowers() -> [String] {
+        return self.followers
+    }
+    
+    func getFollowing() -> [String] {
+        return self.following
+    }
+    
+    func addFollower(follower: String) {
+        self.followers.append(follower)
+    }
+    
+    func addFollowing(following: String) {
+        self.following.append(following)
+    }
+    
+    func removeFollower(follower: String) {
+        self.followers.remove(at: self.followers.firstIndex(of: follower)!)
+    }
+    
+    func removeFollowing(following: String) {
+        self.following.remove(at: self.following.firstIndex(of: following)!)
+    }
+    
     func initFromJson(json: Any) {
+        self.games_rated = [];
+        self.games_played = [];
+        self.followers = [];
+        self.following = []
+        
         self.isLoggedIn = true;
         let parsed = JSON(json);
         print(parsed);

@@ -9,6 +9,10 @@
 import SwiftUI
 
 struct TabRowView: View {
+    
+    init(){
+        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "Karla-Bold", size: 32)!]
+    }
     var body: some View {
         TabView {
             NavigationView { HomeView() }
@@ -17,7 +21,7 @@ struct TabRowView: View {
                     Text("Home")
                 }.tag(0)
 
-            NavigationView { ProfileView() }
+            NavigationView { ProfileView(username: User.currentUser.getUsername()) }
                 .tabItem {
                     Image(systemName: "flame.fill")
                     Text("My Shelf")

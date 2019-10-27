@@ -14,18 +14,21 @@ struct FindFriendView: View {
     
     @State var users: [UserOverview] = []
     
-    let url = "http://localhost:8080/user/all-users"
+    let url = DOMAIN + "user/all-users"
     
     var body: some View {
         VStack {
-            Text("Message your friends!")
-            NavigationView {
+            //Text("Message your friends!")
+            //NavigationView {
                 List(users, id: \.username) { user in
-                    NavigationLink(destination: MessagingView(to: user)) {
-                        Text("MESSAGE THIS USER: " + user.username)
+//                    NavigationLink(destination: MessagingView(to: user)) {
+//                        Text("MESSAGE THIS USER: " + user.username)
+//                    }
+                    NavigationLink(destination: ProfileView(username: user.username)) {
+                        Text(user.username + "'s Profile")
                     }
                 }
-            }
+           // }
         }.onAppear { self.getAllUsers() }
     }
     
@@ -47,7 +50,7 @@ struct FindFriendView: View {
     func parseAllUserData(response: Any) {
         let sampleJson = JSON(response)
         let responseArray = sampleJson.array
-        
+        users = [];
         for user in responseArray! {
             let newUser = UserOverview(user: user)
             users.append(newUser)

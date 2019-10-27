@@ -16,28 +16,37 @@ struct HomeView: View {
     @State var games: [GameOverview] = []
     let url = "https://images.igdb.com/igdb/image/upload/t_cover_big/"
     
+    
+    
     var body: some View {
-        NavigationView {
-            List(games, id: \.id) { game in
-                NavigationLink(destination: DetailedGameView(gameOverview: game, detailedGame: DetailedGame())) {
-                    URLImage(URL(string: self.url + game.coverImageId + ".jpg")!,
-                             processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
-                        content: {
-                            $0.image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .clipped()
-                    }).frame(width: 100, height: 150)
-                    
-                    VStack {
-                        StarRatingView(games: self.$games, gameId: game.id, canEdit: false)
+            HStack {
+
+                List(games, id: \.id) { game in
+                    NavigationLink(destination: DetailedGameView(gameOverview: game, detailedGame: DetailedGame())) {
+                        URLImage(URL(string: self.url + game.coverImageId + ".jpg")!,
+                                 processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
+                            content: {
+                                $0.image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .clipped()
+                        }).frame(width: 100, height: 150)
+
+                        VStack {
+
+                            StarRatingView(games: self.$games, gameId: game.id, canEdit: false)
+                        }
                     }
-                }
-            }
-        }.onAppear {
-            self.getGames()
-            
-        }
+                }.navigationBarTitle(Text("Global Games").font(KarlaHeader))
+            }.onAppear {
+                self.getGames()
+
+            }.font(KarlaSubtitle).frame(height: 675)
+                
+        
+
+        
+
     }
     
     func getGames() {
@@ -45,12 +54,12 @@ struct HomeView: View {
         let headers: HTTPHeaders = [
             "token": User.currentUser.getToken()
         ]
-        AF.request("http://localhost:8080/games/criticallyacclaimedgames",
+        AF.request(DOMAIN + "games/criticallyacclaimedgames",
                    headers: headers).responseJSON { response in
             if response.response?.statusCode == 200 {
-                self.getGameOverviewsArray(response: response.value as Any);
-                self.getGlobalRatings();
-                //self.getUserRatings();
+                self.getGameOverviewsArray(response: response.value as Any)
+                self.getGlobalRatings()
+             
             } else {
                 let error = JSON(response.data as Any)
                 let errorMessage = error["message"].string
@@ -65,15 +74,15 @@ struct HomeView: View {
         let headers: HTTPHeaders = [
             "token": User.currentUser.getToken()
         ]
-        AF.request("http://localhost:8080/ratingInfo/all",
+        AF.request(DOMAIN + "ratingInfo/all",
                    headers: headers).responseJSON { response in
             if response.response?.statusCode == 200 {
                 
                 let sampleJson = JSON(response.value as Any)
                 let responseArray = sampleJson.array
-                var ratings: [RatingInfo] = [];
+                var ratings: [RatingInfo] = []
                 for ratingInfo in responseArray! {
-                    let r: RatingInfo = RatingInfo();
+                    let r: RatingInfo = RatingInfo()
                     r.initFromJson(json: ratingInfo)
                     ratings.append(r)
                 }
@@ -100,22 +109,22 @@ struct HomeView: View {
         
         var updatedGames: Array<GameOverview> = []
         for game in games {
-            let key = game.id;
+            let key = game.id
             let keyExists = map[key] != nil
             if (keyExists) {
-                let score: Int = map[key] ?? 0;
-                print("SCORE \(score)");
+                let score: Int = map[key] ?? 0
+                print("SCORE \(score)")
                 game.userRating = score
-                updatedGames.append(game);
+                updatedGames.append(game)
             }
             else {
                 print("DOING ZERO")
-                game.userRating = 0;
+                game.userRating = 0
                 updatedGames.append(game)
                 
             }
         }
-        games = updatedGames;
+        games = updatedGames
 
     }
     
@@ -125,29 +134,29 @@ struct HomeView: View {
         var map: [Int: Int] = [:]
        
         for ratingInfo in ratingInfos {
-            var score: Int = 0;
+            var score: Int = 0
             if (ratingInfo.numberOfRatings != 0) {
-                score = ratingInfo.totalRatingValue / ratingInfo.numberOfRatings;
+                score = ratingInfo.totalRatingValue / ratingInfo.numberOfRatings
             }
             map.updateValue(score, forKey: Int(ratingInfo.gameId) ?? 0)
         }
         
         var updatedGames: Array<GameOverview> = []
         for game in games {
-            let key = game.id;
+            let key = game.id
             let keyExists = map[key] != nil
             if (keyExists) {
-                let score: Int = map[key] ?? 0;
+                let score: Int = map[key] ?? 0
                 game.globalRating = score
-                updatedGames.append(game);
+                updatedGames.append(game)
             }
             else {
-                game.globalRating = 0;
+                game.globalRating = 0
                 updatedGames.append(game)
                 
             }
         }
-        games = updatedGames;
+        games = updatedGames
 
     }
     

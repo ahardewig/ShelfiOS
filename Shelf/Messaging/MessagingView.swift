@@ -13,16 +13,22 @@ import SwiftyJSON
 
 struct MessagingView: View {
     
-    @State var to: UserOverview
+    @State var to: User
     @State var messages: [Message] = []
+    @State var message: String = ""
+    @State var _id: String = ""
     
-    let url = "http://localhost:8080/message/all"
+    let url = DOMAIN + "message/all"
+    let sendUrl = DOMAIN + "message/send"
     
     var body: some View {
         VStack {
-            Text("MESSAGING TO " + to.username)
             ForEach (messages, id: \.id) { message in
                 Text("Message from " + message.sender + ": " + message.message)
+            }
+            MessageTextField(message: $message)
+            Button(action: { self.sendMessage() }) {
+               SendMessageButton()
             }
         }.onAppear { self.getAllMessages() }
     }
@@ -30,7 +36,7 @@ struct MessagingView: View {
     func getAllMessages() {
         let headers: HTTPHeaders = [
             "token": User.currentUser.getToken(),
-            "receiver": to.username
+            "receiver": to.getUsername()
         ]
         AF.request(url, headers: headers).responseJSON { response in
             if response.response?.statusCode == 200 {
@@ -44,19 +50,55 @@ struct MessagingView: View {
     }
     
     func parseMessageData(response: Any) {
-        print ("Getting the resposne data!")
         let sampleJson = JSON(response)
+        _id = sampleJson["_id"].string ?? ""
         let messageArray = sampleJson["messages"].array ?? []
         
+        messages = []
         for message in messageArray {
             let newMessage = Message(message: message)
+            print (newMessage.message)
             messages.append(newMessage)
+        }
+    }
+    
+    func sendMessage() {
+        let headers: HTTPHeaders = [
+            "token": User.currentUser.getToken()
+        ]
+        let body: [String: String] = [
+            "message": message,
+            "messageID": _id,
+        ]
+        AF.request(sendUrl, method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
+            if response.response?.statusCode == 200 {
+                self.message = ""
+                self.getAllMessages()
+            } else {
+                let error = JSON(response.data as Any)
+                let errorMessage = error["message"].string
+                print(errorMessage as Any)
+            }
         }
     }
 }
 
-struct Messaging_Previews: PreviewProvider {
-    static var previews: some View {
-        MessagingView(to: UserOverview())
+struct MessageTextField: View {
+    @Binding var message: String
+    
+    var body: some View {
+        TextField("Message" , text: $message )
+            .padding()
+            .background(lightGreyColor)
+            .cornerRadius(5.0)
+            .padding(.bottom, 20)
+            .font(KarlaInput)
+    }
+}
+
+struct SendMessageButton: View {
+    var body: some View {
+        primaryCTAButton(text: "Send")
+        
     }
 }
