@@ -10,13 +10,31 @@ import SwiftUI
 
 // Fonts
 let KarlaHeader = Font.custom("Karla", size: 32);
-let KarlaSubtitle = Font.custom("Karla", size: 16)
+let KarlaBody = Font.custom("Karla", size: 16)
 let KarlaInput = Font.custom("Karla", size: 18)
 let KarlaButton = Font.custom("Karla", size: 23)
+let KarlaTiny = Font.custom("Karla", size: 13)
 
 struct LoginViewComponents: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello World!"/*@END_MENU_TOKEN@*/)
+        genreLabel(text: "This is a genre")
+    }
+}
+
+struct genreLabel: View {
+    var text1: String;
+    var body: some View {
+        Text(text1)
+        .font(KarlaTiny)
+        .padding()
+        .overlay(
+            RoundedRectangle(cornerRadius: 16)
+                .stroke(Color(red: 0.98, green: 0.65, blue: 0.10, opacity: 1.0), lineWidth: 1)
+        )
+    }
+    
+    init(text: String){
+        text1 = text
     }
 }
 
@@ -34,12 +52,26 @@ struct kHeader: View {
     }
 }
 
+struct kBody: View {
+    var text1: String;
+    var body: some View {
+        Text(text1)
+            .font(KarlaBody)
+            .padding(.bottom, 8)
+    }
+    
+    init(text: String){
+        text1 = text
+    }
+}
+
 struct kSubtitle: View {
     var text1: String;
     var body: some View {
         Text(text1)
-            .font(KarlaSubtitle)
+            .font(KarlaButton).fontWeight(.bold)
             .padding(.bottom, 8)
+            .padding(.top, 32)
     }
     
     init(text: String){
@@ -70,7 +102,7 @@ struct secondaryCTAButton: View {
     var body: some View {
         
         Text(text1)
-            .font(KarlaSubtitle)
+            .font(KarlaBody)
             .fontWeight(.semibold)
             .foregroundColor(.black)
             .padding(.top)

@@ -72,7 +72,7 @@ struct RegisterText: View {
                 .fontWeight(.semibold)
                 .padding(.bottom, 8)
             Text("We're excited you're here! Input the following information to get started using Shelf.")
-                .font(KarlaSubtitle)
+                .font(KarlaBody)
                 .multilineTextAlignment(.center)
             
         }

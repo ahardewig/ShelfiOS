@@ -110,7 +110,7 @@ struct LoginText: View {
     var body: some View {
         VStack{
             kHeader(text: "Welcome Back!");
-            kSubtitle(text: "Login to pick up where you left off.")
+            kBody(text: "Login to pick up where you left off.")
         }
         
     }

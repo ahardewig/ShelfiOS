@@ -41,7 +41,7 @@ struct HomeView: View {
             }.onAppear {
                 self.getGames()
 
-            }.font(KarlaSubtitle).frame(height: 675)
+            }.font(KarlaBody).frame(height: 675)
                 
         
 

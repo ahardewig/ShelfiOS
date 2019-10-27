@@ -21,23 +21,41 @@ struct DetailedGameView: View {
     
     var body: some View {
         ScrollView(.vertical) {
-            VStack {
+            VStack(alignment: .leading) {
+                URLImage(URL(string: self.coverUrl + gameOverview.coverImageId + ".jpg")!).frame(width: UIScreen.main.bounds.width)
+                    
                 
-                // FOR ZACH: I THINK THE PACKAGE OWNER FOR URLIMAGE said that you can do anything to it that you can for a normal image
-                URLImage(URL(string: self.coverUrl + gameOverview.coverImageId + ".jpg")!)
+                Group{
+                    kSubtitle(text: "My Rating").padding(.leading, 16)
+                    UserRatingView(userRating: self.$userRating, canEdit: true, gameId: self.$gameOverview.id).padding(.leading, 16)
+                }
                 
-                UserRatingView(userRating: self.$userRating, canEdit: true, gameId: self.$gameOverview.id)
-               
-                Text("STORYLINE: \(detailedGame.storyline)")
-                Text("GENRES")
-                ForEach(detailedGame.genres, id: \.self) { genre in
-                    Text("\(genre)")
-                }
-                Text("PLATFORMS")
-                ForEach(detailedGame.platforms, id: \.self) { platform in
-                    Text("\(platform)")
-                }
-                Text("ARTWORKS")
+                kSubtitle(text: "Storyline").padding(.leading, 16)
+                Text("\(detailedGame.storyline)").padding(.leading, 16).padding(.trailing, 16)
+                
+                kSubtitle(text: "Genres").padding(.leading, 16)
+                ScrollView(.horizontal, content: {
+                    HStack{
+                    ForEach(detailedGame.genres, id: \.self) { genre in
+                        genreLabel(text: "\(genre)")
+                    }.padding(.leading, 16)
+                    }
+                    
+                })
+                
+                kSubtitle(text: "Platforms").padding(.leading, 16)
+                
+                ScrollView(.horizontal, content: {
+                    HStack{
+                        ForEach(detailedGame.platforms, id: \.self) { platform in
+                            genreLabel(text: "\(platform)")
+                        }.padding(.leading, 16)
+                    }
+                })
+                
+                
+                
+                kSubtitle(text: "Artworks").padding(.leading, 16)
                 ForEach(detailedGame.artworkImageIds, id: \.self) { imageId in
                     URLImage(URL(string: self.artworkUrl + imageId + ".jpg")!, content: {
                          $0.image
@@ -45,21 +63,18 @@ struct DetailedGameView: View {
                     .aspectRatio(contentMode: .fill)
                     .clipped()
                     })
-                        .frame(width: UIScreen.main.bounds.width)
                     
-                }
+                }.padding(.leading, 16).padding(.trailing, 16)
+            }
+             .navigationBarTitle(Text("\(gameOverview.name)"))
                 
-//                Image("page-under-construction")
-//                .resizable()
-//                .aspectRatio(UIImage(named: "page-under-construction")!.size, contentMode: .fill)
-            }.navigationBarTitle(Text("\(gameOverview.name)"))
         }.onAppear {
             self.getGameById(gameId: self.gameOverview.id)
             self.getUserRating(gameId: self.gameOverview.id)
             
-        }.frame(width: UIScreen.main.bounds.width)
-        .scaledToFit()
+        }
             
+        
     }
     
     func getUserRating(gameId: Int) {
