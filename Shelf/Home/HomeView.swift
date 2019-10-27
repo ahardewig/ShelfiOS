@@ -16,28 +16,35 @@ struct HomeView: View {
     @State var games: [GameOverview] = []
     let url = "https://images.igdb.com/igdb/image/upload/t_cover_big/"
     
+    
+    
     var body: some View {
-        NavigationView {
-            List(games, id: \.id) { game in
-                NavigationLink(destination: DetailedGameView(gameOverview: game, detailedGame: DetailedGame())) {
-                    URLImage(URL(string: self.url + game.coverImageId + ".jpg")!,
-                             processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
-                        content: {
-                            $0.image
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-                    .clipped()
-                    }).frame(width: 100, height: 150)
-                    
-                    VStack {
-                        StarRatingView(games: self.$games, gameId: game.id, canEdit: false)
+            HStack {
+                List(games, id: \.id) { game in
+                    NavigationLink(destination: DetailedGameView(gameOverview: game, detailedGame: DetailedGame())) {
+                        URLImage(URL(string: self.url + game.coverImageId + ".jpg")!,
+                                 processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
+                            content: {
+                                $0.image
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .clipped()
+                        }).frame(width: 100, height: 150)
+
+                        VStack {
+
+                            StarRatingView(games: self.$games, gameId: game.id, canEdit: false)
+                        }
                     }
-                }
-            }
-        }.onAppear {
-            self.getGames()
-            
-        }
+                }.navigationBarTitle(Text("Global Games").font(KarlaHeader))
+            }.onAppear {
+                self.getGames()
+
+            }.font(KarlaSubtitle).frame(height: 675)
+                
+        
+
+        
     }
     
     func getGames() {

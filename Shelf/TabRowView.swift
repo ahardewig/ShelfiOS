@@ -9,6 +9,10 @@
 import SwiftUI
 
 struct TabRowView: View {
+    
+    init(){
+        UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "Karla-Bold", size: 32)!]
+    }
     var body: some View {
         TabView {
             NavigationView { HomeView() }
