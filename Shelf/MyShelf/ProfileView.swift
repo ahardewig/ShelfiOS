@@ -16,23 +16,24 @@ struct ProfileView: View {
     @ObservedObject var viewedProfile: User = User.otherUser
     @State var gamesRated: [Game] = [];
     var body: some View {
-            VStack {
+        VStack(spacing: 0) {
                 
-                Text(viewedProfile.getUsername()).bold()
-                
-                Text("Followers:")
-                FollowersHorizontalList()
-                
-                Text("Following:")
-                FollowingHorizontalList()
-                
-                Text("Rated Games:")
-                RatedGamesHorizontalList(gamesRated: $gamesRated)
-                
-            }.onAppear {
-                self.gamesRated = [];
-                self.getUserData(username: self.username);
-            }
+            Text(username).bold().offset(y: -100)
+            
+            Text("Followers:")
+            Divider()
+            FollowersHorizontalList()
+            Divider()
+            Text("Following:")
+            FollowingHorizontalList()
+            Divider()
+            Text("Rated Games:")
+            RatedGamesHorizontalList(gamesRated: $gamesRated)
+        
+        }.onAppear {
+            self.gamesRated = [];
+            self.getUserData(username: self.username);
+        }.frame(height: 800).padding(0)
     }
     
     func getCovers() {
