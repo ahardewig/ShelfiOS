@@ -35,7 +35,11 @@ struct LoginView: View {
                   SwitchToSignupButton()
             }
             Button(action: {faceId()}) {
-                secondaryCTAButton(text: "Log In with FaceID")
+                HStack {
+                    secondaryCTAButton(text: "Log In with FaceID")
+                    Image(systemName: "faceid").accentColor(.black).imageScale(.large).offset(y: CGFloat(8))
+                }
+                
             }
             
         }.padding()
