@@ -38,7 +38,8 @@ struct ProfileView: View {
             
             Text("Rated Games:")
             RatedGamesHorizontalList(gamesRated: $gamesRated)
-        }.onAppear {
+        }
+        .onAppear {
             self.gamesRated = [];
             self.getUserData(username: self.username);
             

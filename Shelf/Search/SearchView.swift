@@ -28,14 +28,25 @@ struct SearchView: View {
             Group {
                 List(games, id: \.id) { game in
                     NavigationLink(destination: DetailedGameView(gameOverview: game, detailedGame: DetailedGame())) {
-                        URLImage(URL(string: self.url + game.coverImageId + ".jpg")!,
-                                 processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
-                            content: {
-                                $0.image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .clipped()
-                        }).frame(width: 100, height: 150)
+                        
+                        HStack(alignment: .top){
+                            
+                            URLImage(URL(string: self.url + game.coverImageId + ".jpg")!,
+                                     processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
+                                content: {
+                                    $0.image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .clipped()
+                            }).frame(width: 100, height: 150)
+                            
+                            VStack{
+                                kSubtitle(text: "Need game title")
+                                StarRatingView(games: self.$games, gameId: game.id, canEdit: false)
+                            }
+                            
+                        }
+                        
                     }
                 }
             }.onAppear {self.getGames()}
