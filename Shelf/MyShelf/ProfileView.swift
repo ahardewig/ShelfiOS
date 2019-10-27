@@ -16,44 +16,23 @@ struct ProfileView: View {
     @ObservedObject var viewedProfile: User = User.otherUser
     @State var gamesRated: [Game] = [];
     var body: some View {
-        VStack {
-            Text(viewedProfile.getUsername())
-            Text("Followers:")
-            Text("Following:")
-            Text("Rated Games:")
-            
-               List {
-                   
-                   // statuses
-                   ScrollView(.horizontal, content: {
-                       HStack(spacing: 10) {
-                        ForEach(gamesRated) { game in
-                            
-                            URLImage(URL(string: game.coverId )!,
-                                processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
-                                content: {
-                                    $0.image
-                               .resizable()
-                               .aspectRatio(contentMode: .fill)
-                               .clipped()
-                               }).frame(width: 100, height: 150)
-                           }
-                       }
-                       .padding(.leading, 10)
-                   })
-                   .frame(height: 190)
-                   
-               }
-               .padding(.leading, -20)
-               .padding(.trailing, -20)
-               .navigationBarTitle(Text("Home"))
-                   
-            
-            
-        }.onAppear {
-            self.gamesRated = [];
-            self.getUserData(username: self.username);
-        }
+            VStack {
+                
+                Text(viewedProfile.getUsername()).bold()
+                
+                Text("Followers:")
+                FollowersHorizontalList()
+                
+                Text("Following:")
+                FollowingHorizontalList()
+                
+                Text("Rated Games:")
+                RatedGamesHorizontalList(gamesRated: $gamesRated)
+                
+            }.onAppear {
+                self.gamesRated = [];
+                self.getUserData(username: self.username);
+            }
     }
     
     func getCovers() {
@@ -112,11 +91,82 @@ struct ProfileView: View {
                 }
         
     }
+    
+}
+
+struct RatedGamesHorizontalList: View {
+    @Binding var gamesRated: [Game];
+    
+    var body: some View {
+           List {
+               ScrollView(.horizontal, content: {
+                   HStack(spacing: 10) {
+                    ForEach(gamesRated) { game in
+                        
+                        URLImage(URL(string: game.coverId )!,
+                            processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
+                            content: {
+                                $0.image
+                           .resizable()
+                           .aspectRatio(contentMode: .fill)
+                           .clipped()
+                           }).frame(width: 100, height: 150)
+                       }
+                   }
+               })
+               .frame(height: 190)
+           }.frame(height: 190)
+
+    }
+}
+
+struct FollowingHorizontalList: View {
+    @ObservedObject var viewedProfile: User = User.otherUser
+    
+    var body: some View {
+           List {
+               ScrollView(.horizontal, content: {
+                   HStack(spacing: 10) {
+                    ForEach(viewedProfile.getFollowing(), id: \.self) { user in
+                        NavigationLink(destination: ProfileView(username: user)) {
+                            Text(user)
+                        }
+                       }
+                   }
+                   //.padding(.leading, 10)
+               }).frame(height: 100)
+               
+           }.frame(height: 100)
+//           .padding(.leading, -10)
+//           .padding(.trailing, -10)
+    }
+}
+
+struct FollowersHorizontalList: View {
+    @ObservedObject var viewedProfile: User = User.otherUser
+    
+    var body: some View {
+           List {
+               ScrollView(.horizontal, content: {
+                   HStack(spacing: 10) {
+                    ForEach(viewedProfile.getFollowers(), id: \.self) { user in
+                        NavigationLink(destination: ProfileView(username: user)) {
+                            Text(user)
+                        }
+                       }
+                   }
+                   
+               })
+               .frame(height: 100)
+           }.frame(height: 100)
+           
+    }
 }
 
 
-//struct ProfileView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ProfileView(user: {})
-//    }
-//}
+
+struct ProfileView_Previews: PreviewProvider {
+    static var previews: some View {
+        ProfileView(username: "alex123")
+    }
+}
