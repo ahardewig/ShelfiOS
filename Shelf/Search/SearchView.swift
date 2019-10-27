@@ -40,8 +40,8 @@ struct SearchView: View {
                             .clipped()
                             }).frame(width: 100, height: 150)
                             
-                            VStack{
-                                kSubtitle(text: "Need game title")
+                            VStack(alignment: .leading){
+                                kSubtitle(text: game.name)
                                 StarRatingView(games: self.$games, gameId: game.id, canEdit: false)
                             }
                             

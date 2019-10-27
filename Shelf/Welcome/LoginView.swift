@@ -48,7 +48,7 @@ struct LoginView: View {
             Alert(title: Text("Error!"), message: Text(errorHandler.errorMessageText), dismissButton: .default(Text("Got it!")))
         }
 
-        }
+    }
     }
 }
 
