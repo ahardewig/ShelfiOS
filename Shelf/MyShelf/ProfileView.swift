@@ -21,6 +21,10 @@ struct ProfileView: View {
         VStack() {
             
             UsernameText(username: $username)
+            
+            if (username != User.currentUser.getUsername()) {
+                MessagingView(to: viewedProfile)
+            }
 
             FollowButton(viewedProfile: viewedProfile, followButtonText: $followButtonText)
             LogoutButton()
@@ -34,7 +38,6 @@ struct ProfileView: View {
             
             Text("Rated Games:")
             RatedGamesHorizontalList(gamesRated: $gamesRated)
-        
         }.onAppear {
             self.gamesRated = [];
             self.getUserData(username: self.username);

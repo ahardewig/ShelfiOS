@@ -12,7 +12,7 @@ import SwiftyJSON
 class Message {
     public var sender: String = ""
     public var message: String = ""
-    public var id: Int = 0
+    public var id: String = ""
     
     public init() {
         
@@ -27,6 +27,7 @@ class Message {
         self.sender = parsedJson["sender"].string ?? ""
         self.message = parsedJson["message"].string ?? ""
         // TODO: I think this is actually _id, need to test with messaging that works
-        self.id = parsedJson["id"].int ?? 0
+        self.id = parsedJson["_id"].string ?? ""
+        print ("ID: " + String(self.id))
     }
 }

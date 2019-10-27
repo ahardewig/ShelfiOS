@@ -25,7 +25,7 @@ struct FindFriendView: View {
 //                        Text("MESSAGE THIS USER: " + user.username)
 //                    }
                     NavigationLink(destination: ProfileView(username: user.username)) {
-                        Text("MESSAGE THIS USER: " + user.username)
+                        Text(user.username + "'s Profile")
                     }
                 }
            // }
