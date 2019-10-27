@@ -16,17 +16,19 @@ struct ProfileView: View {
     @ObservedObject var viewedProfile: User = User.otherUser
     @State var gamesRated: [Game] = [];
     var body: some View {
-        VStack(spacing: 0) {
-                
-            Text(username).bold().offset(y: -100)
+        VStack() {
+            
+            UsernameText(username: $username)
+
+            LogoutButton()
             
             Text("Followers:")
-            Divider()
+           
             FollowersHorizontalList()
-            Divider()
+            
             Text("Following:")
             FollowingHorizontalList()
-            Divider()
+            
             Text("Rated Games:")
             RatedGamesHorizontalList(gamesRated: $gamesRated)
         
@@ -160,14 +162,39 @@ struct FollowersHorizontalList: View {
                })
                .frame(height: 100)
            }.frame(height: 100)
-           
+         
     }
+    
 }
+
+struct LogoutButton: View {
+     @ObservedObject var viewedProfile: User = User.otherUser
+    var body: some View {
+        Group() {
+             if (User.currentUser.getUsername() == viewedProfile.getUsername()) {
+                Button(action: {
+                     User.currentUser.isLoggedIn = false;
+                 }) {
+                 Text("Logout")
+                 }
+             }
+        }
+    }
+    
+}
+
 
 
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {
         ProfileView(username: "alex123")
+    }
+}
+
+struct UsernameText: View {
+    @Binding var username: String
+    var body: some View {
+        Text(username).bold().offset(x: CGFloat(0), y: CGFloat(-100))
     }
 }
