@@ -29,7 +29,9 @@ struct ProfileView: View {
             RatedGamesHorizontalList(gamesRated: $gamesRated)
             
             LogoutButton(profile: profile)
-            }
+            
+            MessageButton(profile: profile)
+        }
         .onAppear {
             self.gamesRated = [];
             self.getUserData(username: self.username);
@@ -154,6 +156,20 @@ struct FollowingHorizontalList: View {
     }
 }
 
+struct MessageButton: View {
+    @ObservedObject var profile: User
+    
+    var body: some View {
+        NavigationLink(destination: MessagingView(to: profile)) {
+            Text("Message this user")
+        }
+    }
+    
+    func goToMessages() {
+        print ("Going to messages");
+    }
+}
+
 struct FollowersHorizontalList: View {
     @ObservedObject var profile: User
     
@@ -260,8 +276,6 @@ struct FollowButton: View {
          }
     }
 }
-
-
 
 struct ProfileView_Previews: PreviewProvider {
     static var previews: some View {

@@ -20,6 +20,7 @@ struct MessagingView: View {
     
     let url = DOMAIN + "message/all"
     let sendUrl = DOMAIN + "message/send"
+    let newUrl = DOMAIN + "message/new"
     
     var body: some View {
         VStack {
@@ -51,14 +52,35 @@ struct MessagingView: View {
     
     func parseMessageData(response: Any) {
         let sampleJson = JSON(response)
-        _id = sampleJson["_id"].string ?? ""
-        let messageArray = sampleJson["messages"].array ?? []
-        
-        messages = []
-        for message in messageArray {
-            let newMessage = Message(message: message)
-            print (newMessage.message)
-            messages.append(newMessage)
+        if (!sampleJson["_id"].exists()) {
+            let headers: HTTPHeaders = [
+                "token": User.currentUser.getToken()
+            ]
+            let body: [String: String] = [
+                "firstUser": User.currentUser.getUsername(),
+                "secondUser": to.getUsername(),
+            ]
+            AF.request(newUrl, method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { resp in
+                if resp.response?.statusCode == 200 {
+                    self.messages = []
+                    let messagesJson = JSON(resp)
+                    self._id = messagesJson["_id"].string ?? ""
+                } else {
+                    let error = JSON(resp.data as Any)
+                    let errorMessage = error["message"].string
+                    print(errorMessage as Any)
+                }
+            }
+        } else {
+            _id = sampleJson["_id"].string ?? ""
+            let messageArray = sampleJson["messages"].array ?? []
+            
+            messages = []
+            for message in messageArray {
+                let newMessage = Message(message: message)
+                print (newMessage.message)
+                messages.append(newMessage)
+            }
         }
     }
     

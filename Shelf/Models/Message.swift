@@ -26,7 +26,6 @@ class Message {
         let parsedJson = JSON(json)
         self.sender = parsedJson["sender"].string ?? ""
         self.message = parsedJson["message"].string ?? ""
-        // TODO: I think this is actually _id, need to test with messaging that works
         self.id = parsedJson["_id"].string ?? ""
         print ("ID: " + String(self.id))
     }

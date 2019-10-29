@@ -30,11 +30,15 @@ struct DetailedGameView: View {
                     UserRatingView(userRating: self.$userRating, canEdit: true, gameId: self.$gameOverview.id).padding(.leading, 16)
                 }
                 
-                kSubtitle(text: "Storyline").padding(.leading, 16)
+                if (self.detailedGame.storyline != "") {
+                    kSubtitle(text: "Storyline").padding(.leading, 16)
+                }
                
                 kBody(text: "\(detailedGame.storyline)") .padding(.leading, 16).padding(.trailing, 16)
                 
-                kSubtitle(text: "Genres").padding(.leading, 16)
+                if (self.detailedGame.genres.count != 0) {
+                    kSubtitle(text: "Genres").padding(.leading, 16)
+                }
                 ScrollView(.horizontal, content: {
                     HStack{
                     ForEach(detailedGame.genres, id: \.self) { genre in
@@ -44,8 +48,9 @@ struct DetailedGameView: View {
                     
                 })
                 
-                kSubtitle(text: "Platforms").padding(.leading, 16)
-                
+                if (self.detailedGame.platforms.count != 0) {
+                    kSubtitle(text: "Platforms").padding(.leading, 16)
+                }
                 ScrollView(.horizontal, content: {
                     HStack{
                         ForEach(detailedGame.platforms, id: \.self) { platform in
@@ -55,8 +60,9 @@ struct DetailedGameView: View {
                 })
                 
                 
-                
-                kSubtitle(text: "Artworks").padding(.leading, 16)
+                if (self.detailedGame.artworkImageIds.count != 0) {
+                    kSubtitle(text: "Artworks").padding(.leading, 16)
+                }
                 ForEach(detailedGame.artworkImageIds, id: \.self) { imageId in
                     URLImage(URL(string: self.artworkUrl + imageId + ".jpg")!, content: {
                          $0.image

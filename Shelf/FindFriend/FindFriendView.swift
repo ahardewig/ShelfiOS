@@ -18,17 +18,11 @@ struct FindFriendView: View {
     
     var body: some View {
         VStack {
-            //Text("Message your friends!")
-            //NavigationView {
-                List(users, id: \.username) { user in
-//                    NavigationLink(destination: MessagingView(to: user)) {
-//                        Text("MESSAGE THIS USER: " + user.username)
-//                    }
-                    NavigationLink(destination: ProfileView(username: user.username)) {
-                        Text(user.username + "'s Profile")
-                    }
+            List(users, id: \.username) { user in
+                NavigationLink(destination: ProfileView(username: user.username)) {
+                    Text(user.username + "'s Profile")
                 }
-           // }
+            }
         }.onAppear { self.getAllUsers() }
     }
     
