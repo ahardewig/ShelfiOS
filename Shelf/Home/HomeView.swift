@@ -86,7 +86,6 @@ struct HomeView: View {
             default:
                 return this.globalRating > that.globalRating
         }
-      
     }
     
     func getGames() {
