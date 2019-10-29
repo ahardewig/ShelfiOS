@@ -20,24 +20,44 @@ struct ProfileView: View {
         VStack(alignment: .leading) {
         
             // Username Text
-            ProfileHeader(profile: profile)
+//            ProfileHeader(profile: profile, followButtonText: followButtonText)
+            HStack(alignment: .top){
+                Circle().padding().foregroundColor(Color(red: 0.98, green: 0.65, blue: 0.10, opacity: 1.0)).frame(width: 100, height: 100)
+                VStack(alignment: .leading){
+//                    kHeader(text: profile.getUsername())
+                    NavigationLink(destination: FollowersDetailedView(profile: profile)){
+                        kBody(text: "\(profile.getFollowers().count) Followers")
+                    }
+                    
+                    NavigationLink(destination: FollowingDetailedView(profile: profile)){
+                        kBody(text: "\(profile.getFollowing().count) Following")
+                    }
+                    
+                }.padding(.top, 24)
+                // Follow Button
+//                FollowButton(profile: profile, followButtonText: $followButtonText).padding(.top, 16).padding(.leading, 8)
+            }
 
-            // Follow Button
-            FollowButton(profile: profile, followButtonText: $followButtonText)
+//            // Follow Button
+//            FollowButton(profile: profile, followButtonText: $followButtonText)
             
             kHeader(text: "Rated Games:")
             RatedGamesHorizontalList(gamesRated: $gamesRated)
             
-            LogoutButton(profile: profile)
+//            LogoutButton(profile: profile)
+            Spacer()
+//            MessageButton(profile: profile)
             
-            MessageButton(profile: profile)
+            .navigationBarTitle(username)
+                .navigationBarItems(trailing:  FollowButton(profile: profile, followButtonText: $followButtonText))
+                
         }
         .onAppear {
             self.gamesRated = [];
             self.getUserData(username: self.username);
             
         }.frame(alignment: .top)
-        .padding(.all, 16)
+            .padding(.all, 16)
     }
     
     func setFollowStatus() {
@@ -226,7 +246,9 @@ struct FollowButton: View {
                     }) {
                         Text(followButtonText)
                     }
-             }
+             } else {
+                LogoutButton(profile: profile)
+            }
         }
     }
     
@@ -285,8 +307,9 @@ struct ProfileView_Previews: PreviewProvider {
 
 struct ProfileHeader: View {
     @ObservedObject var profile: User
+    @State var followButtonText: String
     var body: some View {
-        HStack{
+        HStack(alignment: .top){
             Circle().padding().foregroundColor(Color(red: 0.98, green: 0.65, blue: 0.10, opacity: 1.0)).frame(width: 100, height: 100)
             VStack(alignment: .leading){
                 kHeader(text: profile.getUsername())
@@ -295,8 +318,9 @@ struct ProfileHeader: View {
                     kBody(text: "\(profile.getFollowing().count) Followers")
                 }
                 
-            }
-            
+            }.padding(.top, 8)
+            // Follow Button
+            FollowButton(profile: profile, followButtonText: $followButtonText).padding(.top, 16).padding(.leading, 8)
         }
     }
 }

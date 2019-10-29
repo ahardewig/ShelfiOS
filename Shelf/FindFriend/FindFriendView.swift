@@ -24,6 +24,7 @@ struct FindFriendView: View {
                 }
             }
         }.onAppear { self.getAllUsers() }
+            .navigationBarTitle("All Users")
     }
     
     func getAllUsers() {

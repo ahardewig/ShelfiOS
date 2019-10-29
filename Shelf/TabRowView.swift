@@ -14,7 +14,7 @@ struct TabRowView: View {
         UINavigationBar.appearance().largeTitleTextAttributes = [.font : UIFont(name: "Karla-Bold", size: 32)!]
     }
     var body: some View {
-        TabView {
+        TabView() {
             NavigationView { HomeView() }
                 .tabItem {
                     Image(systemName: "house.fill")

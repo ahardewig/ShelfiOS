@@ -17,7 +17,7 @@ let KarlaTiny = Font.custom("Karla", size: 13)
 
 struct LoginViewComponents: View {
     var body: some View {
-        genreLabel(text: "This is a genre")
+        profileSmall(text: "zachzach")
     }
 }
 
@@ -31,6 +31,28 @@ struct genreLabel: View {
             RoundedRectangle(cornerRadius: 16)
                 .stroke(Color(red: 0.98, green: 0.65, blue: 0.10, opacity: 1.0), lineWidth: 1)
         )
+    }
+    
+    init(text: String){
+        text1 = text
+    }
+}
+
+struct profileSmall: View {
+    var text1: String;
+    var body: some View {
+        HStack{
+            Circle().frame(width: 20, height: 20)
+                .padding(0)
+                .foregroundColor(Color(red: 0.98, green: 0.65, blue: 0.10, opacity: 1.0))
+                
+            Text(text1)
+            .font(KarlaTiny)
+            .padding()
+                .padding(.leading, 0)
+        }
+        
+        
     }
     
     init(text: String){

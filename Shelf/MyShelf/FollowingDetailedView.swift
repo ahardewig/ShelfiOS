@@ -8,16 +8,16 @@
 
 import SwiftUI
 
-struct FollowersDetailedView: View {
+struct FollowingDetailedView: View {
     @ObservedObject var profile: User
     
     var body: some View {
         VStack(alignment: .leading){
             
-            if (profile.getFollowers().count > 0) {
+            if (profile.getFollowing().count > 0) {
                 List(content: {
                     
-                     ForEach(profile.getFollowers(), id: \.self) { user in
+                     ForEach(profile.getFollowing(), id: \.self) { user in
                          NavigationLink(destination: ProfileView(username: user)) {
                              profileSmall(text: user)
                          }
@@ -25,22 +25,21 @@ struct FollowersDetailedView: View {
                     //.padding(.leading, 10)
                 })
             } else {
-                kSubtitle(text: "Whoops, looks like you don't have any followers")
+                kSubtitle(text: "Whoops, looks like you're not following anyone.")
             }
             
             
             Spacer()
-            
-            .navigationBarTitle("Followers")
+            .navigationBarTitle("Following")
             .navigationBarHidden(false)
         }.padding(16)
     }
 }
 
-struct FollowersDetailedView_Previews: PreviewProvider {
+struct FollowingDetailedView_Previews: PreviewProvider {
     
     static var previews: some View {
-        FollowersDetailedView(profile: setupUser())
+        FollowingDetailedView(profile: setupUser())
     }
     
     static func setupUser() -> User {
