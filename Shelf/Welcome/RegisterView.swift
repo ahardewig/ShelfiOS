@@ -18,10 +18,10 @@ struct RegisterView: View {
     @State var email: String = ""
     @State var birthday = Date()
     @EnvironmentObject var errorHandler: ErrorHandler
+    @State private var isVerifyingAccount: Bool = false
     
 //    Font information
     let KarlaRegular = Font.custom("Karla", size: 24);
-    
     
     var body: some View {
     
@@ -33,12 +33,12 @@ struct RegisterView: View {
                 PasswordTextField(password: $password)
                 ConfirmPasswordTextField(confirmPassword: $confirmPassword)
                 EmailTextField(email: $email)
-                DatePicker(
-                    selection: $birthday,
-                    in: ...Date(),
-                    displayedComponents: .date,
-                    label: { Text("DOB").font(KarlaInput) }
-                ).font(KarlaInput)
+//                DatePicker(
+//                    selection: $birthday,
+//                    in: ...Date(),
+//                    displayedComponents: .date,
+//                    label: { Text("DOB").font(KarlaInput) }
+//                ).font(KarlaInput)
                 
                 Button(action: {registerUser(username: self.username, password: self.password, confirmPassword: self.confirmPassword, email: self.email, birthday: self.birthday)}) {
                    SignupButton()
@@ -47,6 +47,17 @@ struct RegisterView: View {
                 Button(action: {self.isRegistering = false}) {
                       SwitchToLoginButton()
                 }
+                Spacer()
+                Button(action: {
+                    print("Button Pushed")
+                    self.isVerifyingAccount = true
+                    
+                }) {
+                   VerifyButton()
+                }.sheet(isPresented: self.$isVerifyingAccount) {
+                    VerifyModal()
+                }
+                
             }.padding()
                 .alert(isPresented: $errorHandler.errorDetected) {
                     Alert(title: Text("Error!"), message: Text(errorHandler.errorMessageText), dismissButton: .default(Text("Got it!")))
@@ -55,7 +66,34 @@ struct RegisterView: View {
         .background(Color(red: 248, green: 247, blue: 251, opacity: 1.0))
         
     }
+    
+    
 }
+
+
+struct VerifyModal: View {
+    @Environment(\.presentationMode) var presentationMode
+    @State var email: String = ""
+    @State var verificationNum: String = ""
+    
+    var body: some View {
+        VStack {
+            Group() {
+                EmailVerifyTextField(email: $email).autocapitalization(.none)
+                VerifyNumberTextField(verificationNum: $verificationNum)
+                Button(action: {
+                    verifyEmail(email: self.email, verificationNum: self.verificationNum)
+                    self.presentationMode.wrappedValue.dismiss()
+                }) {
+                    SubmitVerifyButton()
+                }.padding(.bottom, 50)
+            }
+            
+        }
+    }
+}
+
+
 
 struct SwitchToLoginButton: View {
     var body: some View {
@@ -115,13 +153,43 @@ struct RegisterView_Previews: PreviewProvider {
 struct SignupButton: View {
     var body: some View {
         primaryCTAButton(text: "REGISTER")
-//        Text("Register")
-//            .font(KarlaSubtitle)
-//            .foregroundColor(.white)
-//            .padding()
-//            .frame(width: 320, height: 60)
-//            .background(Color(red: 0.98, green: 0.65, blue: 0.10, opacity: 1.0))
-//            .cornerRadius(15.0)
+    }
+}
 
+struct VerifyButton: View {
+    var body: some View {
+        primaryCTAButton(text: "VERIFY ACCOUNT")
+    }
+}
+
+struct SubmitVerifyButton: View {
+    var body: some View {
+        primaryCTAButton(text: "SUBMIT")
+    }
+}
+
+struct EmailVerifyTextField: View {
+    @Binding var email: String
+    
+    var body: some View {
+        TextField("Email" , text: $email )
+            .padding()
+            .background(lightGreyColor)
+            .cornerRadius(5.0)
+            .padding(.bottom, 20)
+            .font(KarlaInput)
+    }
+}
+
+struct VerifyNumberTextField: View {
+    @Binding var verificationNum: String
+    
+    var body: some View {
+        TextField("Verification Number" , text: $verificationNum )
+            .padding()
+            .background(lightGreyColor)
+            .cornerRadius(5.0)
+            .padding(.bottom, 20)
+            .font(KarlaInput)
     }
 }

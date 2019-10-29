@@ -16,15 +16,15 @@ struct HomeView: View {
     @State var games: [GameOverview] = []
     @State var showSortingSheet: Bool = false
     @State var currentSortingMethod: SortingEnum = SortingEnum.GlobalDescending
+    @State var isLoading: Bool = true;
     let url = "https://images.igdb.com/igdb/image/upload/t_cover_big/"
 
     
     var body: some View {
-        
             
             HStack {
-                    
-                    List(games.sorted(by: customSorter), id: \.id) { game in
+                LoadingView(isShowing: $isLoading) {
+                    List(self.games.sorted(by: self.customSorter), id: \.id) { game in
                         NavigationLink(destination: DetailedGameView(gameOverview: game, detailedGame: DetailedGame())) {
                             URLImage(URL(string: self.url + game.coverImageId + ".jpg")!,
                                      processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
@@ -36,23 +36,18 @@ struct HomeView: View {
                             }).frame(width: 100, height: 150)
 
                             VStack(alignment: .leading) {
-                                kSubtitle(text: "Game Title")
+                                kSubtitle(text: game.name)
                                 StarRatingView(games: self.$games, gameId: game.id, canEdit: false)
                             }
                         }
                     }.navigationBarTitle(Text("Global Games").font(KarlaHeader))
-                }.onAppear {
-                    self.getGames()
-                    //self.refreshUser()
-
-
-            }.font(KarlaBody).frame(height: 675).navigationBarItems(trailing: SortingSheetView(showSortingSheet: $showSortingSheet, currentSortingMethod: $currentSortingMethod))
-
                 
-        
-
-        
-
+            }.onAppear {
+                    self.isLoading = true;
+                    self.getGames()
+                    
+            }.font(KarlaBody).frame(height: 675).navigationBarItems(trailing: SortingSheetView(showSortingSheet: $showSortingSheet, currentSortingMethod: $currentSortingMethod))
+        }
     }
     
     func refreshUser() {
@@ -171,6 +166,8 @@ struct HomeView: View {
             }
         }
         self.games = updatedGames
+        
+        isLoading = false;
 
     }
     
@@ -210,10 +207,12 @@ struct HomeView: View {
         let sampleJson = JSON(response)
         let responseArray = sampleJson.array
         games = [];
+        var temp: [GameOverview] = [];
         for game in responseArray! {
             let newGame = GameOverview(game: game)
-            games.append(newGame)
+            temp.append(newGame)
         }
+        games = temp.sorted(by: customSorter)
     }
     
     
@@ -251,6 +250,45 @@ struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
     }
+}
+
+struct ActivityIndicator: UIViewRepresentable {
+
+    @Binding var isAnimating: Bool
+    let style: UIActivityIndicatorView.Style
+
+    func makeUIView(context: UIViewRepresentableContext<ActivityIndicator>) -> UIActivityIndicatorView {
+        return UIActivityIndicatorView(style: style)
+    }
+
+    func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicator>) {
+        isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
+    }
+}
+
+struct LoadingView<Content>: View where Content: View {
+
+    @Binding var isShowing: Bool
+    var content: () -> Content
+
+    var body: some View {
+        GeometryReader { geometry in
+ 
+            ZStack(alignment: .center) {
+
+                self.content()
+                    .disabled(self.isShowing)
+                    .blur(radius: self.isShowing ? 3 : 0)
+
+                VStack {
+                    ActivityIndicator(isAnimating: .constant(true), style: .large)
+                }
+                .cornerRadius(20)
+                .opacity(self.isShowing ? 1 : 0)
+            }
+        }
+    }
+
 }
 
 struct SortingSheetView: View {

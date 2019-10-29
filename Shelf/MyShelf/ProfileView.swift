@@ -13,31 +13,23 @@ import URLImage
 
 struct ProfileView: View {
     @State var username: String
-    @ObservedObject var viewedProfile: User = User.otherUser
     @State var gamesRated: [Game] = [];
     @State var followButtonText: String = "Follow"
-    
+    @ObservedObject var profile: User = User()
     var body: some View {
         VStack(alignment: .leading) {
-            
+        
             // Username Text
-            ProfileHeader(username: $username)
-            
-            // Messaging View
-//            if (username != User.currentUser.getUsername()) {
-//                MessagingView(to: viewedProfile)
-//            }
+            ProfileHeader(profile: profile)
 
             // Follow Button
-            FollowButton(viewedProfile: viewedProfile, followButtonText: $followButtonText)
+            FollowButton(profile: profile, followButtonText: $followButtonText)
             
             kHeader(text: "Rated Games:")
             RatedGamesHorizontalList(gamesRated: $gamesRated)
             
-            LogoutButton()
+            LogoutButton(profile: profile)
             }
-            
-            
         .onAppear {
             self.gamesRated = [];
             self.getUserData(username: self.username);
@@ -47,22 +39,22 @@ struct ProfileView: View {
     }
     
     func setFollowStatus() {
-        if(self.isFollowing(curProf: self.viewedProfile)) {
+        if(self.isFollowing(curProf: self.profile)) {
             self.followButtonText = "Unfollow"
         }
         else {
             self.followButtonText = "Follow"
         }
     }
-    
+
     func isFollowing(curProf: User) -> Bool {
         print(User.currentUser.getFollowing())
-        print(self.viewedProfile.getFollowers())
-        return User.currentUser.getFollowing().contains(self.viewedProfile.getUsername())
+        print(self.profile.getFollowers())
+        return User.currentUser.getFollowing().contains(self.profile.getUsername())
     }
-    
+
     func getCovers() {
-        for game in viewedProfile.getGamesRated() {
+        for game in profile.getGamesRated() {
             setCoverId(id: game.gameId, game: game)
         }
     }
@@ -82,16 +74,16 @@ struct ProfileView: View {
                 let parsed = responseArray?[0];
                 let parsedCover = JSON(parsed?["cover"] as Any)
                 let coverImageId = parsedCover["image_id"].string ?? ""
-                var g: Game = Game(rating: game.rating, gameId: String(game.gameId))
+                let g: Game = Game(rating: game.rating, gameId: String(game.gameId))
                 g.coverId = ("https://images.igdb.com/igdb/image/upload/t_cover_big/" + coverImageId + ".jpg")
                 self.gamesRated.append(g)
-                
+
              } else {
                  let error = JSON(response.data as Any)
                  let errorMessage = error["message"].string
                  print(errorMessage as Any)
              }
-             
+
          }
     }
     
@@ -102,11 +94,11 @@ struct ProfileView: View {
                let body: [String: String] = [
                 "username": self.username,
                ]
-        
+
         AF.request(DOMAIN + "user/data",
                            method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
                     if response.response?.statusCode == 200 {
-                        User.otherUser.initFromJson(json: response.value as AnyObject)
+                        self.profile.initFromJson(json: response.value as AnyObject)
                         self.getCovers();
                         self.setFollowStatus()
                     } else {
@@ -114,9 +106,9 @@ struct ProfileView: View {
                         let errorMessage = error["message"].string
                         print(errorMessage as Any)
                     }
-                    
+
                 }
-        
+
     }
     
 }
@@ -146,12 +138,12 @@ struct RatedGamesHorizontalList: View {
 }
 
 struct FollowingHorizontalList: View {
-    @ObservedObject var viewedProfile: User = User.otherUser
+    @ObservedObject var profile: User
     
     var body: some View {
            ScrollView(.horizontal, content: {
                HStack(spacing: 10) {
-                ForEach(viewedProfile.getFollowing(), id: \.self) { user in
+                ForEach(profile.getFollowing(), id: \.self) { user in
                     NavigationLink(destination: ProfileView(username: user)) {
                         genreLabel(text: user)
                     }
@@ -163,13 +155,13 @@ struct FollowingHorizontalList: View {
 }
 
 struct FollowersHorizontalList: View {
-    @ObservedObject var viewedProfile: User = User.otherUser
+    @ObservedObject var profile: User
     
     var body: some View {
            List {
                ScrollView(.horizontal, content: {
                    HStack(spacing: 10) {
-                    ForEach(viewedProfile.getFollowers(), id: \.self) { user in
+                    ForEach(profile.getFollowers(), id: \.self) { user in
                         NavigationLink(destination: ProfileView(username: user)) {
                             Text(user)
                         }
@@ -185,10 +177,10 @@ struct FollowersHorizontalList: View {
 }
 
 struct LogoutButton: View {
-     @ObservedObject var viewedProfile: User = User.otherUser
+     @ObservedObject var profile: User
     var body: some View {
         Group() {
-             if (User.currentUser.getUsername() == viewedProfile.getUsername()) {
+             if (User.currentUser.getUsername() == profile.getUsername()) {
                 Button(action: {
                      User.currentUser.isLoggedIn = false;
                  }) {
@@ -199,12 +191,13 @@ struct LogoutButton: View {
     }
 }
 
+
 struct FollowButton: View {
-    @ObservedObject var viewedProfile: User = User.otherUser
+    @ObservedObject var profile: User
     @Binding var followButtonText: String
     var body: some View {
         Group() {
-             if (User.currentUser.getUsername() != viewedProfile.getUsername()) {
+             if (User.currentUser.getUsername() != profile.getUsername()) {
                     Button(action: {
                         if (self.followButtonText == "Follow") {
                             self.followUser()
@@ -226,48 +219,47 @@ struct FollowButton: View {
             "token": User.currentUser.getToken()
         ]
         let body: [String: String] = [
-            "user": viewedProfile.getUsername()
+            "user": profile.getUsername()
         ]
          AF.request(DOMAIN + "user/follow",
                     method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
              if response.response?.statusCode == 200 {
-                
-                self.viewedProfile.addFollower(follower: User.currentUser.getUsername())
-                User.currentUser.addFollowing(following: self.viewedProfile.getUsername())
-                
+
+                self.profile.addFollower(follower: User.currentUser.getUsername())
+                User.currentUser.addFollowing(following: self.profile.getUsername())
+
              } else {
                  let error = JSON(response.data as Any)
                  let errorMessage = error["message"].string
                  print(errorMessage as Any)
              }
-             
+
          }
     }
-    
+
     func unfollowUser() {
         let headers: HTTPHeaders = [
             "token": User.currentUser.getToken()
         ]
         let body: [String: String] = [
-            "user": viewedProfile.getUsername()
+            "user": profile.getUsername()
         ]
          AF.request(DOMAIN + "user/unfollow",
                     method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
              if response.response?.statusCode == 200 {
-                
-                self.viewedProfile.removeFollower(follower: User.currentUser.getUsername())
-                User.currentUser.removeFollowing(following: self.viewedProfile.getUsername())
-                
+
+                self.profile.removeFollower(follower: User.currentUser.getUsername())
+                User.currentUser.removeFollowing(following: self.profile.getUsername())
+
              } else {
                  let error = JSON(response.data as Any)
                  let errorMessage = error["message"].string
                  print(errorMessage as Any)
              }
-             
+
          }
     }
 }
-
 
 
 
@@ -278,37 +270,19 @@ struct ProfileView_Previews: PreviewProvider {
 }
 
 struct ProfileHeader: View {
-    @Binding var username: String
-    @ObservedObject var viewedProfile: User = User.otherUser
+    @ObservedObject var profile: User
     var body: some View {
         HStack{
             Circle().padding().foregroundColor(Color(red: 0.98, green: 0.65, blue: 0.10, opacity: 1.0)).frame(width: 100, height: 100)
             VStack(alignment: .leading){
-                kHeader(text: username)
-                NavigationLink(destination: FollowersDetailedView(username: username)){
-                    kBody(text: "\(viewedProfile.getFollowers().count) Followers")
-                    kBody(text: "\(viewedProfile.getFollowing().count) Followers")
+                kHeader(text: profile.getUsername())
+                NavigationLink(destination: FollowersDetailedView(profile: profile)){
+                    kBody(text: "\(profile.getFollowers().count) Followers")
+                    kBody(text: "\(profile.getFollowing().count) Followers")
                 }
                 
             }
             
         }
-        
     }
 }
-
-//NavigationLink(destination: DetailedGameView(gameOverview: game, detailedGame: DetailedGame())) {
-//    URLImage(URL(string: self.url + game.coverImageId + ".jpg")!,
-//             processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
-//        content: {
-//            $0.image
-//    .resizable()
-//    .aspectRatio(contentMode: .fill)
-//    .clipped()
-//    }).frame(width: 100, height: 150)
-//
-//    VStack(alignment: .leading) {
-//        kSubtitle(text: "Game Title")
-//        StarRatingView(games: self.$games, gameId: game.id, canEdit: false)
-//    }
-//}
