@@ -13,29 +13,28 @@ import URLImage
 
 struct ProfileView: View {
     @State var username: String
-    @ObservedObject var viewedProfile: User = User.otherUser
     @State var gamesRated: [Game] = [];
     @State var followButtonText: String = "Follow"
-    
+    @ObservedObject var profile: User = User()
     var body: some View {
         VStack() {
             
-            UsernameText(username: $username)
-            
             if (username != User.currentUser.getUsername()) {
-                MessagingView(to: viewedProfile)
+                MessagingView(to: profile)
             }
+            
+            UsernameText(profile: profile)
 
-            FollowButton(viewedProfile: viewedProfile, followButtonText: $followButtonText)
-            LogoutButton()
-            
+            FollowButton(profile: profile, followButtonText: $followButtonText)
+            LogoutButton(profile: profile)
+
             Text("Followers:")
-           
-            FollowersHorizontalList()
-            
+
+            FollowersHorizontalList(profile: profile)
+
             Text("Following:")
-            FollowingHorizontalList()
-            
+            FollowingHorizontalList(profile: profile)
+
             Text("Rated Games:")
             RatedGamesHorizontalList(gamesRated: $gamesRated)
         }
@@ -47,22 +46,22 @@ struct ProfileView: View {
     }
     
     func setFollowStatus() {
-        if(self.isFollowing(curProf: self.viewedProfile)) {
+        if(self.isFollowing(curProf: self.profile)) {
             self.followButtonText = "Unfollow"
         }
         else {
             self.followButtonText = "Follow"
         }
     }
-    
+
     func isFollowing(curProf: User) -> Bool {
         print(User.currentUser.getFollowing())
-        print(self.viewedProfile.getFollowers())
-        return User.currentUser.getFollowing().contains(self.viewedProfile.getUsername())
+        print(self.profile.getFollowers())
+        return User.currentUser.getFollowing().contains(self.profile.getUsername())
     }
-    
+
     func getCovers() {
-        for game in viewedProfile.getGamesRated() {
+        for game in profile.getGamesRated() {
             setCoverId(id: game.gameId, game: game)
         }
     }
@@ -82,16 +81,16 @@ struct ProfileView: View {
                 let parsed = responseArray?[0];
                 let parsedCover = JSON(parsed?["cover"] as Any)
                 let coverImageId = parsedCover["image_id"].string ?? ""
-                var g: Game = Game(rating: game.rating, gameId: String(game.gameId))
+                let g: Game = Game(rating: game.rating, gameId: String(game.gameId))
                 g.coverId = ("https://images.igdb.com/igdb/image/upload/t_cover_big/" + coverImageId + ".jpg")
                 self.gamesRated.append(g)
-                
+
              } else {
                  let error = JSON(response.data as Any)
                  let errorMessage = error["message"].string
                  print(errorMessage as Any)
              }
-             
+
          }
     }
     
@@ -102,11 +101,11 @@ struct ProfileView: View {
                let body: [String: String] = [
                 "username": self.username,
                ]
-        
+
         AF.request(DOMAIN + "user/data",
                            method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
                     if response.response?.statusCode == 200 {
-                        User.otherUser.initFromJson(json: response.value as AnyObject)
+                        self.profile.initFromJson(json: response.value as AnyObject)
                         self.getCovers();
                         self.setFollowStatus()
                     } else {
@@ -114,9 +113,9 @@ struct ProfileView: View {
                         let errorMessage = error["message"].string
                         print(errorMessage as Any)
                     }
-                    
+
                 }
-        
+
     }
     
 }
@@ -148,35 +147,32 @@ struct RatedGamesHorizontalList: View {
 }
 
 struct FollowingHorizontalList: View {
-    @ObservedObject var viewedProfile: User = User.otherUser
+    @ObservedObject var profile: User
     
     var body: some View {
            List {
                ScrollView(.horizontal, content: {
                    HStack(spacing: 10) {
-                    ForEach(viewedProfile.getFollowing(), id: \.self) { user in
+                    ForEach(profile.getFollowing(), id: \.self) { user in
                         NavigationLink(destination: ProfileView(username: user)) {
                             Text(user)
                         }
                        }
                    }
-                   //.padding(.leading, 10)
                }).frame(height: 100)
                
            }.frame(height: 100)
-//           .padding(.leading, -10)
-//           .padding(.trailing, -10)
     }
 }
 
 struct FollowersHorizontalList: View {
-    @ObservedObject var viewedProfile: User = User.otherUser
+    @ObservedObject var profile: User
     
     var body: some View {
            List {
                ScrollView(.horizontal, content: {
                    HStack(spacing: 10) {
-                    ForEach(viewedProfile.getFollowers(), id: \.self) { user in
+                    ForEach(profile.getFollowers(), id: \.self) { user in
                         NavigationLink(destination: ProfileView(username: user)) {
                             Text(user)
                         }
@@ -192,10 +188,10 @@ struct FollowersHorizontalList: View {
 }
 
 struct LogoutButton: View {
-     @ObservedObject var viewedProfile: User = User.otherUser
+     @ObservedObject var profile: User
     var body: some View {
         Group() {
-             if (User.currentUser.getUsername() == viewedProfile.getUsername()) {
+             if (User.currentUser.getUsername() == profile.getUsername()) {
                 Button(action: {
                      User.currentUser.isLoggedIn = false;
                  }) {
@@ -206,12 +202,13 @@ struct LogoutButton: View {
     }
 }
 
+
 struct FollowButton: View {
-    @ObservedObject var viewedProfile: User = User.otherUser
+    @ObservedObject var profile: User
     @Binding var followButtonText: String
     var body: some View {
         Group() {
-             if (User.currentUser.getUsername() != viewedProfile.getUsername()) {
+             if (User.currentUser.getUsername() != profile.getUsername()) {
                     Button(action: {
                         if (self.followButtonText == "Follow") {
                             self.followUser()
@@ -233,48 +230,47 @@ struct FollowButton: View {
             "token": User.currentUser.getToken()
         ]
         let body: [String: String] = [
-            "user": viewedProfile.getUsername()
+            "user": profile.getUsername()
         ]
          AF.request(DOMAIN + "user/follow",
                     method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
              if response.response?.statusCode == 200 {
-                
-                self.viewedProfile.addFollower(follower: User.currentUser.getUsername())
-                User.currentUser.addFollowing(following: self.viewedProfile.getUsername())
-                
+
+                self.profile.addFollower(follower: User.currentUser.getUsername())
+                User.currentUser.addFollowing(following: self.profile.getUsername())
+
              } else {
                  let error = JSON(response.data as Any)
                  let errorMessage = error["message"].string
                  print(errorMessage as Any)
              }
-             
+
          }
     }
-    
+
     func unfollowUser() {
         let headers: HTTPHeaders = [
             "token": User.currentUser.getToken()
         ]
         let body: [String: String] = [
-            "user": viewedProfile.getUsername()
+            "user": profile.getUsername()
         ]
          AF.request(DOMAIN + "user/unfollow",
                     method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
              if response.response?.statusCode == 200 {
-                
-                self.viewedProfile.removeFollower(follower: User.currentUser.getUsername())
-                User.currentUser.removeFollowing(following: self.viewedProfile.getUsername())
-                
+
+                self.profile.removeFollower(follower: User.currentUser.getUsername())
+                User.currentUser.removeFollowing(following: self.profile.getUsername())
+
              } else {
                  let error = JSON(response.data as Any)
                  let errorMessage = error["message"].string
                  print(errorMessage as Any)
              }
-             
+
          }
     }
 }
-
 
 
 
@@ -285,8 +281,8 @@ struct ProfileView_Previews: PreviewProvider {
 }
 
 struct UsernameText: View {
-    @Binding var username: String
+    @ObservedObject var profile: User
     var body: some View {
-        Text(username).bold().offset(x: CGFloat(0), y: CGFloat(-100))
+        Text(profile.getUsername()).bold().offset(x: CGFloat(0), y: CGFloat(-100))
     }
 }

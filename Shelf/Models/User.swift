@@ -24,10 +24,9 @@ class User: ObservableObject {
     @Published var isLoggedIn: Bool = false;
     
     static let currentUser = User();
-    static let otherUser = User();
     
-    private init() {
-        //SINGLETON
+    public init() {
+        
     }
     
     
