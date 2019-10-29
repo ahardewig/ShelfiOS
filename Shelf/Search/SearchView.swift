@@ -15,6 +15,8 @@ struct SearchView: View {
     
     @State var games: Array<GameOverview> = []
     @State var query: String = ""
+    @State var showSortingSheet: Bool = false
+    @State var currentSortingMethod: SortingEnum = SortingEnum.GlobalDescending
     @State var test: Bool = false;
     
     let url = "https://images.igdb.com/igdb/image/upload/t_cover_big/"
@@ -26,7 +28,7 @@ struct SearchView: View {
                 primaryCTAButton(text: "Search")
             }
             Group {
-                List(games, id: \.id) { game in
+                List(self.games.sorted(by: self.customSorter), id: \.id) { game in
                     NavigationLink(destination: DetailedGameView(gameOverview: game, detailedGame: DetailedGame())) {
                         
                         HStack(alignment: .top){
@@ -49,8 +51,47 @@ struct SearchView: View {
                         
                     }
                 }
-            }.onAppear {self.getGames()}
-                .navigationBarTitle("Search")
+            }.onAppear {
+                //self.getGames()
+            }.navigationBarTitle("Search")
+        }.font(KarlaBody).frame(height: 675).navigationBarItems(trailing: SortingSheetView(showSortingSheet: $showSortingSheet, currentSortingMethod: $currentSortingMethod))
+    }
+    
+    func refreshUser() {
+            let headers: HTTPHeaders = [
+                       "token": User.currentUser.getToken()
+                   ]
+                   let body: [String: String] = [
+                    "username": User.currentUser.getUsername(),
+                   ]
+            
+            AF.request(DOMAIN + "user/data",
+                               method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
+                        if response.response?.statusCode == 200 {
+                            User.currentUser.initFromJson(json: response.value as AnyObject)
+                            self.getUserRatings()
+                        } else {
+                            let error = JSON(response.data as Any)
+                            let errorMessage = error["message"].string
+                            print(errorMessage as Any)
+                        }
+                        
+                    }
+    }
+    
+    func customSorter(this:GameOverview, that:GameOverview) -> Bool {
+
+        switch currentSortingMethod {
+            
+            case .GlobalAscending:
+                return this.globalRating < that.globalRating
+            case .UserAscending:
+            
+                return this.userRating < that.userRating
+            case .UserDescending:
+                return this.userRating > that.userRating
+            default:
+                return this.globalRating > that.globalRating
         }
     }
     
@@ -63,12 +104,105 @@ struct SearchView: View {
                    headers: headers).responseJSON { response in
             if response.response?.statusCode == 200 {
                 self.getGameOverviewsArray(response: response.value as Any);
+                self.getGlobalRatings()
+                self.refreshUser()
             } else {
                 let error = JSON(response.data as Any)
                 let errorMessage = error["message"].string
                 print(errorMessage as Any)
             }
         }
+    }
+    
+    func getGlobalRatings() {
+        
+        let headers: HTTPHeaders = [
+            "token": User.currentUser.getToken()
+        ]
+        AF.request(DOMAIN + "ratingInfo/all",
+                   headers: headers).responseJSON { response in
+            if response.response?.statusCode == 200 {
+                
+                let sampleJson = JSON(response.value as Any)
+                let responseArray = sampleJson.array
+                var ratings: [RatingInfo] = []
+                for ratingInfo in responseArray! {
+                    let r: RatingInfo = RatingInfo()
+                    r.initFromJson(json: ratingInfo)
+                    ratings.append(r)
+                }
+                self.attachGlobalRatingsToGames(ratingInfos: ratings)
+            } else {
+                let error = JSON(response.data as Any)
+                let errorMessage = error["message"].string
+                print(errorMessage as Any)
+            }
+            
+        }
+    }
+    
+    func getUserRatings() {
+        self.attachUserRatingsToGames(gamesRated: User.currentUser.getGamesRated())
+    }
+    
+    func attachUserRatingsToGames(gamesRated : [Game]) {
+        var map: [Int: Int] = [:]
+       
+        for game in gamesRated {
+            map.updateValue(game.rating, forKey: game.gameId)
+        }
+        
+        var updatedGames: Array<GameOverview> = []
+        for game in self.games {
+            let key = game.id
+            let keyExists = map[key] != nil
+            if (keyExists) {
+                let score: Int = map[key] ?? 0
+                print("SCORE \(score)")
+                game.userRating = score
+                updatedGames.append(game)
+            }
+            else {
+                print("DOING ZERO")
+                game.userRating = 0
+                updatedGames.append(game)
+                
+            }
+        }
+        self.games = updatedGames
+
+    }
+    
+
+    
+    func attachGlobalRatingsToGames(ratingInfos : [RatingInfo]) {
+        var map: [Int: Int] = [:]
+       
+        for ratingInfo in ratingInfos {
+            var score: Int = 0
+            if (ratingInfo.numberOfRatings != 0) {
+                score = ratingInfo.totalRatingValue / ratingInfo.numberOfRatings
+            }
+            map.updateValue(score, forKey: Int(ratingInfo.gameId) ?? 0)
+        }
+        
+        var updatedGames: Array<GameOverview> = []
+        for game in games {
+            let key = game.id
+            let keyExists = map[key] != nil
+            if (keyExists) {
+                let score: Int = map[key] ?? 0
+                game.globalRating = score
+                updatedGames.append(game)
+            }
+            else {
+                game.globalRating = 0
+                updatedGames.append(game)
+                
+            }
+        }
+        games = updatedGames
+
     }
     
     func searchGames(query: String) {
@@ -84,6 +218,8 @@ struct SearchView: View {
             if response.response?.statusCode == 200 {
                 self.games = [];
                 self.getGameOverviewsArray(response: response.value as Any);
+                self.getGlobalRatings()
+                self.refreshUser()
             } else {
                 let error = JSON(response.data as Any)
                 let errorMessage = error["message"].string
@@ -95,12 +231,14 @@ struct SearchView: View {
     func getGameOverviewsArray(response: Any) {
         let sampleJson = JSON(response)
         let responseArray = sampleJson.array
+        games = [];
+        var temp: [GameOverview] = [];
         for game in responseArray! {
             let newGame = GameOverview(game: game)
-            games.append(newGame)
+            temp.append(newGame)
         }
+        games = temp.sorted(by: customSorter)
     }
-    
 }
 
 struct QueryTextField: View {
