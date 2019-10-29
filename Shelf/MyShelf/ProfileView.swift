@@ -41,7 +41,10 @@ struct ProfileView: View {
 //            // Follow Button
 //            FollowButton(profile: profile, followButtonText: $followButtonText)
             
-            kHeader(text: "Rated Games:")
+            NavigationLink(destination: CertainGamesListView(profile: profile, gamesRated: $gamesRated)){
+                kHeader(text: "Rated Games >")
+            }
+            
             RatedGamesHorizontalList(gamesRated: $gamesRated)
             
 //            LogoutButton(profile: profile)
@@ -150,11 +153,11 @@ struct RatedGamesHorizontalList: View {
                        .resizable()
                        .aspectRatio(contentMode: .fill)
                        .clipped()
-                       }).frame(width: 100, height: 150)
+                       }).frame(width: 180, height: 250)
                    }
                }
            })
-           .frame(height: 150)
+           .frame(height: 250)
 
     }
 }
