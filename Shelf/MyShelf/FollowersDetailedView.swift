@@ -9,8 +9,7 @@
 import SwiftUI
 
 struct FollowersDetailedView: View {
-    @State var username: String
-    @ObservedObject var viewedProfile: User = User.otherUser
+    @ObservedObject var profile: User
     
     var body: some View {
         VStack(alignment: .leading){
@@ -18,7 +17,7 @@ struct FollowersDetailedView: View {
             kHeader(text: "Followers")
             ScrollView(.horizontal, content: {
                 HStack(spacing: 10) {
-                 ForEach(viewedProfile.getFollowers(), id: \.self) { user in
+                 ForEach(profile.getFollowers(), id: \.self) { user in
                      NavigationLink(destination: ProfileView(username: user)) {
                          genreLabel(text: user)
                      }
@@ -30,7 +29,7 @@ struct FollowersDetailedView: View {
             kHeader(text: "Following")
             ScrollView(.horizontal, content: {
                 HStack(spacing: 10) {
-                 ForEach(viewedProfile.getFollowing(), id: \.self) { user in
+                 ForEach(profile.getFollowing(), id: \.self) { user in
                      NavigationLink(destination: ProfileView(username: user)) {
                          genreLabel(text: user)
                      }
@@ -43,7 +42,14 @@ struct FollowersDetailedView: View {
 }
 
 struct FollowersDetailedView_Previews: PreviewProvider {
+    
     static var previews: some View {
-        FollowersDetailedView(username: "zachzach")
+        FollowersDetailedView(profile: setupUser())
+    }
+    
+    static func setupUser() -> User {
+        let user: User = User()
+        user.setUsername(username: "zachzach")
+        return user
     }
 }
