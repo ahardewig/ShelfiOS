@@ -43,6 +43,7 @@
 		925400E9235F677200572DA2 /* Karla-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 925400E5235F677200572DA2 /* Karla-BoldItalic.ttf */; };
 		925400EA235F677200572DA2 /* Karla-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 925400E6235F677200572DA2 /* Karla-Regular.ttf */; };
 		925400EE235F6A2C00572DA2 /* LoginViewComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925400ED235F6A2C00572DA2 /* LoginViewComponents.swift */; };
+		92AB27A32367DC4D003A3C30 /* FollowersDetailedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92AB27A22367DC4D003A3C30 /* FollowersDetailedView.swift */; };
 		A748191D23620C5A0077AE2F /* GameOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748191C23620C5A0077AE2F /* GameOverview.swift */; };
 		A748191F23620C8D0077AE2F /* DetailedGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = A748191E23620C8D0077AE2F /* DetailedGame.swift */; };
 		A748192223620D490077AE2F /* URLImage in Frameworks */ = {isa = PBXBuildFile; productRef = A748192123620D490077AE2F /* URLImage */; };
@@ -110,6 +111,7 @@
 		925400E5235F677200572DA2 /* Karla-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-BoldItalic.ttf"; sourceTree = "<group>"; };
 		925400E6235F677200572DA2 /* Karla-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-Regular.ttf"; sourceTree = "<group>"; };
 		925400ED235F6A2C00572DA2 /* LoginViewComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewComponents.swift; sourceTree = "<group>"; };
+		92AB27A22367DC4D003A3C30 /* FollowersDetailedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowersDetailedView.swift; sourceTree = "<group>"; };
 		A748191C23620C5A0077AE2F /* GameOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverview.swift; sourceTree = "<group>"; };
 		A748191E23620C8D0077AE2F /* DetailedGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedGame.swift; sourceTree = "<group>"; };
 		A748192423620D870077AE2F /* DetailedGameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailedGameView.swift; sourceTree = "<group>"; };
@@ -216,6 +218,7 @@
 			isa = PBXGroup;
 			children = (
 				33057EFB23541A3800AD06DB /* ProfileView.swift */,
+				92AB27A22367DC4D003A3C30 /* FollowersDetailedView.swift */,
 			);
 			path = MyShelf;
 			sourceTree = "<group>";
@@ -495,6 +498,7 @@
 				925400EE235F6A2C00572DA2 /* LoginViewComponents.swift in Sources */,
 				333D183D2336DECC0005AD45 /* ContentView.swift in Sources */,
 				A748191D23620C5A0077AE2F /* GameOverview.swift in Sources */,
+				92AB27A32367DC4D003A3C30 /* FollowersDetailedView.swift in Sources */,
 				A7583F4A236410DF0027049D /* MessagingView.swift in Sources */,
 				33057EEE235418C900AD06DB /* FindFriendView.swift in Sources */,
 				334541C7235421790055331A /* RegisterView.swift in Sources */,

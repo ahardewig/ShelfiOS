@@ -18,32 +18,32 @@ struct ProfileView: View {
     @State var followButtonText: String = "Follow"
     
     var body: some View {
-        VStack() {
+        VStack(alignment: .leading) {
             
-            UsernameText(username: $username)
+            // Username Text
+            ProfileHeader(username: $username)
             
-            if (username != User.currentUser.getUsername()) {
-                MessagingView(to: viewedProfile)
-            }
+            // Messaging View
+//            if (username != User.currentUser.getUsername()) {
+//                MessagingView(to: viewedProfile)
+//            }
 
+            // Follow Button
             FollowButton(viewedProfile: viewedProfile, followButtonText: $followButtonText)
-            LogoutButton()
             
-            Text("Followers:")
-           
-            FollowersHorizontalList()
-            
-            Text("Following:")
-            FollowingHorizontalList()
-            
-            Text("Rated Games:")
+            kHeader(text: "Rated Games:")
             RatedGamesHorizontalList(gamesRated: $gamesRated)
-        }
+            
+            LogoutButton()
+            }
+            
+            
         .onAppear {
             self.gamesRated = [];
             self.getUserData(username: self.username);
             
-        }.frame(height: 800).padding(0)
+        }.frame(alignment: .top)
+        .padding(.all, 16)
     }
     
     func setFollowStatus() {
@@ -125,24 +125,22 @@ struct RatedGamesHorizontalList: View {
     @Binding var gamesRated: [Game];
     
     var body: some View {
-           List {
-               ScrollView(.horizontal, content: {
-                   HStack(spacing: 10) {
-                    ForEach(gamesRated) { game in
-                        
-                        URLImage(URL(string: game.coverId )!,
-                            processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
-                            content: {
-                                $0.image
-                           .resizable()
-                           .aspectRatio(contentMode: .fill)
-                           .clipped()
-                           }).frame(width: 100, height: 150)
-                       }
+           ScrollView(.horizontal, content: {
+               HStack(spacing: 10) {
+                ForEach(gamesRated) { game in
+                    
+                    URLImage(URL(string: game.coverId )!,
+                        processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
+                        content: {
+                            $0.image
+                       .resizable()
+                       .aspectRatio(contentMode: .fill)
+                       .clipped()
+                       }).frame(width: 100, height: 150)
                    }
-               })
-               .frame(height: 190)
-           }.frame(height: 190)
+               }
+           })
+           .frame(height: 150)
 
     }
 }
@@ -151,21 +149,16 @@ struct FollowingHorizontalList: View {
     @ObservedObject var viewedProfile: User = User.otherUser
     
     var body: some View {
-           List {
-               ScrollView(.horizontal, content: {
-                   HStack(spacing: 10) {
-                    ForEach(viewedProfile.getFollowing(), id: \.self) { user in
-                        NavigationLink(destination: ProfileView(username: user)) {
-                            Text(user)
-                        }
-                       }
+           ScrollView(.horizontal, content: {
+               HStack(spacing: 10) {
+                ForEach(viewedProfile.getFollowing(), id: \.self) { user in
+                    NavigationLink(destination: ProfileView(username: user)) {
+                        genreLabel(text: user)
+                    }
                    }
-                   //.padding(.leading, 10)
-               }).frame(height: 100)
-               
-           }.frame(height: 100)
-//           .padding(.leading, -10)
-//           .padding(.trailing, -10)
+               }
+               //.padding(.leading, 10)
+           }).frame(height: 100)
     }
 }
 
@@ -284,9 +277,38 @@ struct ProfileView_Previews: PreviewProvider {
     }
 }
 
-struct UsernameText: View {
+struct ProfileHeader: View {
     @Binding var username: String
+    @ObservedObject var viewedProfile: User = User.otherUser
     var body: some View {
-        Text(username).bold().offset(x: CGFloat(0), y: CGFloat(-100))
+        HStack{
+            Circle().padding().foregroundColor(Color(red: 0.98, green: 0.65, blue: 0.10, opacity: 1.0)).frame(width: 100, height: 100)
+            VStack(alignment: .leading){
+                kHeader(text: username)
+                NavigationLink(destination: FollowersDetailedView(username: username)){
+                    kBody(text: "\(viewedProfile.getFollowers().count) Followers")
+                    kBody(text: "\(viewedProfile.getFollowing().count) Followers")
+                }
+                
+            }
+            
+        }
+        
     }
 }
+
+//NavigationLink(destination: DetailedGameView(gameOverview: game, detailedGame: DetailedGame())) {
+//    URLImage(URL(string: self.url + game.coverImageId + ".jpg")!,
+//             processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
+//        content: {
+//            $0.image
+//    .resizable()
+//    .aspectRatio(contentMode: .fill)
+//    .clipped()
+//    }).frame(width: 100, height: 150)
+//
+//    VStack(alignment: .leading) {
+//        kSubtitle(text: "Game Title")
+//        StarRatingView(games: self.$games, gameId: game.id, canEdit: false)
+//    }
+//}
