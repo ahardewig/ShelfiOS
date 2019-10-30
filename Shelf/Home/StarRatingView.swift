@@ -172,6 +172,35 @@ struct UserRatingView: View {
 
 
 
+struct StarRatingNoVote: View {
+    
+    var userRating: Int;
+    
+
+    func starButton(index:Int) -> some View {
+        let imageName: String = index <= userRating ? "star.fill" : "star"
+        let color: Color = .gray
+        
+                
+      return
+        Button(action: {
+        }) {
+          Image(systemName:imageName)
+            .imageScale(.large)
+            .foregroundColor(color)
+            .frame(width:24, height: 24)
+      }
+    }
+    
+    var body: some View {
+        HStack {
+          ForEach(1...5,id: \.self ) { id in
+            self.starButton(index: id)
+          }
+        }
+    }
+}
+
 
 enum Rating: Int,CaseIterable {
   case zero = 0
