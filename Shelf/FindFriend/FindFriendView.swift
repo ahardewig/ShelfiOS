@@ -20,7 +20,7 @@ struct FindFriendView: View {
         VStack {
             List(users, id: \.username) { user in
                 NavigationLink(destination: ProfileView(username: user.username)) {
-                    Text(user.username + "'s Profile")
+                    profileSmall(text: user.username)
                 }
             }
         }.onAppear { self.getAllUsers() }
