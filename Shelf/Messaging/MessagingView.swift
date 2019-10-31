@@ -23,15 +23,24 @@ struct MessagingView: View {
     let newUrl = DOMAIN + "message/new"
     
     var body: some View {
-        VStack {
-            ForEach (messages, id: \.id) { message in
-                Text("Message from " + message.sender + ": " + message.message)
+        VStack(alignment: .leading) {
+            VStack(alignment: .center){
+                MessageTextField(message: $message)
+                Button(action: { self.sendMessage() }) {
+                   SendMessageButton()
+                }
             }
-            MessageTextField(message: $message)
-            Button(action: { self.sendMessage() }) {
-               SendMessageButton()
+            List{
+                ForEach (messages, id: \.id) { message in
+                    profileSmall(text: message.sender + ": " + message.message)
+                }
             }
-        }.onAppear { self.getAllMessages() }
+            
+            Spacer()
+            
+            }.padding(16)
+            .navigationBarTitle("Messages with \(to.getUsername())")
+        .onAppear { self.getAllMessages() }
     }
     
     func getAllMessages() {

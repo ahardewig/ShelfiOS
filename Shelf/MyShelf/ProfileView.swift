@@ -49,7 +49,7 @@ struct ProfileView: View {
             
 //            LogoutButton(profile: profile)
             Spacer()
-//            MessageButton(profile: profile)
+            MessageButton(profile: profile)
             
             .navigationBarTitle(username)
                 .navigationBarItems(trailing:  FollowButton(profile: profile, followButtonText: $followButtonText))
