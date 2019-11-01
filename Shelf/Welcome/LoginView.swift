@@ -45,7 +45,7 @@ struct LoginView: View {
         }.padding()
         
         .alert(isPresented: $errorHandler.errorDetected) {
-            Alert(title: Text("Error!"), message: Text(errorHandler.errorMessageText), dismissButton: .default(Text("Got it!")))
+            Alert(title: Text("Attention!"), message: Text(errorHandler.errorMessageText), dismissButton: .default(Text("Got it!")))
         }
 
     }
