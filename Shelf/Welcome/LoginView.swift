@@ -15,6 +15,7 @@ let lightGreyColor = Color(red: 239.0/255.0, green: 243.0/255.0, blue: 244.0/255
 struct LoginView: View {
     
     @Binding var isRegistering: Bool;
+    @Binding var isForgotPassword: Bool;
     
     @State var username: String = ""
     @State var password: String = ""
@@ -33,6 +34,9 @@ struct LoginView: View {
             
             Button(action: {self.isRegistering = true}) {
                   SwitchToSignupButton()
+            }
+            Button(action: {self.isForgotPassword = true}) {
+                SwitchToForgotPasswordButton()
             }
             Button(action: {faceId()}) {
                 HStack {
@@ -143,6 +147,12 @@ struct SwitchToSignupButton: View {
     }
 }
 
+struct SwitchToForgotPasswordButton: View {
+    var body: some View {
+        secondaryCTAButton(text: "Forgot password?")
+    }
+}
+
 struct UsernameTextField: View {
     @Binding var username: String
     
@@ -172,6 +182,6 @@ struct PasswordTextField: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         
-        LoginView(isRegistering: .constant(false)).environmentObject(ErrorHandler.errorHandler)
+        LoginView(isRegistering: .constant(false), isForgotPassword: .constant(false)).environmentObject(ErrorHandler.errorHandler)
     }
 }

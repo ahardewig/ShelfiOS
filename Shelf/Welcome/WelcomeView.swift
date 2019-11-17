@@ -9,16 +9,21 @@
 import SwiftUI
 
 struct WelcomeView: View {
+    
     @State var isRegistering: Bool = false;
+    @State var isForgotPassword: Bool = false;
     
     var body: some View {
         
         Group() {
-            if (isRegistering) {
-                RegisterView(isRegistering: $isRegistering)
+            if (isRegistering && !isForgotPassword) {
+                RegisterView(isRegistering: $isRegistering, isForgotPassword: $isForgotPassword)
+            }
+            else if (isForgotPassword && !isRegistering) {
+                ForgotPasswordView(isRegistering: $isRegistering, isForgotPassword: $isForgotPassword)
             }
             else {
-                LoginView(isRegistering: $isRegistering)
+                LoginView(isRegistering: $isRegistering, isForgotPassword: $isForgotPassword)
             }
         }
     }

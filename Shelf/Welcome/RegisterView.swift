@@ -11,6 +11,7 @@ import SwiftUI
 struct RegisterView: View {
     
     @Binding var isRegistering: Bool;
+    @Binding var isForgotPassword: Bool;
     
     @State var username: String = ""
     @State var password: String = ""
@@ -146,7 +147,7 @@ struct EmailTextField: View {
 
 struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
-        RegisterView(isRegistering: .constant(true)).environmentObject(ErrorHandler.errorHandler)
+        RegisterView(isRegistering: .constant(true), isForgotPassword: .constant(false)).environmentObject(ErrorHandler.errorHandler)
     }
 }
 

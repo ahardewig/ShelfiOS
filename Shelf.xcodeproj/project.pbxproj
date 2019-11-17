@@ -53,6 +53,7 @@
 		A7583F4A236410DF0027049D /* MessagingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7583F49236410DF0027049D /* MessagingView.swift */; };
 		A7583F4C236414030027049D /* UserOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7583F4B236414030027049D /* UserOverview.swift */; };
 		A7583F4E23641ED60027049D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7583F4D23641ED60027049D /* Message.swift */; };
+		A75D2CEF2381E88900B884EE /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75D2CEE2381E88900B884EE /* ForgotPasswordView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +123,7 @@
 		A7583F49236410DF0027049D /* MessagingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessagingView.swift; sourceTree = "<group>"; };
 		A7583F4B236414030027049D /* UserOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOverview.swift; sourceTree = "<group>"; };
 		A7583F4D23641ED60027049D /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		A75D2CEE2381E88900B884EE /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -313,6 +315,7 @@
 				33C3C1B62353EC7200E1652A /* LoginView.swift */,
 				33C3C1AA2353A78C00E1652A /* LoginService.swift */,
 				925400ED235F6A2C00572DA2 /* LoginViewComponents.swift */,
+				A75D2CEE2381E88900B884EE /* ForgotPasswordView.swift */,
 			);
 			path = Welcome;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 				33057EFC23541A3800AD06DB /* ProfileView.swift in Sources */,
 				3365D2DD234FE76A003E6B79 /* HomeView.swift in Sources */,
 				333D18382336DECC0005AD45 /* SceneDelegate.swift in Sources */,
+				A75D2CEF2381E88900B884EE /* ForgotPasswordView.swift in Sources */,
 				92A02EBD2368AA0C006A376A /* CertainGamesListView.swift in Sources */,
 				33C3C1B32353BF0200E1652A /* User.swift in Sources */,
 				33E5EC9523654884009A3957 /* BackendConstants.swift in Sources */,
