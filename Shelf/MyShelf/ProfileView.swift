@@ -19,12 +19,10 @@ struct ProfileView: View {
     var body: some View {
         VStack(alignment: .leading) {
         
-            // Username Text
-//            ProfileHeader(profile: profile, followButtonText: followButtonText)
             HStack(alignment: .top){
                 Circle().padding().foregroundColor(Color(red: 0.98, green: 0.65, blue: 0.10, opacity: 1.0)).frame(width: 100, height: 100)
                 VStack(alignment: .leading){
-//                    kHeader(text: profile.getUsername())
+
                     NavigationLink(destination: FollowersDetailedView(profile: profile)){
                         kBody(text: "\(profile.getFollowers().count) Followers")
                     }
@@ -34,12 +32,8 @@ struct ProfileView: View {
                     }
                     
                 }.padding(.top, 24)
-                // Follow Button
-//                FollowButton(profile: profile, followButtonText: $followButtonText).padding(.top, 16).padding(.leading, 8)
-            }
 
-//            // Follow Button
-//            FollowButton(profile: profile, followButtonText: $followButtonText)
+            }
             
             NavigationLink(destination: CertainGamesListView(profile: profile, gamesRated: $gamesRated)){
                 kHeader(text: "Rated Games >")
@@ -47,7 +41,6 @@ struct ProfileView: View {
             
             RatedGamesHorizontalList(gamesRated: $gamesRated)
             
-//            LogoutButton(profile: profile)
             Spacer()
             MessageButton(profile: profile)
             

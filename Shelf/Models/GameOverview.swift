@@ -32,6 +32,8 @@ class GameOverview {
         let parsedCover = JSON(parsedJson["cover"])
         self.coverImageId = parsedCover["image_id"].string ?? ""
         self.coverId = parsedCover["id"].int ?? 0
+        self.globalRating = parsedJson["globalRating"].int ?? 0
+        self.userRating = parsedJson["userRating"].int ?? 0
     }
     
     func toString() {

@@ -43,8 +43,8 @@ struct HomeView: View {
                     }.navigationBarTitle(Text("Global Games").font(KarlaHeader))
                 
             }.onAppear {
-                    self.isLoading = true;
-                    self.getGames()
+                self.isLoading = true;
+                self.getGames(username: User.currentUser.getUsername())
                     
             }.font(KarlaBody).frame(height: 675).navigationBarItems(trailing: SortingSheetView(showSortingSheet: $showSortingSheet, currentSortingMethod: $currentSortingMethod))
         }
@@ -62,7 +62,6 @@ struct HomeView: View {
                                method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
                         if response.response?.statusCode == 200 {
                             User.currentUser.initFromJson(json: response.value as AnyObject)
-                            self.getUserRatings()
                         } else {
                             let error = JSON(response.data as Any)
                             let errorMessage = error["message"].string
@@ -88,118 +87,26 @@ struct HomeView: View {
         }
     }
     
-    func getGames() {
+    func getGames(username: String) {
    
         let headers: HTTPHeaders = [
             "token": User.currentUser.getToken()
         ]
-        AF.request(DOMAIN + "games/criticallyacclaimedgames",
+        AF.request(DOMAIN + "games/criticallyacclaimedgames/\(username)",
                    headers: headers).responseJSON { response in
             if response.response?.statusCode == 200 {
                 self.getGameOverviewsArray(response: response.value as Any)
-                self.getGlobalRatings()
                 self.refreshUser()
+                self.isLoading = false;
              
             } else {
                 let error = JSON(response.data as Any)
                 let errorMessage = error["message"].string
                 print(errorMessage as Any)
+                self.isLoading = false;
             }
             
         }
-    }
-    
-    func getGlobalRatings() {
-        
-        let headers: HTTPHeaders = [
-            "token": User.currentUser.getToken()
-        ]
-        AF.request(DOMAIN + "ratingInfo/all",
-                   headers: headers).responseJSON { response in
-            if response.response?.statusCode == 200 {
-                
-                let sampleJson = JSON(response.value as Any)
-                let responseArray = sampleJson.array
-                var ratings: [RatingInfo] = []
-                for ratingInfo in responseArray! {
-                    let r: RatingInfo = RatingInfo()
-                    r.initFromJson(json: ratingInfo)
-                    ratings.append(r)
-                }
-                self.attachGlobalRatingsToGames(ratingInfos: ratings)
-            } else {
-                let error = JSON(response.data as Any)
-                let errorMessage = error["message"].string
-                print(errorMessage as Any)
-            }
-            
-        }
-    }
-    
-    func getUserRatings() {
-        self.attachUserRatingsToGames(gamesRated: User.currentUser.getGamesRated())
-    }
-    
-    func attachUserRatingsToGames(gamesRated : [Game]) {
-        var map: [Int: Int] = [:]
-       
-        for game in gamesRated {
-            map.updateValue(game.rating, forKey: game.gameId)
-        }
-        
-        var updatedGames: Array<GameOverview> = []
-        for game in self.games {
-            let key = game.id
-            let keyExists = map[key] != nil
-            if (keyExists) {
-                let score: Int = map[key] ?? 0
-                print("SCORE \(score)")
-                game.userRating = score
-                updatedGames.append(game)
-            }
-            else {
-                print("DOING ZERO")
-                game.userRating = 0
-                updatedGames.append(game)
-                
-            }
-        }
-        self.games = updatedGames
-        
-        isLoading = false;
-
-    }
-    
-
-    
-    func attachGlobalRatingsToGames(ratingInfos : [RatingInfo]) {
-        var map: [Int: Int] = [:]
-       
-        for ratingInfo in ratingInfos {
-            var score: Int = 0
-            if (ratingInfo.numberOfRatings != 0) {
-                score = ratingInfo.totalRatingValue / ratingInfo.numberOfRatings
-            }
-            map.updateValue(score, forKey: Int(ratingInfo.gameId) ?? 0)
-        }
-        
-        var updatedGames: Array<GameOverview> = []
-        for game in games {
-            let key = game.id
-            let keyExists = map[key] != nil
-            if (keyExists) {
-                let score: Int = map[key] ?? 0
-                game.globalRating = score
-                updatedGames.append(game)
-            }
-            else {
-                game.globalRating = 0
-                updatedGames.append(game)
-                
-            }
-        }
-        games = updatedGames
-
     }
     
     func getGameOverviewsArray(response: Any) {
@@ -213,7 +120,6 @@ struct HomeView: View {
         }
         games = temp.sorted(by: customSorter)
     }
-    
     
 }
 
