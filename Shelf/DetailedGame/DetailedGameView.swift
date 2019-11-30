@@ -27,7 +27,7 @@ struct DetailedGameView: View {
                 
                 Group{
                     kSubtitle(text: "My Rating").padding(.leading, 16)
-                    UserRatingView(userRating: self.$userRating, canEdit: true, gameId: self.$gameOverview.id).padding(.leading, 16)
+                    UserRatingView(userRating: self.$userRating, canEdit: true, gameId: self.$gameOverview.id, coverUrl: self.coverUrl + gameOverview.coverImageId + ".jpg" ).padding(.leading, 16)
                 }
                 
                 if (self.detailedGame.storyline != "") {

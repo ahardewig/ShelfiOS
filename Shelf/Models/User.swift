@@ -14,8 +14,8 @@ class User: ObservableObject {
     @Published private var username: String = "";
     @Published private var birthday: String = "";
     @Published private var email: String = "";
-    @Published private var games_rated:  Array<Game> = [];
-    @Published private var games_played: Array<Game> = [];
+    @Published public var games_rated:  [Game] = [];
+    @Published public var games_played: [Game] = [];
     @Published private var followers: [String] = [];
     @Published private var following: [String] = [];
     @Published private var inboxId: String = "";
@@ -90,6 +90,7 @@ class User: ObservableObject {
         self.following.remove(at: self.following.firstIndex(of: following)!)
     }
     
+    
     func initFromJson(json: Any) {
         self.games_rated = [];
         self.games_played = [];
@@ -109,7 +110,8 @@ class User: ObservableObject {
             print(games["rating"]);
             let rating = games["rating"].int ?? 0
             let gameId = games["game_id"].string ?? "-999"
-            self.games_rated.append(Game(rating: rating, gameId: gameId ))
+            let coverUrl = games["coverUrl"].string ?? ""
+            self.games_rated.append(Game(rating: rating, gameId: gameId, coverUrl: coverUrl))
         }
         
         for games in parsed["games_played"].array! {

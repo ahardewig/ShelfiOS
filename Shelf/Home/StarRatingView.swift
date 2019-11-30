@@ -72,6 +72,7 @@ struct UserRatingView: View {
     @Binding var userRating: Int;
     @State var canEdit: Bool;
     @Binding var gameId: Int;
+    var coverUrl: String;
     
 
     func starButton(index:Int) -> some View {
@@ -93,7 +94,7 @@ struct UserRatingView: View {
       return
         Button(action: {
             if (self.canEdit) {
-                self.submitRatingToUser(newRating: index, oldRating: self.userRating, gameId: self.gameId)
+                self.submitRatingToUser(newRating: index, oldRating: self.userRating, gameId: self.gameId, coverUrl: self.coverUrl)
                 self.submitRatingToGame(newRating: index, oldRating: self.userRating, gameId: self.gameId)
                 if (self.userRating == index) {
                     self.userRating = 0
@@ -114,14 +115,15 @@ struct UserRatingView: View {
     
     
     
-    func submitRatingToUser(newRating: Int, oldRating: Int, gameId: Int) {
+    func submitRatingToUser(newRating: Int, oldRating: Int, gameId: Int, coverUrl: String) {
         let headers: HTTPHeaders = [
                    "token": User.currentUser.getToken()
                ]
-               let body: [String: Int] = [
-                   "gameId": gameId,
-                   "newRating": newRating,
-                   "oldRating": oldRating
+               let body: [String: String] = [
+                   "gameId": String(gameId),
+                   "newRating": String(newRating),
+                   "oldRating": String(oldRating),
+                   "coverUrl": coverUrl
                ]
         AF.request(DOMAIN + "user/\(User.currentUser.getUsername())/games-rated",
                            method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in

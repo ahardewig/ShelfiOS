@@ -26,20 +26,21 @@ struct ProfileView: View {
                     NavigationLink(destination: FollowersDetailedView(profile: profile)){
                         kBody(text: "\(profile.getFollowers().count) Followers")
                     }
-                    
+
                     NavigationLink(destination: FollowingDetailedView(profile: profile)){
                         kBody(text: "\(profile.getFollowing().count) Following")
                     }
-                    
+
                 }.padding(.top, 24)
 
             }
             
-            NavigationLink(destination: CertainGamesListView(profile: profile, gamesRated: $gamesRated)){
+            NavigationLink(destination: CertainGamesListView(profile: profile, gamesRated: $profile.games_rated)){
                 kHeader(text: "Rated Games >")
             }
             
-            RatedGamesHorizontalList(gamesRated: $gamesRated)
+            RatedGamesHorizontalList(gamesRated: $profile.games_rated)
+            
             
             Spacer()
             MessageButton(profile: profile)
@@ -49,7 +50,6 @@ struct ProfileView: View {
                 
         }
         .onAppear {
-            self.gamesRated = [];
             self.getUserData(username: self.username);
             
         }.frame(alignment: .top)
@@ -70,40 +70,6 @@ struct ProfileView: View {
         print(self.profile.getFollowers())
         return User.currentUser.getFollowing().contains(self.profile.getUsername())
     }
-
-    func getCovers() {
-        for game in profile.getGamesRated() {
-            setCoverId(id: game.gameId, game: game)
-        }
-    }
-    
-    func setCoverId(id: Int, game: Game) {
-        let headers: HTTPHeaders = [
-            "token": User.currentUser.getToken()
-        ]
-        let body: [String: Int] = [
-            "id": id
-        ]
-         AF.request(DOMAIN + "games/detailedgamedata",
-                    method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
-             if response.response?.statusCode == 200 {
-                let sampleJson = JSON(response.value as Any)
-                let responseArray = sampleJson.array
-                let parsed = responseArray?[0];
-                let parsedCover = JSON(parsed?["cover"] as Any)
-                let coverImageId = parsedCover["image_id"].string ?? ""
-                let g: Game = Game(rating: game.rating, gameId: String(game.gameId))
-                g.coverId = ("https://images.igdb.com/igdb/image/upload/t_cover_big/" + coverImageId + ".jpg")
-                self.gamesRated.append(g)
-
-             } else {
-                 let error = JSON(response.data as Any)
-                 let errorMessage = error["message"].string
-                 print(errorMessage as Any)
-             }
-
-         }
-    }
     
     func getUserData(username: String) {
         let headers: HTTPHeaders = [
@@ -117,8 +83,13 @@ struct ProfileView: View {
                            method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
                     if response.response?.statusCode == 200 {
                         self.profile.initFromJson(json: response.value as AnyObject)
-                        self.getCovers();
+                        print(self.profile.getGamesRated())
+                        print(self.gamesRated)
+                        self.gamesRated.append(contentsOf: self.profile.games_rated)
+                        print(self.gamesRated)
                         self.setFollowStatus()
+                        print(self.profile.games_rated[0].coverUrl)
+
                     } else {
                         let error = JSON(response.data as Any)
                         let errorMessage = error["message"].string
@@ -135,25 +106,33 @@ struct RatedGamesHorizontalList: View {
     @Binding var gamesRated: [Game];
     
     var body: some View {
-           ScrollView(.horizontal, content: {
-               HStack(spacing: 10) {
-                ForEach(gamesRated) { game in
-                    
-                    URLImage(URL(string: game.coverId )!,
-                        processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
-                        content: {
-                            $0.image
-                       .resizable()
-                       .aspectRatio(contentMode: .fill)
-                       .clipped()
-                       }).frame(width: 180, height: 250)
-                   }
-               }
-           })
-           .frame(height: 250)
-
+  
+        Group() {
+        if (gamesRated.count > 0) {
+            
+            ScrollView(.horizontal, content: {
+                HStack {
+                    ForEach(gamesRated, id: \.gameId) { game in
+                        URLImage(URL(string: game.coverUrl) ?? URL(string: "https://images.igdb.com/igdb/image/upload/t_cover_big/co1pjc.jpg")!,
+                                                processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
+                                                content: {
+                                                    $0.image
+                                               .resizable()
+                                               .aspectRatio(contentMode: .fill)
+                                               .clipped()
+                        }).frame(width: 180, height: 250)
+                        }
+                }
+             }).frame(height: 250)
+        }
+        else {
+            Text("Loading...")
+        }
+        }
+    
     }
 }
+
 
 struct FollowingHorizontalList: View {
     @ObservedObject var profile: User

@@ -8,6 +8,8 @@
 
 import SwiftUI
 import URLImage
+import Alamofire
+import SwiftyJSON
 
 struct CertainGamesListView: View {
     @ObservedObject var profile: User
@@ -22,7 +24,7 @@ struct CertainGamesListView: View {
                 List(self.gamesRated.sorted(by: self.customSorter), id: \.id) { game in
 
                     Group() {
-                          URLImage(URL(string: game.coverId )!,
+                          URLImage(URL(string: game.coverUrl )!,
                               processors: [ Resize(size: CGSize(width: 100.0, height: 150.0), scale: UIScreen.main.scale) ],
                               content: {
                                   $0.image
@@ -33,30 +35,72 @@ struct CertainGamesListView: View {
                          
                         VStack(alignment: .leading) {
                             //kSubtitle(text: game.name)
-                            StarRatingNoVote(userRating: game.rating)
+                            Text("Global Rating")
+                            StarRatingNoVote(userRating: game.globalRating)
+                            Text("User Rating")
+                            StarRatingNoVote(userRating: game.userRating)
                         }
                       
                       }
                 }
-                     //.frame(height: 150)
-                
 
             }.navigationBarItems(trailing: SortingSheetView(showSortingSheet: $showSortingSheet, currentSortingMethod: $currentSortingMethod))
+                .onAppear() {
+                    self.getMultipleGameOverviews(gamesRated: self.gamesRated);
+        }
+    }
+    
+    
+    func getMultipleGameOverviews(gamesRated: [Game]) {
+        let headers: HTTPHeaders = [
+                   "token": User.currentUser.getToken()
+               ]
+        
+        var gameIds: [String] = [];
+        for game in gamesRated {
+            gameIds.append(String(game.gameId))
+        }
+        let body: [String: [String]] = [
+            "gameIds": gameIds,
+        ]
+
+        AF.request(DOMAIN + "games/multiplegameoverviews/\(User.currentUser.getUsername())",
+                           method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
+                    if response.response?.statusCode == 200 {
+//                        self.profile.initFromJson(json: response.value as AnyObject)
+                        print(JSON(response.data as Any))
+                        let obj = JSON(response.data as Any)
+                        var gameArr: [Game] = []
+                        for game in obj.array! {
+                            gameArr.append(Game.init(json: game))
+                        }
+                        
+                        self.gamesRated = gameArr
+
+                    } else {
+                        let error = JSON(response.data as Any)
+                        let errorMessage = error["message"].string
+                        print(errorMessage as Any)
+                    }
+
+                }
+
     }
     
     
     func customSorter(this:Game, that:Game) -> Bool {
 
         switch currentSortingMethod {
+            
+            case .GlobalAscending:
+                return this.globalRating < that.globalRating
             case .UserAscending:
-                return this.rating < that.rating
-        default:
-                return this.rating > that.rating
+            
+                return this.userRating < that.userRating
+            case .UserDescending:
+                return this.userRating > that.userRating
+            default:
+                return this.globalRating > that.globalRating
         }
     }
 }
-            //Spacer()
-                //.navigationBarTitle("\(profile.getUsername())'s Rated Games")
-       // }.padding(16)
-
-
