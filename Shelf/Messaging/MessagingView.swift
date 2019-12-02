@@ -13,7 +13,7 @@ import SwiftyJSON
 
 struct MessagingView: View {
     
-    @State var to: User
+    @State var to: String
     @State var messages: [Message] = []
     @State var message: String = ""
     @State var _id: String = ""
@@ -39,14 +39,14 @@ struct MessagingView: View {
             Spacer()
             
             }.padding(16)
-            .navigationBarTitle("Messages with \(to.getUsername())")
+            .navigationBarTitle("Messages with \(to)")
         .onAppear { self.getAllMessages() }
     }
     
     func getAllMessages() {
         let headers: HTTPHeaders = [
             "token": User.currentUser.getToken(),
-            "receiver": to.getUsername()
+            "receiver": to
         ]
         AF.request(url, headers: headers).responseJSON { response in
             if response.response?.statusCode == 200 {
@@ -67,7 +67,7 @@ struct MessagingView: View {
             ]
             let body: [String: String] = [
                 "firstUser": User.currentUser.getUsername(),
-                "secondUser": to.getUsername(),
+                "secondUser": to,
             ]
             AF.request(newUrl, method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { resp in
                 if resp.response?.statusCode == 200 {

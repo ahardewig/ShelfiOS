@@ -43,7 +43,7 @@ struct ProfileView: View {
             
             
             Spacer()
-            MessageButton(profile: profile)
+            MessageButton(profile: profile, username: self.username)
             
             .navigationBarTitle(username)
                 .navigationBarItems(trailing:  FollowButton(profile: profile, followButtonText: $followButtonText))
@@ -66,8 +66,6 @@ struct ProfileView: View {
     }
 
     func isFollowing(curProf: User) -> Bool {
-        print(User.currentUser.getFollowing())
-        print(self.profile.getFollowers())
         return User.currentUser.getFollowing().contains(self.profile.getUsername())
     }
     
@@ -83,12 +81,8 @@ struct ProfileView: View {
                            method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
                     if response.response?.statusCode == 200 {
                         self.profile.initFromJson(json: response.value as AnyObject)
-                        print(self.profile.getGamesRated())
-                        print(self.gamesRated)
                         self.gamesRated.append(contentsOf: self.profile.games_rated)
-                        print(self.gamesRated)
                         self.setFollowStatus()
-                        print(self.profile.games_rated[0].coverUrl)
 
                     } else {
                         let error = JSON(response.data as Any)
@@ -153,10 +147,19 @@ struct FollowingHorizontalList: View {
 
 struct MessageButton: View {
     @ObservedObject var profile: User
+    @State var username: String
     
     var body: some View {
-        NavigationLink(destination: MessagingView(to: profile)) {
-            Text("Message this user")
+        Group() {
+            if (User.currentUser.getUsername() == username) {
+                NavigationLink(destination: AllMessagesView()) {
+                    Text("Go to messages")
+                }
+            } else {
+                NavigationLink(destination: MessagingView(to: profile.getUsername())) {
+                    Text("Message this user")
+                }
+            }
         }
     }
     

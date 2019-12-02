@@ -54,6 +54,7 @@
 		A7583F4C236414030027049D /* UserOverview.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7583F4B236414030027049D /* UserOverview.swift */; };
 		A7583F4E23641ED60027049D /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7583F4D23641ED60027049D /* Message.swift */; };
 		A75D2CEF2381E88900B884EE /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A75D2CEE2381E88900B884EE /* ForgotPasswordView.swift */; };
+		A7B822392394D9B10064017D /* AllMessagesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B822382394D9B10064017D /* AllMessagesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +125,7 @@
 		A7583F4B236414030027049D /* UserOverview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOverview.swift; sourceTree = "<group>"; };
 		A7583F4D23641ED60027049D /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		A75D2CEE2381E88900B884EE /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
+		A7B822382394D9B10064017D /* AllMessagesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllMessagesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -343,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				A7583F49236410DF0027049D /* MessagingView.swift */,
+				A7B822382394D9B10064017D /* AllMessagesView.swift */,
 			);
 			path = Messaging;
 			sourceTree = "<group>";
@@ -511,6 +514,7 @@
 				A7583F4A236410DF0027049D /* MessagingView.swift in Sources */,
 				33057EEE235418C900AD06DB /* FindFriendView.swift in Sources */,
 				334541C7235421790055331A /* RegisterView.swift in Sources */,
+				A7B822392394D9B10064017D /* AllMessagesView.swift in Sources */,
 				33057EFC23541A3800AD06DB /* ProfileView.swift in Sources */,
 				3365D2DD234FE76A003E6B79 /* HomeView.swift in Sources */,
 				333D18382336DECC0005AD45 /* SceneDelegate.swift in Sources */,
