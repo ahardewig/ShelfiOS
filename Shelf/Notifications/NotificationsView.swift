@@ -102,7 +102,7 @@ struct notificationSmall: View {
                     Text(date.prefix(10)).font(KarlaTiny)
                 }
                 Text(text1)
-                           .font(KarlaBody)
+                    .font(KarlaBody).fontWeight(.bold)
             }
            
         }

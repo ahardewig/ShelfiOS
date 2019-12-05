@@ -46,7 +46,9 @@ struct HomeView: View {
                 self.isLoading = true;
                 self.getGames(username: User.currentUser.getUsername())
                     
-            }.font(KarlaBody).frame(height: 675).navigationBarItems(trailing: SortingSheetView(showSortingSheet: $showSortingSheet, currentSortingMethod: $currentSortingMethod))
+                }.font(KarlaBody).frame(height: 675).navigationBarItems(leading: NavigationLink(destination: NotificationsView()){
+                    Image("Notification")
+                }, trailing: SortingSheetView(showSortingSheet: $showSortingSheet, currentSortingMethod: $currentSortingMethod))
         }
     }
     

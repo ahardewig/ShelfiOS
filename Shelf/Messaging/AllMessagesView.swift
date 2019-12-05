@@ -25,6 +25,7 @@ struct AllMessagesView: View {
             }
         }.padding(16)
         .navigationBarTitle("Conversations")
+            .navigationBarItems(trailing: Image("Compose-2").fixedSize())
         .onAppear { self.getAllConversations() }
     }
     

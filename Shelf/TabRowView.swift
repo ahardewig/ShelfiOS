@@ -27,18 +27,23 @@ struct TabRowView: View {
                     Text("My Shelf")
                 }.tag(1)
 
-            NavigationView { NotificationsView() }
-                .tabItem {
-                    Image(systemName: "bubble.left.and.bubble.right.fill")
-                    Text("Notifications")
-                }.tag(2)
-
-            NavigationView { SearchView() }
-                .tabItem {
-                    Image(systemName: "magnifyingglass.circle.fill")
-                    Text("Search")
-                }.tag(3)
             
+            
+            NavigationView { AllMessagesView() }
+            .tabItem {
+                Image(systemName: "bubble.left.and.bubble.right.fill")
+                Text("Messages")
+            }.tag(2)
+            
+            NavigationView { SearchView() }
+            .tabItem {
+                Image(systemName: "magnifyingglass.circle.fill")
+                Text("Search")
+            }.tag(3)
+            
+//            NavigationLink(destination: AllMessagesView()) {
+//                Text("Go to messages")
+//            }
             NavigationView { FindFriendView() }
                 .tabItem {
                     Image(systemName: "person.3.fill")
