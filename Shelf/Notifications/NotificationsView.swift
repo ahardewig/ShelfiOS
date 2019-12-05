@@ -24,9 +24,8 @@ struct NotificationsView: View {
             // Zach, below is where the notifications get displayed. I am unable to figure out how to display the sender and timestamp above the notification (in bold like on the website) and the icon. the notifications[] contains all the information
             List{
                 ForEach (notifications, id: \.id) { notificationText in
+                    notificationSmall(text: notificationText.message, u: notificationText.sender, d: notificationText.timeStamp)
                     
-                    profileSmall(text: notificationText.message)
-
                 }
             }
             
@@ -84,5 +83,36 @@ struct notificationSubtitle: View {
     
     init(text: String){
         text1 = text
+    }
+}
+
+struct notificationSmall: View {
+    var text1: String;
+    var username: String;
+    var date: String;
+    var body: some View {
+        HStack{
+            Circle().frame(width: 20, height: 20)
+                .padding(0)
+                .foregroundColor(Color(red: 0.98, green: 0.65, blue: 0.10, opacity: 1.0))
+                
+            VStack(alignment: .leading){
+                HStack{
+                    Text(username).font(KarlaInput)
+                    Text(date.prefix(10)).font(KarlaTiny)
+                }
+                Text(text1)
+                           .font(KarlaBody)
+            }
+           
+        }
+        
+        
+    }
+    
+    init(text: String, u: String, d: String){
+        text1 = text
+        username = u;
+        date = d;
     }
 }
