@@ -251,6 +251,16 @@ struct FollowButton: View {
              }
 
          }
+        
+        let notificationUrl = DOMAIN + "inbox/add-notification"
+        
+        let notificationBody: [String: String] = [
+            "message": NEW_FOLLOWER_NOTIFICATION(sender: User.currentUser.getUsername(), receiver: profile.getUsername()),
+            "receiver": profile.getUsername()
+        ]
+        AF.request(notificationUrl, method: .post, parameters: notificationBody, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
+            
+        }
     }
 
     func unfollowUser() {

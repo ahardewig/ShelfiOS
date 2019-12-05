@@ -21,6 +21,7 @@ struct MessagingView: View {
     let url = DOMAIN + "message/all"
     let sendUrl = DOMAIN + "message/send"
     let newUrl = DOMAIN + "message/new"
+    let notificationUrl = DOMAIN + "inbox/add-notification"
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -110,6 +111,13 @@ struct MessagingView: View {
                 let errorMessage = error["message"].string
                 print(errorMessage as Any)
             }
+        }
+        let notificationBody: [String: String] = [
+            "message": SEND_MESSAGE_NOTIFICATION(sender: User.currentUser.getUsername(), receiver: to),
+            "receiver": to
+        ]
+        AF.request(notificationUrl, method: .post, parameters: notificationBody, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
+            
         }
     }
 }
