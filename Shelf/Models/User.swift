@@ -99,7 +99,7 @@ class User: ObservableObject {
         
         self.isLoggedIn = true;
         let parsed = JSON(json);
-        print(parsed);
+//        print(parsed);
         
         self.username = parsed["username"].string ?? "";
         self.birthday = parsed["birthday"].string ?? "";
@@ -107,7 +107,7 @@ class User: ObservableObject {
         self.inboxId = parsed["inboxID"].string ?? "";
         
         for games in parsed["games_rated"].array! {
-            print(games["rating"]);
+//            print(games["rating"]);
             let rating = games["rating"].int ?? 0
             let gameId = games["game_id"].string ?? "-999"
             let coverUrl = games["coverUrl"].string ?? ""
@@ -115,7 +115,7 @@ class User: ObservableObject {
         }
         
         for games in parsed["games_played"].array! {
-            print(games["rating"]);
+//            print(games["rating"]);
             let rating = games["rating"].int ?? 0
             let gameId = games["game_id"].string ?? "-999"
             self.games_played.append(Game(rating: rating, gameId: gameId))

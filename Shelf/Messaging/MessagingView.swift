@@ -87,7 +87,7 @@ struct MessagingView: View {
             messages = []
             for message in messageArray {
                 let newMessage = Message(message: message)
-                print (newMessage.message)
+//                print (newMessage.message)
                 messages.append(newMessage)
             }
         }

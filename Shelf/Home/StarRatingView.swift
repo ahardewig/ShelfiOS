@@ -26,7 +26,7 @@ struct StarRatingView: View {
             //find correct game
             if (game.id == gameId) {
                 if (canEdit) {
-                    print("USER: \(game.userRating)")
+//                    print("USER: \(game.userRating)")
                     imageName = index <= game.userRating ? "star.fill" : "star"
                     color = index <= game.userRating ? .yellow : .gray
                     
@@ -81,7 +81,7 @@ struct UserRatingView: View {
         var color: Color = .gray
             //find correct game
         if (canEdit) {
-            print("USER: \(userRating)")
+//            print("USER: \(userRating)")
             imageName = index <= userRating ? "star.fill" : "star"
             color = index <= userRating ? .yellow : .gray
                     
@@ -128,7 +128,7 @@ struct UserRatingView: View {
         AF.request(DOMAIN + "user/\(User.currentUser.getUsername())/games-rated",
                            method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
                     if response.response?.statusCode == 200 {
-                        print(response.value as Any)
+//                        print(response.value as Any)
                     } else {
                         let error = JSON(response.data as Any)
                         let errorMessage = error["message"].string
@@ -151,7 +151,7 @@ struct UserRatingView: View {
         AF.request(DOMAIN + "ratingInfo/\(gameId)",
                            method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
                     if response.response?.statusCode == 200 {
-                        print(response.value as Any)
+//                        print(response.value as Any)
                     } else {
                         let error = JSON(response.data as Any)
                         let errorMessage = error["message"].string

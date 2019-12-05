@@ -20,7 +20,7 @@ func verifyEmail(email: String, verificationNum: String) {
     AF.request(DOMAIN + "user/verify-email", method: .post, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
            
             if response.response?.statusCode == 200 {
-                print("Success with JSON: \(String(describing: response.data))")
+//                print("Success with JSON: \(String(describing: response.data))")
                 ErrorHandler.errorHandler.errorMessageText = "Success!"
                 ErrorHandler.errorHandler.errorDetected = true
             }
@@ -39,15 +39,15 @@ func verifyEmail(email: String, verificationNum: String) {
 
 
 func registerUser(username: String, password: String, confirmPassword: String, email: String, birthday: Date) {
-    print (birthday)
+//    print (birthday)
     
     if (!usernameIsValid(username: username)) {return}
     if (!passwordIsValid(password: password, confirmPassword: confirmPassword)) {return}
     if (!emailIsValid(email: email)) {return}
 
-    print("USER: " + username);
-    print("PASS: " + password);
-    print("EMAIL: " + email);
+//    print("USER: " + username);
+//    print("PASS: " + password);
+//    print("EMAIL: " + email);
         
 //        let dateFormatter = DateFormatter()
 //        dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -63,7 +63,7 @@ func registerUser(username: String, password: String, confirmPassword: String, e
     AF.request(DOMAIN + "user/register", method: .post, parameters: body, encoder: JSONParameterEncoder.default).responseJSON { response in
            
             if response.response?.statusCode == 200 {
-                print("Success with JSON: \(String(describing: response.data))")
+//                print("Success with JSON: \(String(describing: response.data))")
             }
             else {
                 let error = JSON(response.data as Any)

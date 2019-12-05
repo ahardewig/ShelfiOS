@@ -68,7 +68,7 @@ struct CertainGamesListView: View {
                            method: .post, parameters: body, encoder: JSONParameterEncoder.default, headers: headers).responseJSON { response in
                     if response.response?.statusCode == 200 {
 //                        self.profile.initFromJson(json: response.value as AnyObject)
-                        print(JSON(response.data as Any))
+//                        print(JSON(response.data as Any))
                         let obj = JSON(response.data as Any)
                         var gameArr: [Game] = []
                         for game in obj.array! {

@@ -45,11 +45,11 @@ struct AllMessagesView: View {
     
     func parseAllMessagesData(response: Any) {
         let sampleJson = JSON(response)
-        print (sampleJson)
+//        print (sampleJson)
         let messageArray = sampleJson.array ?? []
         
         people = []
-        
+                
         for message in messageArray {
             let messageJson = JSON(message)
             let messagesArray = messageJson["messages"].array ?? [];
@@ -59,11 +59,11 @@ struct AllMessagesView: View {
                 if (name == User.currentUser.getUsername()) {
                     name = messageJson["secondUser"].string ?? ""
                 }
-                print(name)
+//                print(name)
                 people.append(name)
             }
         }
         
-        print ("Parsed messages!")
+//        print ("Parsed messages!")
     }
 }

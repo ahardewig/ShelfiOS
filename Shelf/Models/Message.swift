@@ -27,6 +27,6 @@ class Message {
         self.sender = parsedJson["sender"].string ?? ""
         self.message = parsedJson["message"].string ?? ""
         self.id = parsedJson["_id"].string ?? ""
-        print ("ID: " + String(self.id))
+//        print ("ID: " + String(self.id))
     }
 }

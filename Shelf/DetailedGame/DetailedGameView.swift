@@ -94,7 +94,7 @@ struct DetailedGameView: View {
                 let json = JSON(response.value as Any);
                 let rate: Int = json["rating"].int ?? 0
                 self.userRating = rate
-                print(response.value as Any)
+//                print(response.value as Any)
              } else {
                  let error = JSON(response.data as Any)
                  let errorMessage = error["message"].string

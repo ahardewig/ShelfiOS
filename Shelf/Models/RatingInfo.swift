@@ -32,7 +32,7 @@ class RatingInfo {
     func initFromJson(json: Any) {
         
         let parsed = JSON(json);
-        print(parsed);
+//        print(parsed);
         
         self.totalRatingValue = parsed["total_rating_value"].int ?? 0;
         self.numberOfPlayers = parsed["number_of_players"].int ?? 0;

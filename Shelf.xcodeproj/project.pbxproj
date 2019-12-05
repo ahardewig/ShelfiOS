@@ -38,6 +38,7 @@
 		33C3C1B52353C62B00E1652A /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3C1B42353C62B00E1652A /* Game.swift */; };
 		33C3C1B72353EC7200E1652A /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33C3C1B62353EC7200E1652A /* LoginView.swift */; };
 		33E5EC9523654884009A3957 /* BackendConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33E5EC9423654884009A3957 /* BackendConstants.swift */; };
+		64B579DF2398A81B0000E141 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64B579DE2398A81B0000E141 /* Notification.swift */; };
 		925400E7235F677200572DA2 /* Karla-RegularItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 925400E3235F677100572DA2 /* Karla-RegularItalic.ttf */; };
 		925400E8235F677200572DA2 /* Karla-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 925400E4235F677200572DA2 /* Karla-Bold.ttf */; };
 		925400E9235F677200572DA2 /* Karla-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 925400E5235F677200572DA2 /* Karla-BoldItalic.ttf */; };
@@ -110,6 +111,7 @@
 		33C3C1B42353C62B00E1652A /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		33C3C1B62353EC7200E1652A /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		33E5EC9423654884009A3957 /* BackendConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackendConstants.swift; sourceTree = "<group>"; };
+		64B579DE2398A81B0000E141 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		925400E3235F677100572DA2 /* Karla-RegularItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-RegularItalic.ttf"; sourceTree = "<group>"; };
 		925400E4235F677200572DA2 /* Karla-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-Bold.ttf"; sourceTree = "<group>"; };
 		925400E5235F677200572DA2 /* Karla-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Karla-BoldItalic.ttf"; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 			isa = PBXGroup;
 			children = (
 				33BD18B32354A33100236E2C /* ErrorHandler.swift */,
+				64B579DE2398A81B0000E141 /* Notification.swift */,
 				33C3C1B42353C62B00E1652A /* Game.swift */,
 				33C3C1B22353BF0200E1652A /* User.swift */,
 				A748191C23620C5A0077AE2F /* GameOverview.swift */,
@@ -517,6 +520,7 @@
 				A7B822392394D9B10064017D /* AllMessagesView.swift in Sources */,
 				33057EFC23541A3800AD06DB /* ProfileView.swift in Sources */,
 				3365D2DD234FE76A003E6B79 /* HomeView.swift in Sources */,
+				64B579DF2398A81B0000E141 /* Notification.swift in Sources */,
 				333D18382336DECC0005AD45 /* SceneDelegate.swift in Sources */,
 				A75D2CEF2381E88900B884EE /* ForgotPasswordView.swift in Sources */,
 				92A02EBD2368AA0C006A376A /* CertainGamesListView.swift in Sources */,

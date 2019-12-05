@@ -37,7 +37,7 @@ class GameOverview {
     }
     
     func toString() {
-        print("NAME: " + self.name)
-        print("COVER_IMAGE_ID: " + self.coverImageId)
+//        print("NAME: " + self.name)
+//        print("COVER_IMAGE_ID: " + self.coverImageId)
     }
 }

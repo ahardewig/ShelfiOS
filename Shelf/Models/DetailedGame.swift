@@ -38,7 +38,7 @@ class DetailedGame {
         let game = jsonArray[0]
         let parsedGame = JSON(game)
         
-        print (parsedGame)
+//        print (parsedGame)
         
         self.storyline = parsedGame["storyline"].string ?? ""
         let artworksArray = parsedGame["artworks"].array ?? []
