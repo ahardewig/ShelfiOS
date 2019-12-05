@@ -16,15 +16,20 @@ struct WelcomeView: View {
     var body: some View {
         
         Group() {
-            if (isRegistering && !isForgotPassword) {
+        Group() {
+            if (isRegistering) {
                 RegisterView(isRegistering: $isRegistering, isForgotPassword: $isForgotPassword)
             }
-            else if (isForgotPassword && !isRegistering) {
-                ForgotPasswordView(isRegistering: $isRegistering, isForgotPassword: $isForgotPassword)
-            }
-            else {
+            else if (!isRegistering && !isForgotPassword) {
                 LoginView(isRegistering: $isRegistering, isForgotPassword: $isForgotPassword)
             }
+        }
+        
+        Group() {
+            if (isForgotPassword) {
+                ForgotPasswordView(isRegistering: $isRegistering, isForgotPassword: $isForgotPassword)
+            }
+        }
         }
     }
 }
